@@ -1,3 +1,67 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+      #alphabet{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 20px;
+    grid-gap:50px;
+}
+
+.char{
+    display: grid;
+    width: 100px;
+    height: 100px;
+    font-size: xxx-large;
+    border: 1px solid black;
+    align-content: center;
+    justify-content: center;
+    animation-duration: .3s;
+    box-shadow:1px 1px 1px gray;
+    box-shadow: 1px 1px 4px 2px #b6abab;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+.clicked{
+  background:#bcf6bc;
+}
+    </style>
+  </head>
 <body>
   <div id="alphabet"></div>
+  <script>
+    const anim = ["animate__zoomOutRight","animate__zoomIn","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
+var an=0;
+$(document).ready(function(){
+  var div = $("#alphabet"),i,c;
+  for(i=0;i<26;i++){
+    c = String.fromCharCode(65+i);
+    div.append('<div class="char"><span>'+c+'</span></div>');
+  }
+  
+  $(".char").mouseenter(function() {
+    $(this).addClass("animate__pulse");
+}).mouseleave(function() {
+    $(this).removeClass("animate__pulse").removeClass(anim[an]);
+});
+  $(".char").click(function(){
+    console.log(anim[an],an);
+    $(this).addClass(anim[an]);
+    setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
+                          an++;
+if(an>=anim.length)
+   an=0;
+    },500);
+    //if(!$(this).hasClass("clicked"))
+      $(this).addClass("clicked");
+  })
+})
+  </script>
 </body>
+</html>
