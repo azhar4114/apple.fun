@@ -1,10 +1,12 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	  <title>Alphabet Chart</title>
     <style>
-      #alphabet{
+     #alphabet{
     display: grid;
     justify-items: center;
     align-items: center;
@@ -51,6 +53,7 @@ body {
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
+  margin:0;
 }
 
 @keyframes gradient {
@@ -64,10 +67,52 @@ body {
 		background-position: 0% 50%;
 	}
 }
+
+ header {
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            margin: 10px 0;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+#header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: start;
+    align-items: end;
+}
+
     </style>
   </head>
 <body ng-app="newApp">
+  
   <div ng-controller="appCtrl">
+   <div id="header"> <header>
+        <h1>Alphabet Chart</h1>
+    <nav>
+            <a href="/">Goto Home</a>
+        </nav>
+    </header>
   <div id="controls"><div style="
     grid-template-columns: 1fr 1fr;
     grid-gap:20px;
@@ -76,15 +121,16 @@ body {
     <label style="font-size:larger;font-weight:bold;"><input type="checkbox" id="small-letters" ng-model="ctrl.showSmall" ng-click="showSmallClck();"> Show small letters</label>
     <button>AutoPlay</button>
     
-  </div></div>
+    </div></div></div>
     <div id="alphabet">
       <div class="char ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
     </div>
       
     </div>
+
   <script>
 const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
-const aud = new Audio("https://azhar4114.github.io/AforApple.fun/alpha.m4a");
+const aud = new Audio("/alpha.m4a");
 const audTime = [{s:0.20, e:0.69}, {s:0.83,e:1.33}, {s:1.41,e:2.03}, {s:2.12,e:2.66}, {s:2.74,e:3.26}, {s:3.36,e:3.91}, {s:4.05,e:4.65}, {s:4.70,e:5.35}, {s:5.49,e:6.09}, {s:6.23,e:6.78}, {s:6.96,e:7.48}, {s:7.60,e:8.11}, {s:8.22,e:8.78}, {s:8.83,e:9.39}, {s:9.44,e:10.02}, {s:10.13,e:10.68}, {s:10.79,e:11.41}, {s:11.52,e:12.06}, {s:12.19,e:12.78}, {s:12.90,e:13.45}, {s:13.59,e:14.20}, {s:14.33,e:14.82}, {s:14.98,e:15.69}, {s:15.76,e:16.38}, {s:16.54,e:17.10}, {s:17.22,e:17.77}];
 var an=0;
 
