@@ -16,6 +16,23 @@
     grid-gap: 3vh 3vh;
 }
 
+	    input[type="checkbox"]  {
+    -webkit-appearance: none; /* Remove default checkbox styles */
+    -moz-appearance: none;
+    appearance: none;
+    width: 1.5vh; /* Adjust the width as needed */
+    height: 1.5vh; /* Adjust the height as needed */
+    border: 2px solid #999; /* Optional: Add a border */
+    border-radius: .5vh; /* Optional: Add rounded corners */
+    outline: none; /* Optional: Remove focus outline */
+    cursor: pointer;
+}
+
+	    input[type="checkbox"]:checked {
+    background-color: #007bff; /* Example background color for checked checkboxes */
+    border-color: #007bff; /* Example border color for checked checkboxes */
+}
+
 #controls, #controls div{
     display: grid;
     justify-content: center;
@@ -49,11 +66,11 @@
 }
 
 body {
-	background: linear-gradient(-45deg, #ee7752, #f27daa, #7dd7f7, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
-  margin:0;
+    background: linear-gradient(90deg, #ee7752, #f27daa, #7dd7f7, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    margin: 0;
 }
 
 @keyframes gradient {
@@ -98,8 +115,8 @@ nav {
 #header {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    justify-items: start;
-    align-items: end;
+    align-items: center;
+    justify-items: stretch;
 }
 
     </style>
