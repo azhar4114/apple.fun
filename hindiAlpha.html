@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	  <title>Alphabet Chart</title>
+    <style>
+     #alphabet{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
+    padding: 2vh 3vh;
+    grid-gap: 3vh 3vh;
+}
+
+	    input[type="checkbox"]  {
+    -webkit-appearance: none; /* Remove default checkbox styles */
+    -moz-appearance: none;
+    appearance: none;
+    width: 1.5vh; /* Adjust the width as needed */
+    height: 1.5vh; /* Adjust the height as needed */
+    border: 2px solid #999; /* Optional: Add a border */
+    border-radius: .5vh; /* Optional: Add rounded corners */
+    outline: none; /* Optional: Remove focus outline */
+    cursor: pointer;
+}
+
+	    input[type="checkbox"]:checked {
+    background-color: #007bff; /* Example background color for checked checkboxes */
+    border-color: #007bff; /* Example border color for checked checkboxes */
+}
+
+#controls, #controls div{
+    justify-content: center;
+  align-items: center;
+}
+
+#controls div{
+    padding: 1vh 1vh;
+    text-align: center;
+    color: white;
+}
+
+.char{
+    display: grid;
+    width: 18vh;
+    height: 16vh;
+    font-size: 7vh;
+    border: 0.2vh solid white;
+    align-content: center;
+    justify-content: center;
+    animation-duration: .3s;
+    box-shadow: 1vh 1vh 1vh 0.6vh #1111115e;
+    border-radius: 1vh;
+    cursor: pointer;
+    background: #ddca7eb3;
+}
+
+.clicked{
+  background:#bcf6bc;
+}
+
+body {
+    background: linear-gradient(90deg, #ee7752, #f27daa, #7dd7f7, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    margin: 0;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+ header {
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        h1 {
+    font-size: 3.3vh;
+    margin: 1vh 0;
+}
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+nav {
+            text-align: center;
+            margin-bottom: 1vh;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 2vh;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+  </head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl">
+   <div id="header"> <header>
+        <h1>Hindi Alphabet</h1>
+    <nav>
+            <a href="/">Goto Home</a>
+        </nav>
+    </header>
+  </div>
+    <div id="alphabet">
+      <div class="char ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div><span ng-if="l.c!=null">{{l.c}}</span><br ng-if="l.c==null"/></div></div>
+    </div>
+      
+    </div>
+
+  <script>
+const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
+const aud = new Audio("/alpha.m4a");
+const audTime = [{s:0.20, e:0.69}, {s:0.83,e:1.33}, {s:1.41,e:2.03}, {s:2.12,e:2.66}, {s:2.74,e:3.26}, {s:3.36,e:3.91}, {s:4.05,e:4.65}, {s:4.70,e:5.35}, {s:5.49,e:6.09}, {s:6.23,e:6.78}, {s:6.96,e:7.48}, {s:7.60,e:8.11}, {s:8.22,e:8.78}, {s:8.83,e:9.39}, {s:9.44,e:10.02}, {s:10.13,e:10.68}, {s:10.79,e:11.41}, {s:11.52,e:12.06}, {s:12.19,e:12.78}, {s:12.90,e:13.45}, {s:13.59,e:14.20}, {s:14.33,e:14.82}, {s:14.98,e:15.69}, {s:15.76,e:16.38}, {s:16.54,e:17.10}, {s:17.22,e:17.77}];
+var an=0;
+const conso= [{s:0, e:0, c:'अ'}, {s:0, e:0, c:'आ'}, {s:0, e:0, c:'इ'}, {s:0, e:0, c:'ई'}, {s:0, e:0, c:'उ'}, {s:0, e:0, c:'ऊ'}, {s:0, e:0, c:'ऋ'}, {s:0, e:0, c:'ए'}, {s:0, e:0, c:'ऐ'}, {s:0, e:0, c:'ओ'}, {s:0, e:0, c:'औ'}, {s:0, e:0, c:'अं'}, {s:0, e:0, c:'अः'}, {},
+{s:0, e:0, c:'क'}, {s:0, e:0, c:'ख'}, {s:0, e:0, c:'ग'}, {s:0, e:0, c:'घ'}, {s:0, e:0, c:'ङ'}, {},
+{s:0, e:0, c:'च'}, {s:0, e:0, c:'छ'}, {s:0, e:0, c:'ज'}, {s:0, e:0, c:'झ'}, {s:0, e:0, c:'ञ'}, {},
+{s:0, e:0, c:'ट'}, {s:0, e:0, c:'ठ'}, {s:0, e:0, c:'ड'}, {s:0, e:0, c:'ढ'}, {s:0, e:0, c:'ण'}, {},
+{s:0, e:0, c:'त'}, {s:0, e:0, c:'थ'}, {s:0, e:0, c:'द'}, {s:0, e:0, c:'ध'}, {s:0, e:0, c:'न'}, {},
+{s:0, e:0, c:'प'}, {s:0, e:0, c:'फ'}, {s:0, e:0, c:'ब'}, {s:0, e:0, c:'भ'}, {s:0, e:0, c:'म'}, {},
+{s:0, e:0, c:'य'}, {s:0, e:0, c:'र'}, {s:0, e:0, c:'ल'}, {s:0, e:0, c:'व'}, {s:0, e:0, c:'श'}, {s:0, e:0, c:'ष'}, {s:0, e:0, c:'स'}, {s:0, e:0, c:'ह'}, {},
+{s:0, e:0, c:'क्ष'}, {s:0, e:0, c:'त्र'}, {s:0, e:0, c:'ज्ञ'}];
+
+$(document).ready(function(){
+  
+ $(".char").mouseenter(function() {
+    $(this).addClass("animate__pulse");
+}).mouseleave(function() {
+    $(this).removeClass("animate__pulse").removeClass(anim[an]);
+});
+  
+  
+  
+  $(".char").click(function(){
+    console.log(anim[an],an, this);
+    $(this).addClass(anim[an]);
+    var ind = $(this).attr('data');
+    aud.currentTime = audTime[ind].s;
+    aud.play();
+    setTimeout(function(){
+      aud.pause();
+    }, (audTime[ind].e-audTime[ind].s)*1000);
+    setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
+                          an++;
+if(an>=anim.length)
+   an=0;
+    },500);
+      $(this).addClass("clicked");
+  })
+});
+
+var app = angular.module("newApp", []);
+
+app.controller('appCtrl', function($scope) {
+  $scope.ctrl = {showSmall:true, showCaps:true};
+  $scope.chars = [];
+  
+  $scope.showSmallClck = function(){
+    //$scope.aud.play();
+    if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+      $scope.ctrl.showCaps = true;
+  };
+  
+  $scope.populatePage = function(){
+    var i,c="",C="";
+    $scope.chars = conso;
+  }
+  $scope.populatePage(); 
+}); 
+  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</body>
+</html>
