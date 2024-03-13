@@ -8,10 +8,9 @@
     <style>
      div#alphabet{
     display: grid;
-    justify-items: center;
     align-items: center;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18vh, 20vh));
     padding: 2vh 3vh;
     grid-gap: 3vh 3vh;
 }
@@ -125,28 +124,28 @@ nav {
     </header>
   </div>
     <div id="alphabet">
-      <div class="char ng-cloak" ng-repeat="n in range(0,12)" data="{{$index}}"><div><span >{{chars[n]}}</span></div></div>
+      <div class="char ng-cloak" ng-repeat="n in range(0,12)" data="{{$index}}"><div><span >{{chars[n].c}}</span></div></div>
     </div>
     <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(13,17)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(13,17)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(18,22)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(18,22)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(23,27)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(23,27)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(28,32)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(28,32)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(33,37)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(33,37)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(38,42)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(38,42)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(43,45)" data="{{$index}}"><div><span>{{chars[n]}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(43,45)" data="{{$index}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       
     </div>
