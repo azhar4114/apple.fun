@@ -167,8 +167,11 @@ if(an>=anim.length)
    an=0;
     },500);
       $(this).addClass("clicked");
-      if($(".clicked").length==26 && !expl)
+      if($(".clicked").length==26 && !expl){
         explodeConfetti();
+        expl = true;
+      }
+        
   })
 });
 
