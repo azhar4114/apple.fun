@@ -139,7 +139,7 @@ nav {
 const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
 const aud = new Audio("/alpha.m4a");
 const audTime = [{s:0.20, e:0.69}, {s:0.83,e:1.33}, {s:1.41,e:2.03}, {s:2.12,e:2.66}, {s:2.74,e:3.26}, {s:3.36,e:3.91}, {s:4.05,e:4.65}, {s:4.70,e:5.35}, {s:5.49,e:6.09}, {s:6.23,e:6.78}, {s:6.96,e:7.48}, {s:7.60,e:8.11}, {s:8.22,e:8.78}, {s:8.83,e:9.39}, {s:9.44,e:10.02}, {s:10.13,e:10.68}, {s:10.79,e:11.41}, {s:11.52,e:12.06}, {s:12.19,e:12.78}, {s:12.90,e:13.45}, {s:13.59,e:14.20}, {s:14.33,e:14.82}, {s:14.98,e:15.69}, {s:15.76,e:16.38}, {s:16.54,e:17.10}, {s:17.22,e:17.77}];
-var an=0;
+var an=0, expl=false;
 
 $(document).ready(function(){
   
@@ -166,6 +166,8 @@ if(an>=anim.length)
    an=0;
     },500);
       $(this).addClass("clicked");
+      if($(".clicked").length==26 && !expl)
+        explodeConfetti();
   })
 });
 
@@ -192,6 +194,14 @@ app.controller('appCtrl', function($scope) {
   }
   $scope.populatePage(); 
 }); 
+function explodeConfetti() {
+  confetti({
+    particleCount: 1000,
+    spread: 300,
+    origin: { y: .5}
+  });
+}
+
   </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
