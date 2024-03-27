@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	  <title>Alphabet Chart</title>
+	  <title>Telugu Alphabet Chart</title>
     <style>
      div#alphabet{
     display: grid;
@@ -163,8 +163,8 @@ const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'�
 {c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
 {c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
 {c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
-const voices = speechSynthesis.getVoices();
-desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
+var voices = speechSynthesis.getVoices();
+var desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 $(document).ready(function(){
   
  $(".char").mouseenter(function() {
@@ -183,13 +183,10 @@ $(document).ready(function(){
     $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
     const utterance = new SpeechSynthesisUtterance();
-    
+    voices = speechSynthesis.getVoices();
     // Set the text and language for speech synthesis
     
-  
-
-// Find the desired voice
-desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
+    desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 
 // Set the desired voice
 utterance.voice = desiredVoice;
