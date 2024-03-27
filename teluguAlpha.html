@@ -163,7 +163,7 @@ const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'�
 {c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
 {c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
 {c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
-
+desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 $(document).ready(function(){
   
  $(".char").mouseenter(function() {
@@ -188,12 +188,12 @@ $(document).ready(function(){
   const voices = speechSynthesis.getVoices();
 
 // Find the desired voice
-const desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
+desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 
 // Set the desired voice
 utterance.voice = desiredVoice;
   utterance.pitch = 1;
-  utterance.rate = 1;
+  utterance.rate = 1.3;
     utterance.lang = 'hi'; // English language for IPA
     utterance.text = conso[ind].p;
     console.log(utterance);
