@@ -163,6 +163,7 @@ const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'�
 {c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
 {c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
 {c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
+const voices = speechSynthesis.getVoices();
 desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 $(document).ready(function(){
   
@@ -185,7 +186,7 @@ $(document).ready(function(){
     
     // Set the text and language for speech synthesis
     
-  const voices = speechSynthesis.getVoices();
+  
 
 // Find the desired voice
 desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
