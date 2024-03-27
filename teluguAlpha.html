@@ -195,6 +195,7 @@ utterance.voice = desiredVoice;
     $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
     utterance.text = conso[ind].p;
+    console.log(utterance);
     speechSynthesis.speak(utterance);
     setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
                           an++;
