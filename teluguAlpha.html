@@ -172,7 +172,16 @@ $(document).ready(function(){
     $(this).removeClass("animate__pulse").removeClass(anim[an]);
 });
   
-const utterance = new SpeechSynthesisUtterance();
+
+    // Speak the text
+    
+  
+  
+  $(".char").click(function(){
+    console.log(anim[an],an, this);
+    $(this).addClass(anim[an]);
+    var ind = $(this).attr('data');
+    const utterance = new SpeechSynthesisUtterance();
     
     // Set the text and language for speech synthesis
     
@@ -186,14 +195,6 @@ utterance.voice = desiredVoice;
   utterance.pitch = 1;
   utterance.rate = 1;
     utterance.lang = 'hi'; // English language for IPA
-    // Speak the text
-    
-  
-  
-  $(".char").click(function(){
-    console.log(anim[an],an, this);
-    $(this).addClass(anim[an]);
-    var ind = $(this).attr('data');
     utterance.text = conso[ind].p;
     console.log(utterance);
     speechSynthesis.speak(utterance);
@@ -203,7 +204,7 @@ if(an>=anim.length)
    an=0;
     },500);
       $(this).addClass("clicked");
-      if($(".clicked").length==49 && !expl){
+      if($(".clicked").length==conso.length && !expl){
         explodeConfetti();
         expl = true;
       }
