@@ -125,25 +125,25 @@ nav {
     </header>
   </div>
     <div id="alphabet">
-      <div class="char ng-cloak" ng-repeat="n in range(0,12)" data="{{n}}"><div><span >{{chars[n].c}}</span></div></div>
+      <div class="char ng-cloak" ng-repeat="n in range(0,15)" data="{{n}}"><div><span >{{chars[n].c}}</span></div></div>
     </div>
     <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(13,17)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(16,20)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(18,22)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(21,25)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(23,27)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(26,30)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(28,32)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(31,35)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(33,37)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(36,40)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(38,45)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="char ng-cloak" ng-repeat="n in range(41,45)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
         <div class="char ng-cloak" ng-repeat="n in range(46,48)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
@@ -154,16 +154,15 @@ nav {
 
   <script>
 const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
-const aud = new Audio("/Hindi.m4a");
 var an=0, expl=false;
-const conso= [{s:1.13, e:1.48, c:'अ',C:''}, {s:1.71, e:2.35, c:'आ'}, {s:2.78, e:3.12, c:'इ'}, {s:3.59, e:4.21, c:'ई'}, {s:4.72, e:5.04, c:'उ'}, {s:5.65, e:6.28, c:'ऊ'}, {s:6.79, e:7.23, c:'ऋ'}, {s:7.96, e:8.29, c:'ए'}, {s:8.71, e:9.31, c:'ऐ'}, {s:9.97, e:10.34, c:'ओ'}, {s:10.72, e:11.33, c:'औ'}, {s:11.97, e:12.39, c:'अं'}, {s:12.90, e:13.48, c:'अः'}, 
-{s:14.78, e:15.15, c:'क'}, {s:15.43, e:16.04, c:'ख'}, {s:16.46, e:17.09, c:'ग'}, {s:17.31, e:17.97, c:'घ'}, {s:18.52, e:19.08, c:'ङ'},
-{s:20.06, e:20.53, c:'च'}, {s:20.77, e:21.48, c:'छ'}, {s:21.84, e:22.57, c:'ज'}, {s:22.72, e:23.42, c:'झ'}, {s:23.85, e:24.39, c:'ञ'}, 
-{s:25.5, e:25.92, c:'ट'}, {s:26.17, e:26.78, c:'ठ'}, {s:27.12, e:27.79, c:'ड'}, {s:27.86, e:28.59, c:'ढ'}, {s:29.30, e:29.90, c:'ण'}, 
-{s:30.64, e:31.1, c:'त'}, {s:31.47, e:32.15, c:'थ'}, {s:32.42, e:33.03, c:'द'}, {s:33.24, e:34.03, c:'ध'}, {s:34.57, e:35.08, c:'न'}, 
-{s:36.07, e:36.55, c:'प'}, {s:36.97, e:37.73, c:'फ'}, {s:38.08, e:38.84, c:'ब'}, {s:38.98, e:39.79, c:'भ'}, {s:40.25, e:40.76, c:'म'}, 
-{s:41.71, e:42.42, c:'य'}, {s:42.62, e:43.32, c:'र'}, {s:43.61, e:44.23, c:'ल'}, {s:44.67, e:45.28, c:'व'}, {s:45.65, e:46.45, c:'श'}, {s:47.19, e:47.92, c:'ष'}, {s:48.34, e:49.15, c:'स'}, {s:49.49, e:50.09, c:'ह'}, 
-{s:50.75, e:51.55, c:'क्ष'}, {s:51.93, e:52.49, c:'त्र'}, {s:52.82, e:53.54, c:'ज्ञ'}];
+const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'ఈ', p:'ईई'}, {c:'ఉ', p:'उ'}, {c:'ఊ', p:'उउ'}, {c:'ఋ', p:'रु'}, {c:'ౠ', p:'रू'}, {c:'ఎ', p:'ए'}, {c:'ఏ', p:'एए'}, {c:'ఐ', p:'i'}, {c:'ఒ', p:'o'}, {c:'ఓ', p:'oo'}, {c:'ఔ',p:'अउ'}, {c:'అం', p:'अम'}, {c:'అః', p:'अहा'}, 
+{c:'క', p:'क'}, {c:'ఖ', p:'ख'}, {c:'గ', p:'ग'}, {c:'ఘ', p:'घ'}, {c:'ఙ', p:'na'}, 
+{c:'చ', p:'च'}, {c:'ఛ', p:'छ'}, {c:'జ', p:'ज'}, {c:'ఝ', p:'झ'}, {c:'ఞ', p:'na'}, 
+{c:'ట', p:'ट'}, {c:'ఠ', p:'ठ'}, {c:'డ', p:'ड'}, {c:'ఢ', p:'ढ'}, {c:'ణ', p:'ण'}, 
+{c:'త', p:'त'}, {c:'థ', p:'थ'}, {c:'ద', p:'द'}, {c:'ధ', p:'ध'}, {c:'న', p:'न'}, 
+{c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
+{c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
+{c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
 
 $(document).ready(function(){
   
@@ -173,17 +172,30 @@ $(document).ready(function(){
     $(this).removeClass("animate__pulse").removeClass(anim[an]);
 });
   
+const utterance = new SpeechSynthesisUtterance();
+    
+    // Set the text and language for speech synthesis
+    
+  const voices = speechSynthesis.getVoices();
+
+// Find the desired voice
+const desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
+
+// Set the desired voice
+utterance.voice = desiredVoice;
+  utterance.pitch = 1;
+  utterance.rate = 1;
+    utterance.lang = 'hi'; // English language for IPA
+    // Speak the text
+    
   
   
   $(".char").click(function(){
     console.log(anim[an],an, this);
     $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
-    aud.currentTime = conso[ind].s;
-    aud.play();
-    setTimeout(function(){
-      aud.pause();
-    }, (conso[ind].e-conso[ind].s)*1000);
+    utterance.text = conso[ind].p;
+    speechSynthesis.speak(utterance);
     setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
                           an++;
 if(an>=anim.length)
