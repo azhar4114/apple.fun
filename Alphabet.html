@@ -226,17 +226,12 @@ $(document).ready(function(){
   
   
   $(".button").click(function(){
-   // $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
     aud.currentTime = audTime[ind].s;
     aud.play();
     setTimeout(function(){
       aud.pause();
     }, (audTime[ind].e-audTime[ind].s)*1000);
-                          an++;
-if(an>=anim.length)
-   an=0;
-    },500);
       $(this).addClass("clicked");
       if($(".clicked").length==26 && !expl){
         explodeConfetti();
