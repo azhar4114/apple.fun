@@ -17,6 +17,31 @@
     grid-gap: 3vh 3vh;
 }
 
+	    .header {
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.header a {
+  font-size: 1em;
+  color: #ff6f61;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
 	    input[type="checkbox"]  {
     -webkit-appearance: none; /* Remove default checkbox styles */
     -moz-appearance: none;
@@ -175,7 +200,7 @@ nav {
   </div>
   <div class="toggle-buttons">
     <button class="toggle-button" ng-disabled="!ctrl.showSmall" ng-click="ctrl.showCaps=!ctrl.showCaps" ng-class="{'active':ctrl.showCaps}">Show capital letters</button>
-    <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showsmall}">Show small letters</button>
+    <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showSmall}">Show small letters</button>
   </div>
     <div id="alphabet">
       <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
@@ -230,6 +255,7 @@ app.controller('appCtrl', function($scope) {
   
   $scope.showSmallClck = function(){
     //$scope.aud.play();
+	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
