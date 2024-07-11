@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Coloring Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-image: url('nature1.jpeg'); /* Replace with your chosen background URL */
+    background-size: cover;
+    background-position: center;
+  }
+  canvas {
+    border: 1px solid #000;
+    margin-top: 20px;
+    cursor: url('https://i.imgur.com/7bh5G9H.png') 0 32, auto; /* Custom cursor */
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background for better visibility */
+  }
+  .controls {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .controls button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  .color-picker, .file-input {
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<h1>Interactive Coloring Page</h1>
+<p>Upload an image and start coloring:</p>
+<div class="controls">
+  <input type="color" id="colorPicker" value="#ff0000" class="color-picker">
+  <button onclick="clearCanvas()">Clear</button>
+  <input type="file" id="imageLoader" name="imageLoader" class="file-input">
+  <button onclick="downloadCanvas()">Download</button>
+</div>
+<canvas id="coloringCanvas" width="400" height="400"></canvas>
+
+<script>
+  const canvas = document.getElementById('coloringCanvas');
+  const ctx = canvas.getContext('2d');
+  const colorPicker = document.getElementById('colorPicker');
+  const imageLoader = document.getElementById('imageLoader');
+  let drawing = false;
+  let img = new Image();
+
+  imageLoader.addEventListener('change', handleImage, false);
+
+  function handleImage(e) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      img.onload = function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+      img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
+
+  canvas.addEventListener('mousedown', () => drawing = true);
+  canvas.addEventListener('mouseup', () => {
+    drawing = false;
+    ctx.beginPath();
+  });
+  canvas.addEventListener('mouseout', () => drawing = false);
+  canvas.addEventListener('mousemove', draw);
+
+  function draw(event) {
+    if (!drawing) return;
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  }
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (img.src) {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  function downloadCanvas() {
+    const link = document.createElement('a');
+    link.download = 'drawing.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+</script>
+</body>
+</html>
