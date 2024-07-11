@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+pp67<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -38,6 +38,55 @@
     justify-content: center;
   align-items: center;
 }
+	    .button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+  min-width: 80px;
+  position: relative;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border: 4px solid #ff6f61;
+}
+
+.button:active,
+.button.clicked {
+  border: 4px solid #4caf50;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.toggle-button {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-button.active {
+  background-color: #ff6f61;
+  color: #fff;
+}
+
 
 #controls div{
     padding: 1vh 1vh;
@@ -71,6 +120,7 @@ body {
     height: 100vh;
     margin: 0;
     background-position: center;
+	font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 @keyframes gradient {
@@ -119,20 +169,16 @@ nav {
 <body ng-app="newApp">
   
   <div ng-controller="appCtrl">
-   <div id="header"> <header>
-        <h1>Alphabet Chart</h1>
-    <nav>
-            <a href="/">Goto Home</a>
-        </nav>
-    </header>
-  <div id="controls"><div>
-    <label style="font-size:2.4vh;font-weight:bold;"><input type="checkbox" id="cap-letters" ng-model="ctrl.showCaps" ng-disabled="!ctrl.showSmall"> Show capital letters</label> 
-    <label style="font-size:2.4vh;font-weight:bold;"><input type="checkbox" id="small-letters" ng-model="ctrl.showSmall" ng-click="showSmallClck();"> Show small letters</label>
-    
-    
-    </div></div></div>
+   <div class="header">
+    <h1>Alphabet Chart</h1>
+    <a href="home.html">Go to Home</a>
+  </div>
+  <div class="toggle-buttons">
+    <button class="toggle-button" ng-disabled="!ctrl.showSmall" ng-click="ctrl.showCaps=!ctrl.showCaps" ng-class="{'active':ctrl.showCaps}">Show capital letters</button>
+    <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showsmall}">Show small letters</button>
+  </div>
     <div id="alphabet">
-      <div class="char ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
+      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
     </div>
       
     </div>
@@ -153,7 +199,7 @@ $(document).ready(function(){
   
   
   
-  $(".char").click(function(){
+  $(".button").click(function(){
     console.log(anim[an],an, this);
     $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
