@@ -105,6 +105,7 @@
   margin: 0 1vh;
   cursor: pointer;
   transition: background-color 0.3s;
+font-size: 1.7vh;
 }
 
 .toggle-button.active {
@@ -225,15 +226,13 @@ $(document).ready(function(){
   
   
   $(".button").click(function(){
-    console.log(anim[an],an, this);
-    $(this).addClass(anim[an]);
+   // $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
     aud.currentTime = audTime[ind].s;
     aud.play();
     setTimeout(function(){
       aud.pause();
     }, (audTime[ind].e-audTime[ind].s)*1000);
-    setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
                           an++;
 if(an>=anim.length)
    an=0;
@@ -273,7 +272,7 @@ app.controller('appCtrl', function($scope) {
 }); 
 function explodeConfetti() {
   confetti({
-    particleCount: 1000,
+    particleCount: 300,
     spread: 300,
     origin: { y: .5}
   });
