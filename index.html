@@ -66,8 +66,21 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-image: url(clouds1.jpeg);
-    background-size: cover;
+    background-image: url(clouds2.jpeg);
+    background-size: 130% 120%;
+    animation: gradient 50s ease infinite;
+}
+
+    @keyframes gradient {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
 }
 
         header {
