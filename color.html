@@ -13,13 +13,53 @@
     margin: 0;
     padding: 20px;
     background-image: url('nature1.jpeg'); /* Replace with your chosen background URL */
-    background-size: cover;
+    
+    background-size: 130% 120%;
+    animation: gradient 50s ease infinite;
+    height: 100vh;
+    margin: 0;
     background-position: center;
+	font-family: 'Comic Sans MS', cursive, sans-serif;
   }
+
+  @keyframes gradient {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}
+  .header {
+  padding: 2vh;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+
+.header h1 {
+  font-size: 5vh;
+  margin: 0;
+}
+
+.header a {
+  font-size: 2vh;
+  color: #ff6f61;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1vh;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
   canvas {
     border: 1px solid #000;
     margin-top: 20px;
-    cursor: url('https://i.imgur.com/7bh5G9H.png') 0 32, auto; /* Custom cursor */
     background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background for better visibility */
   }
   .controls {
@@ -27,6 +67,7 @@
     background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
     padding: 10px;
     border-radius: 10px;
+    text-align: center;
   }
   .controls button {
     margin-right: 10px;
@@ -34,18 +75,24 @@
     font-size: 16px;
   }
   .color-picker, .file-input {
-    margin-top: 10px;
+    margin-top: 15px 0;
   }
 </style>
 </head>
 <body>
-<h1>Interactive Coloring Page</h1>
-<p>Upload an image and start coloring:</p>
+
+  <div class="header">
+    <h1>Interactive Coloring Page</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+<h1></h1>
+
 <div class="controls">
   <input type="color" id="colorPicker" value="#ff0000" class="color-picker">
   <button onclick="clearCanvas()">Clear</button>
   <input type="file" id="imageLoader" name="imageLoader" class="file-input">
   <button onclick="downloadCanvas()">Download</button>
+  <p>Upload an image and start coloring</p>
 </div>
 <canvas id="coloringCanvas" width="400" height="400"></canvas>
 
@@ -71,28 +118,42 @@
     reader.readAsDataURL(e.target.files[0]);
   }
 
-  canvas.addEventListener('mousedown', () => drawing = true);
-  canvas.addEventListener('mouseup', () => {
+  function startDrawing(event) {
+    drawing = true;
+    draw(event);
+  }
+
+  function stopDrawing() {
     drawing = false;
     ctx.beginPath();
-  });
-  canvas.addEventListener('mouseout', () => drawing = false);
-  canvas.addEventListener('mousemove', draw);
+  }
 
   function draw(event) {
     if (!drawing) return;
+
     ctx.strokeStyle = colorPicker.value;
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
 
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    let x, y;
+
+    if (event.type.includes('touch')) {
+      const touch = event.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      x = touch.clientX - rect.left;
+      y = touch.clientY - rect.top;
+    } else {
+      const rect = canvas.getBoundingClientRect();
+      x = event.clientX - rect.left;
+      y = event.clientY - rect.top;
+    }
 
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
+
+    event.preventDefault();
   }
 
   function clearCanvas() {
@@ -108,6 +169,16 @@
     link.href = canvas.toDataURL();
     link.click();
   }
+
+  canvas.addEventListener('mousedown', startDrawing);
+  canvas.addEventListener('mouseup', stopDrawing);
+  canvas.addEventListener('mouseout', stopDrawing);
+  canvas.addEventListener('mousemove', draw);
+
+  canvas.addEventListener('touchstart', startDrawing);
+  canvas.addEventListener('touchend', stopDrawing);
+  canvas.addEventListener('touchcancel', stopDrawing);
+  canvas.addEventListener('touchmove', draw);
 </script>
 </body>
 </html>
