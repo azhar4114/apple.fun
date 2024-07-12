@@ -151,7 +151,7 @@ body {
     height: 100vh;
     margin: 0;
     background-position: center;
-	font-family: 'Comic Sans MS', cursive, sans-serif;
+	font-family: Arial, sans-serif;
 }
 
 @keyframes gradient {
@@ -210,7 +210,7 @@ nav {
     <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showSmall}">Show small letters</button>
   </div>
     <div id="alphabet">
-      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}" ng-click="read(l,$index)" ng-class="{'clicked':l.clicked}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
+      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
     </div>
       
     </div>
@@ -312,10 +312,6 @@ app.controller('appCtrl', function($scope) {
     }
   }
   $scope.populatePage();
-  $scope.autoPlay = function(){
-	  $scope.ctrl.busyPlay = true;
-	  angular.element(".button")
-  }
 }); 
 function explodeConfetti() {
   confetti({
