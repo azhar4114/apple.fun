@@ -268,6 +268,7 @@ $(document).ready(function(){
       aud.pause();
     }, (audTime[ind].e-audTime[ind].s)*1000);
       $(this).addClass("clicked");
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
       if($(".clicked").length==26 && !expl){
         explodeConfetti();
         expl = true;
