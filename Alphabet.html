@@ -247,7 +247,7 @@ $(document).ready(function(){
 		  $(".autoplay").removeClass("autoplay");
 		  $(bt[i]).addClass("autoplay");
 		  $(bt[i++]).click();
-		  if(i>25){
+		  if(i>=25){
 			  setTimeout(function(){
 				  	$(this).html("Play");
 					clearInterval(intv);
@@ -312,6 +312,7 @@ app.controller('appCtrl', function($scope) {
     }
   }
   $scope.populatePage(); 
+  $(".toggle-button.play").click();
   $scope.autoPlay = function(){
 	  $scope.ctrl.busyPlay = true;
 	  angular.element(".button")
