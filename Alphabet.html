@@ -232,6 +232,7 @@ $(document).ready(function(){
 	
   $(".toggle-button.play").click(function(e){
 	  var i=0;
+	  var bt = $(".button");
 	  if(intv!=null){
 	  	$(this).html("Play");
 		clearInterval(intv);
@@ -244,8 +245,8 @@ $(document).ready(function(){
 	  $(this).html("Stop");
 	  intv = setInterval(function(){
 		  $(".autoplay").removeClass("autoplay");
-		  $(".button")[i++].addClass("autoplay");
-		  $(".button")[i].click();
+		  $(bt[i++]).addClass("autoplay");
+		  $(bt[i]).click();
 		  if(i>25){
 			  SetTimeout(function(){
 				  	$(this).html("Play");
