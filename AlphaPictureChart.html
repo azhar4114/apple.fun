@@ -67,7 +67,7 @@
 	    .button {
   background-color: rgba(255, 255, 255, 0.9);
   color: #333;
-  padding: 2vh 3vh;
+  padding: 2vh 11vh;
   border-radius: 1vh;
   box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.2);
   margin: 1vh;
@@ -278,7 +278,7 @@ font-size: 1.7vh;
 							intv = null;
 					 },1000);
 			  	  }
-			  },1200);
+			  },2000);
 			  
 		  });
               
@@ -293,6 +293,8 @@ font-size: 1.7vh;
                 }, (audTime[ind].e-audTime[ind].s)*1000);
                 
                   $(this).addClass("clicked");
+		  this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
                   if($(".clicked").length==26 && !expl){
                     explodeConfetti();
                     expl = true;
