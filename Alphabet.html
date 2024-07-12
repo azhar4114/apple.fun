@@ -312,9 +312,6 @@ app.controller('appCtrl', function($scope) {
     }
   }
   $scope.populatePage();
-  setTimeout(function(){
-    $(".toggle-button.play").click();
-  },1000);
   $scope.autoPlay = function(){
 	  $scope.ctrl.busyPlay = true;
 	  angular.element(".button")
