@@ -247,12 +247,12 @@ $(document).ready(function(){
 		  $(".autoplay").removeClass("autoplay");
 		  $(bt[i]).addClass("autoplay");
 		  $(bt[i++]).click();
-		  if(i>=25){
+		  if(i>25){
 			  setTimeout(function(){
-				  	$(this).html("Play");
+				  	$(".toggle-button.play").html("Play");
 					clearInterval(intv);
 					$(".autoplay").removeClass("autoplay");
-					$(this).addClass("active");
+					$(".toggle-button.play").addClass("active");
 					intv = null;
 			 },1000);
 	  	  }
@@ -311,8 +311,10 @@ app.controller('appCtrl', function($scope) {
     $scope.chars.push([C,c]);
     }
   }
-  $scope.populatePage(); 
-  $(".toggle-button.play").click();
+  $scope.populatePage();
+  setTimeout(function(){
+    $(".toggle-button.play").click();
+  },1000);
   $scope.autoPlay = function(){
 	  $scope.ctrl.busyPlay = true;
 	  angular.element(".button")
