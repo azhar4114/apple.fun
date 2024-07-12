@@ -14,7 +14,6 @@
     padding: 30px;
     border-radius: 10px;
     display: inline-block;
-    width: 320px;
     align-content: center;
 }
         .card-content {
@@ -58,8 +57,10 @@
 }
 
 .container{
-  display:block;
-  padding:3vh;
+    display: grid;
+    padding: 3vh;
+    grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
+    padding-bottom: 20vh;
 }
 
 
@@ -148,8 +149,8 @@ body {
     </div>
     <div class="card">
         <div class="card-content">
-            <h2 class="card-title">हिंदी वर्णमाला</h2>
-            <p class="card-description">रंगीन चित्रों की यात्रा</p>
+            <h2 class="card-title">हिंदी वर्णमाला चार्ट</h2>
+            <p class="card-description">रंगीन चित्रों की यात्रा: हिंदी वर्णमाला सीखें और सिखाएं</p>
             <a href="/hindiAlpha.html" class="btn">Learn More</a>
         </div>
     </div>
