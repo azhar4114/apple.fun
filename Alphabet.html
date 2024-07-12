@@ -89,6 +89,11 @@
 .button.clicked {
   border: 0.4vh solid #4caf50;
 }
+	    .button.autoplay{
+		border: 0.5vh solid #9861ff;
+		transform: scale(1.09);
+	        box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
+	    }
 
 .toggle-buttons {
   display: flex;
@@ -200,11 +205,12 @@ nav {
     <a href="index.html">Go to Home</a>
   </div>
   <div class="toggle-buttons">
+   <button class="toggle-button play active">Play</button>
     <button class="toggle-button" ng-disabled="!ctrl.showSmall" ng-click="ctrl.showCaps=!ctrl.showCaps" ng-class="{'active':ctrl.showCaps}">Show capital letters</button>
     <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showSmall}">Show small letters</button>
   </div>
     <div id="alphabet">
-      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
+      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}" ng-click="read(l,$index)" ng-class="{'clicked':l.clicked}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
     </div>
       
     </div>
@@ -222,8 +228,36 @@ $(document).ready(function(){
 }).mouseleave(function() {
     $(this).removeClass("animate__pulse").removeClass(anim[an]);
 });
-  
-  
+  var intv;
+	
+  $(".toggle-button.play").click(function(e){
+	  var i=0;
+	  if(intv!=null){
+	  	$(this).html("Play");
+		clearInterval(intv);
+		$(".autoplay").removeClass("autoplay");
+		$(this).addClass("active");
+		intv = null;
+		return;
+	  } 
+	  $(this).removeClass("active");
+	  $(this).html("Stop");
+	  intv = setInterval(function(){
+		  $(".autoplay").removeClass("autoplay");
+		  $(".button")[i++].addClass("autoplay");
+		  $(".button")[i].click();
+		  if(i>25){
+			  SetTimeout(function(){
+				  	$(this).html("Play");
+					clearInterval(intv);
+					$(".autoplay").removeClass("autoplay");
+					$(this).addClass("active");
+					intv = null;
+			 },1000);
+	  	  }
+	  },1200);
+	  
+  });
   
   $(".button").click(function(){
     var ind = $(this).attr('data');
@@ -244,7 +278,7 @@ $(document).ready(function(){
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
-  $scope.ctrl = {showSmall:true, showCaps:true};
+  $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
   $scope.chars = [];
   
   $scope.showSmallClck = function(){
@@ -253,6 +287,19 @@ app.controller('appCtrl', function($scope) {
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
+
+	/*$scope.read = function(l, ind){
+    	    aud.currentTime = audTime[ind].s;
+	    aud.play();
+	    setTimeout(function(){
+	      aud.pause();
+	    }, (audTime[ind].e-audTime[ind].s)*1000);
+	      
+	      if($(".clicked").length==26 && !expl){
+	        explodeConfetti();
+	        expl = true;
+	      }
+	}*/
   
   $scope.populatePage = function(){
     var i,c="",C="";
@@ -264,6 +311,10 @@ app.controller('appCtrl', function($scope) {
     }
   }
   $scope.populatePage(); 
+  $scope.autoPlay = function(){
+	  $scope.ctrl.busyPlay = true;
+	  angular.element(".button")
+  }
 }); 
 function explodeConfetti() {
   confetti({
