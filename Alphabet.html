@@ -245,10 +245,10 @@ $(document).ready(function(){
 	  $(this).html("Stop");
 	  intv = setInterval(function(){
 		  $(".autoplay").removeClass("autoplay");
-		  $(bt[i++]).addClass("autoplay");
-		  $(bt[i]).click();
+		  $(bt[i]).addClass("autoplay");
+		  $(bt[i++]).click();
 		  if(i>25){
-			  SetTimeout(function(){
+			  setTimeout(function(){
 				  	$(this).html("Play");
 					clearInterval(intv);
 					$(".autoplay").removeClass("autoplay");
