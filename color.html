@@ -77,6 +77,18 @@
   .color-picker, .file-input {
     margin: 15px 0;
   }
+
+.image-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .image-selection img {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
@@ -94,7 +106,20 @@
   <p>Upload an image and start coloring</p>
 </div>
 <canvas id="coloringCanvas" width="400" height="400"></canvas>
-
+<div class="image-selection">
+  <img src="apple.jpeg" onclick="loadImage(this.src)" alt="Apple">
+  <img src="car1.jpeg" onclick="loadImage(this.src)" alt="Car">
+  <img src="car2.jpeg" onclick="loadImage(this.src)" alt="Car">
+  <img src="carrot.jpeg" onclick="loadImage(this.src)" alt="Carrot">
+  <img src="flower1.jpeg" onclick="loadImage(this.src)" alt="Flower">
+  <img src="house1.jpeg" onclick="loadImage(this.src)" alt="House">
+  <img src="house2.jpeg" onclick="loadImage(this.src)" alt="House">
+  <img src="house3.jpeg" onclick="loadImage(this.src)" alt="House">
+  <img src="orange.jpeg" onclick="loadImage(this.src)" alt="Orange">
+  <img src="pumpkin.jpeg" onclick="loadImage(this.src)" alt="Pumpkin">
+	<img src="strawberry.jpeg" onclick="loadImage(this.src)" alt="Strawberry">
+	<img src="tomato1.jpeg" onclick="loadImage(this.src)" alt="Tomato">
+</div>
 <script>
   const canvas = document.getElementById('coloringCanvas');
   const ctx = canvas.getContext('2d');
@@ -120,6 +145,14 @@
   function startDrawing(event) {
     drawing = true;
     draw(event);
+  }
+
+function loadImage(src) {
+    img.src = src;
+    img.onload = function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
   }
 
   function stopDrawing() {
