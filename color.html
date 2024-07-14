@@ -103,10 +103,10 @@
   <button onclick="clearCanvas()">Clear</button>
   <input type="file" id="imageLoader" name="imageLoader" class="file-input">
   <button onclick="downloadCanvas()">Download</button>
-  <p>Upload an image and start coloring</p>
+  <p>Upload an image or pick an image and start coloring</p>
 </div>
-<canvas id="coloringCanvas" width="400" height="400"></canvas>
 <div class="image-selection">
+	<img src="a-apple.jpeg" onclick="loadImage(this.src)" alt="A Apple">
   <img src="apple.jpeg" onclick="loadImage(this.src)" alt="Apple">
   <img src="car1.jpeg" onclick="loadImage(this.src)" alt="Car">
   <img src="car2.jpeg" onclick="loadImage(this.src)" alt="Car">
@@ -120,6 +120,8 @@
 	<img src="strawberry.jpeg" onclick="loadImage(this.src)" alt="Strawberry">
 	<img src="tomato1.jpeg" onclick="loadImage(this.src)" alt="Tomato">
 </div>
+<canvas id="coloringCanvas" width="400" height="400"></canvas>
+
 <script>
   const canvas = document.getElementById('coloringCanvas');
   const ctx = canvas.getContext('2d');
