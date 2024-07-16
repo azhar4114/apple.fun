@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	  <title>Alphabet Chart</title>
+    <style>
+      .header {
+  padding: 2vh;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+
+.header h1 {
+  font-size: 5vh;
+  margin: 0;
+}
+
+.header a {
+  font-size: 2vh;
+  color: #ff6f61;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1vh;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+      #controls, #controls div{
+    justify-content: center;
+  align-items: center;
+}
+	    .button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 2vh 3vh;
+  border-radius: 1vh;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.2);
+  margin: 1vh;
+  font-size: 4vh;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+  min-width: 10vh;
+  position: relative;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
+  border: 0.4vh solid #ff6f61;
+}
+
+.button:active,
+.button.clicked {
+  border: 0.4vh solid #4caf50;
+}
+	    .button.autoplay{
+		border: 0.5vh solid #9861ff;
+		transform: scale(1.09);
+	        box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
+	    }
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 2vh 0;
+}
+
+.toggle-button {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 1vh 2vh;
+  border: none;
+  border-radius: 0.5vh;
+  margin: 0 1vh;
+  cursor: pointer;
+  transition: background-color 0.3s;
+font-size: 1.7vh;
+}
+
+.toggle-button.active {
+  background-color: #ff6f61;
+  color: #fff;
+}
+      body {
+    background-image: url(flowersbg.jpeg);
+    background-size: 130% 120%;
+    animation: gradient 50s ease infinite;
+    height: 100vh;
+    margin: 0;
+    background-position: center;
+	font-family: Arial, sans-serif;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}
+
+ header {
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        h1 {
+    font-size: 3.3vh;
+    margin: 1vh 0;
+}
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+nav {
+            text-align: center;
+            margin-bottom: 1vh;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 2vh;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+      canvas {
+    border: 1px solid black;
+    background-color: #fff;
+    margin-top: 10px;
+  }
+      h1 {
+    margin-bottom: 20px;
+  }
+  .game {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+  }
+  .game h2 {
+    margin-bottom: 10px;
+  }
+    </style>
+  </head>
+  <body>
+    <body ng-app="newApp">
+  
+  <div ng-controller="appCtrl">
+   <div class="header">
+    <h1>Letter Tracking</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+  <div class="toggle-buttons">
+   <button class="toggle-button active" ng-class="{'active':ctrl.eng}" ng-click="setLang('eng')">English</button>
+    <button class="toggle-button active" ng-class="{'active':ctrl.hin}" ng-click="setLang('hin')">Hindi</button>
+    <button class="toggle-button active" ng-class="{'active':ctrl.tel}" ng-click="setLang('tel')">Telugu</button>
+  </div>
+    <div class="game">
+      <div id="english" ng-show="ctrl.eng">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.el)" ng-value="ctrl.el">
+      <option value="">Select a letter</option>
+      <option value="{{c}}" ng-repeat="c in chars">{{c}}</option>
+    </select>
+      </div>
+      <div id="hindi" ng-show="ctrl.hin">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.hl)" ng-value="ctrl.hl">
+      <option value="">Select a letter</option>
+      <option value="{{c.c}}" ng-repeat="c in hind">{{c.c}}</option>
+    </select>
+      </div>
+      <div id="telugu" ng-show="ctrl.tel">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.tl)" ng-value="ctrl.tl">
+      <option value="">Select a letter</option>
+      <option value="{{c.c}}" ng-repeat="c in telu">{{c.c}}</option>
+    </select>
+      </div>
+      <canvas id="tracingCanvas" width="400" height="400"></canvas>
+    </div>
+  </body>
+    <script>
+      var app = angular.module("newApp", []);
+
+      app.controller('appCtrl', function($scope) {
+        $scope.ctrl = {eng:true, hin:false, tel:false};
+        $scope.hind= [{s:1.13, e:1.48, c:'अ',C:''}, {s:1.71, e:2.35, c:'आ'}, {s:2.78, e:3.12, c:'इ'}, {s:3.59, e:4.21, c:'ई'}, {s:4.72, e:5.04, c:'उ'}, {s:5.65, e:6.28, c:'ऊ'}, {s:6.79, e:7.23, c:'ऋ'}, {s:7.96, e:8.29, c:'ए'}, {s:8.71, e:9.31, c:'ऐ'}, {s:9.97, e:10.34, c:'ओ'}, {s:10.72, e:11.33, c:'औ'}, {s:11.97, e:12.39, c:'अं'}, {s:12.90, e:13.48, c:'अः'}, 
+{s:14.78, e:15.15, c:'क'}, {s:15.43, e:16.04, c:'ख'}, {s:16.46, e:17.09, c:'ग'}, {s:17.31, e:17.97, c:'घ'}, {s:18.52, e:19.08, c:'ङ'},
+{s:20.06, e:20.53, c:'च'}, {s:20.77, e:21.48, c:'छ'}, {s:21.84, e:22.57, c:'ज'}, {s:22.72, e:23.42, c:'झ'}, {s:23.85, e:24.39, c:'ञ'}, 
+{s:25.5, e:25.92, c:'ट'}, {s:26.17, e:26.78, c:'ठ'}, {s:27.12, e:27.79, c:'ड'}, {s:27.86, e:28.59, c:'ढ'}, {s:29.30, e:29.90, c:'ण'}, 
+{s:30.64, e:31.1, c:'त'}, {s:31.47, e:32.15, c:'थ'}, {s:32.42, e:33.03, c:'द'}, {s:33.24, e:34.03, c:'ध'}, {s:34.57, e:35.08, c:'न'}, 
+{s:36.07, e:36.55, c:'प'}, {s:36.97, e:37.73, c:'फ'}, {s:38.08, e:38.84, c:'ब'}, {s:38.98, e:39.79, c:'भ'}, {s:40.25, e:40.76, c:'म'}, 
+{s:41.71, e:42.42, c:'य'}, {s:42.62, e:43.32, c:'र'}, {s:43.61, e:44.23, c:'ल'}, {s:44.67, e:45.28, c:'व'}, {s:45.65, e:46.45, c:'श'}, {s:47.19, e:47.92, c:'ष'}, {s:48.34, e:49.15, c:'स'}, {s:49.49, e:50.09, c:'ह'}, 
+{s:50.75, e:51.55, c:'क्ष'}, {s:51.93, e:52.49, c:'त्र'}, {s:52.82, e:53.54, c:'ज्ञ'}];
+        $scope.telu= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'ఈ', p:'ईई'}, {c:'ఉ', p:'उ'}, {c:'ఊ', p:'उउ'}, {c:'ఋ', p:'रु'}, {c:'ౠ', p:'रू'}, {c:'ఎ', p:'ए'}, {c:'ఏ', p:'एए'}, {c:'ఐ', p:'i'}, {c:'ఒ', p:'o'}, {c:'ఓ', p:'O'}, {c:'ఔ',p:'अउ'}, {c:'అం', p:'अम'}, {c:'అః', p:'अहा'}, 
+{c:'క', p:'क'}, {c:'ఖ', p:'ख'}, {c:'గ', p:'ग'}, {c:'ఘ', p:'घ'}, {c:'ఙ', p:'na'}, 
+{c:'చ', p:'च'}, {c:'ఛ', p:'छ'}, {c:'జ', p:'ज'}, {c:'ఝ', p:'झ'}, {c:'ఞ', p:'na'}, 
+{c:'ట', p:'ट'}, {c:'ఠ', p:'ठ'}, {c:'డ', p:'ड'}, {c:'ఢ', p:'ढ'}, {c:'ణ', p:'ण'}, 
+{c:'త', p:'त'}, {c:'థ', p:'थ'}, {c:'ద', p:'द'}, {c:'ధ', p:'ध'}, {c:'న', p:'न'}, 
+{c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
+{c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
+{c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
+        $scope.chars = [];
+        $scope.populatePage = function(){
+          var i,c="",C="";
+          $scope.chars = [];
+        for(i=0;i<26;i++){
+          C = String.fromCharCode(65+i);
+          //c = String.fromCharCode(97+i);
+          $scope.chars.push(C);
+          }
+        }
+        $scope.populatePage();
+        $scope.setLang = function(l){
+          $scope.ctrl.eng = false;
+          $scope.ctrl.hin = false;
+          $scope.ctrl.tel = false;
+          $scope.ctrl[l] = true;
+        }
+
+        const tracingCanvas = document.getElementById('tracingCanvas');
+  const ctx = tracingCanvas.getContext('2d');
+  let drawing = false;
+
+  function startDrawing(event) {
+    drawing = true;
+    draw(event);
+  }
+
+  function stopDrawing() {
+    drawing = false;
+    ctx.beginPath();
+  }
+
+  function draw(event) {
+    if (!drawing) return;
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+
+    let x, y;
+
+    if (event.type.includes('touch')) {
+      const touch = event.touches[0];
+      const rect = tracingCanvas.getBoundingClientRect();
+      x = touch.clientX - rect.left;
+      y = touch.clientY - rect.top;
+    } else {
+      const rect = tracingCanvas.getBoundingClientRect();
+      x = event.clientX - rect.left;
+      y = event.clientY - rect.top;
+    }
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    event.preventDefault();
+  }
+
+   $scope.drawLetter = function(letter) {
+    ctx.clearRect(0, 0, tracingCanvas.width, tracingCanvas.height);
+    ctx.font = '200px Arial';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter, tracingCanvas.width / 2, tracingCanvas.height / 2);
+  }
+
+  tracingCanvas.addEventListener('mousedown', startDrawing);
+  tracingCanvas.addEventListener('mouseup', stopDrawing);
+  tracingCanvas.addEventListener('mouseout', stopDrawing);
+  tracingCanvas.addEventListener('mousemove', draw);
+
+  tracingCanvas.addEventListener('touchstart', startDrawing);
+  tracingCanvas.addEventListener('touchend', stopDrawing);
+  tracingCanvas.addEventListener('touchcancel', stopDrawing);
+  tracingCanvas.addEventListener('touchmove', draw);
+        
+      });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</html>
