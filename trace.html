@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	  <title>Alphabet Chart</title>
+	  <title>Letter Tracing</title>
     <style>
       .header {
   padding: 2vh;
@@ -159,20 +159,26 @@ nav {
   .game h2 {
     margin-bottom: 10px;
   }
+
+	    .container{
+		    display: flex;
+    flex-direction: column;
+    align-items: center;
+	    }
     </style>
   </head>
   <body>
     <body ng-app="newApp">
-  
-  <div ng-controller="appCtrl">
-   <div class="header">
-    <h1>Letter Tracking</h1>
+  <div class="header">
+    <h1>Letter Tracing</h1>
     <a href="index.html">Go to Home</a>
   </div>
+  <div ng-controller="appCtrl" class="container">
+   
   <div class="toggle-buttons">
    <button class="toggle-button active" ng-class="{'active':ctrl.eng}" ng-click="setLang('eng')">English</button>
-    <button class="toggle-button active" ng-class="{'active':ctrl.hin}" ng-click="setLang('hin')">Hindi</button>
-    <button class="toggle-button active" ng-class="{'active':ctrl.tel}" ng-click="setLang('tel')">Telugu</button>
+    <button class="toggle-button" ng-class="{'active':ctrl.hin}" ng-click="setLang('hin')">Hindi</button>
+    <button class="toggle-button" ng-class="{'active':ctrl.tel}" ng-click="setLang('tel')">Telugu</button>
   </div>
     <div class="game">
       <div id="english" ng-show="ctrl.eng">
