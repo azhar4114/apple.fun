@@ -239,6 +239,12 @@ nav {
           $scope.ctrl.hin = false;
           $scope.ctrl.tel = false;
           $scope.ctrl[l] = true;
+	  if(l=='eng')
+	  drawLetter(ctrl.el)
+	  else if(l=='hin')
+	  drawLetter(ctrl.hl)
+	  else if(l=='tel')
+	  drawLetter(ctrl.tl)
         }
 
         const tracingCanvas = document.getElementById('tracingCanvas');
