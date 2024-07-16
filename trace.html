@@ -240,11 +240,11 @@ nav {
           $scope.ctrl.tel = false;
           $scope.ctrl[l] = true;
 	  if(l=='eng')
-	  drawLetter(ctrl.el)
+	  $scope.drawLetter($scope.ctrl.el)
 	  else if(l=='hin')
-	  drawLetter(ctrl.hl)
+	  $scope.drawLetter($scope.ctrl.hl)
 	  else if(l=='tel')
-	  drawLetter(ctrl.tl)
+	  $scope.drawLetter($scope.ctrl.tl)
         }
 
         const tracingCanvas = document.getElementById('tracingCanvas');
