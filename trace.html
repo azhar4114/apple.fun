@@ -176,19 +176,19 @@ nav {
   </div>
     <div class="game">
       <div id="english" ng-show="ctrl.eng">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.el)" ng-value="ctrl.el">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.el)" ng-model="ctrl.el">
       <option value="">Select a letter</option>
       <option value="{{c}}" ng-repeat="c in chars">{{c}}</option>
     </select>
       </div>
       <div id="hindi" ng-show="ctrl.hin">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.hl)" ng-value="ctrl.hl">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.hl)" ng-model="ctrl.hl">
       <option value="">Select a letter</option>
       <option value="{{c.c}}" ng-repeat="c in hind">{{c.c}}</option>
     </select>
       </div>
       <div id="telugu" ng-show="ctrl.tel">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.tl)" ng-value="ctrl.tl">
+    <select id="letterSelect" ng-change="drawLetter(ctrl.tl)" ng-model="ctrl.tl">
       <option value="">Select a letter</option>
       <option value="{{c.c}}" ng-repeat="c in telu">{{c.c}}</option>
     </select>
