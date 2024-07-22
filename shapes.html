@@ -84,8 +84,8 @@
   border: 0.4vh solid #ff6f61;
 }
 
-.button:active,
-.button.clicked {
+.button:active
+ {
   border: 0.4vh solid #4caf50;
 }
 	    .button.autoplay{
@@ -284,7 +284,7 @@ $(document).ready(function(){
 		  $(".autoplay").removeClass("autoplay");
 		  $(bt[i]).addClass("autoplay");
 		  $(bt[i++]).click();
-		  if(i>9){
+		  if(i>11){
 			  setTimeout(function(){
 				  	$(".toggle-button.play").html("Play");
 					clearInterval(intv);
@@ -306,7 +306,7 @@ $(document).ready(function(){
     }, (audTime[ind].e-audTime[ind].s)*1000);
       $(this).addClass("clicked");
       this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if($(".clicked").length==11 && !expl){
+      if($(".clicked").length==12 && !expl){
         explodeConfetti();
         expl = true;
       }
