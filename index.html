@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A for Apple - Learning Through Fun and Play</title>
     <meta name="description" content="Learning Through Fun and Play!. Fun and educational content for everyone!"/>
-
+	<meta name="google-signin-client_id" content="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <style>
 .card {
     background: rgba(255, 255, 255, 0.9);
@@ -130,6 +131,8 @@ body {
   <header>
         <h1>Welcome to AForApple.Fun</h1>
         <p>Learning Through Fun and Play!</p>
+	  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+	  <a href="#" onclick="signOut();">Sign out</a>
     </header>
   <div class="container"> 
     <div class="card">
@@ -207,6 +210,23 @@ body {
     </footer>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
+	function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+ 
+
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+
+	
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
