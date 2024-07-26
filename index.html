@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A for Apple - Learning Through Fun and Play</title>
     <meta name="description" content="Learning Through Fun and Play!. Fun and educational content for everyone!"/>
-	<meta name="google-signin-client_id" content="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
+
+	#avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+	
 .card {
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -125,7 +131,7 @@ body {
         .footer-links a:hover {
             text-decoration: underline;
         }
-	.hide{
+	.hidden{
 		display:none;
 	}
 
@@ -135,11 +141,16 @@ body {
   <header>
         <h1>Welcome to AForApple.Fun</h1>
         <p>Learning Through Fun and Play!</p>
-	  <div class="login hide">
-		  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-		  <img id="avatar" class="hide" src="" alt="User Avatar">
-		  <a href="#" onclick="signOut();" id="sign-out" class="hide">Sign out</a>
-	  </div>
+	  <center class="login hidden">
+	 <div id="g_id_onload"
+       data-client_id="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com"
+       data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin" data-type="standard"></div>
+  
+  <button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button>
+  <img id="avatar" class="hidden" src="" alt="User Avatar">
+	  </center>
     </header>
   <div class="container"> 
     <div class="card">
@@ -217,16 +228,54 @@ body {
     </footer>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
-	function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		$("#sign-out").toggleClass("hide");
-		$(".g-signin2").toggleClass("hide");
-		$("#avatar").toggleClass("hide");
-		$("#avatar").attr("src",profile.getImageUrl());
+	// script.js
+
+function handleCredentialResponse(response) {
+  const responsePayload = decodeJwtResponse(response.credential);
+
+  // Show user information
+  document.getElementById('signout-button').classList.remove('hidden');
+  document.getElementById('avatar').classList.remove('hidden');
+  document.getElementById('avatar').src = responsePayload.picture;
+  
+  // Hide the sign-in button
+  document.querySelector('.g_id_signin').classList.add('hidden');
+}
+
+function decodeJwtResponse(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
+function signOut() {
+  // Hide user information
+  document.getElementById('signout-button').classList.add('hidden');
+  document.getElementById('avatar').classList.add('hidden');
+  document.getElementById('avatar').src = '';
+  
+  // Show the sign-in button
+  document.querySelector('.g_id_signin').classList.remove('hidden');
+
+  // Optionally, you can also revoke the token on the server-side
+  // For more info, see: https://developers.google.com/identity/sign-in/web/disconnect
+}
+
+// Listen for the Google Sign-In button to render
+window.onload = function() {
+  google.accounts.id.initialize({
+    client_id: 'YOUR_GOOGLE_CLIENT_ID',
+    callback: handleCredentialResponse
+  });
+  google.accounts.id.renderButton(
+    document.querySelector('.g_id_signin'),
+    { theme: 'outline', size: 'large' }  // customization attributes
+  );
+  google.accounts.id.prompt(); // Display the One Tap prompt
 }
 
 function isWebView() {
@@ -247,19 +296,11 @@ if (isWebView()) {
   console.log('The website is being rendered in a webview.');
 	
 } else {
-	$(".login.hide").removeClass("hide");
+	$(".login.hidden").removeClass("hidden");
         console.log('The website is not being rendered in a webview.');
  }
 },1000);
 
- 
-
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
 
 	
   window.dataLayer = window.dataLayer || [];
