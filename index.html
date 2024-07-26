@@ -7,6 +7,7 @@
     <meta name="description" content="Learning Through Fun and Play!. Fun and educational content for everyone!"/>
 	<meta name="google-signin-client_id" content="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 .card {
     background: rgba(255, 255, 255, 0.9);
@@ -124,6 +125,9 @@ body {
         .footer-links a:hover {
             text-decoration: underline;
         }
+	.hide{
+		display:none;
+	}
 
 </style>
 </head>
@@ -131,8 +135,11 @@ body {
   <header>
         <h1>Welcome to AForApple.Fun</h1>
         <p>Learning Through Fun and Play!</p>
-	  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-	  <a href="#" onclick="signOut();">Sign out</a>
+	  <div class="login hide">
+		  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+		  <img id="avatar" class="hide" src="" alt="User Avatar">
+		  <a href="#" onclick="signOut();" id="sign-out" class="hide">Sign out</a>
+	  </div>
     </header>
   <div class="container"> 
     <div class="card">
@@ -216,7 +223,35 @@ body {
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		$("#sign-out").toggleClass("hide");
+		$(".g-signin2").toggleClass("hide");
+		$("#avatar").toggleClass("hide");
+		$("#avatar").attr("src",profile.getImageUrl());
 }
+
+function isWebView() {
+  // Check if the user agent indicates a webview
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroidWebView = /wv/.test(userAgent);
+  const isIOSWebView = /iPhone|iPod|iPad.*AppleWebKit(?!.*Safari)/i.test(userAgent);
+
+  // Check for additional webview-specific features
+  const isAndroidWebViewFeature = window.navigator.platform === 'Linux armv8l' || window.navigator.platform === 'Linux aarch64';
+  const isIOSWebViewFeature = window.webkit && window.webkit.messageHandlers;
+
+  return isAndroidWebView || isIOSWebView || isAndroidWebViewFeature || isIOSWebViewFeature;
+}
+
+setTimeout(function(){	
+if (isWebView()) {
+  console.log('The website is being rendered in a webview.');
+	
+} else {
+	$(".login.hide").removeClass("hide");
+        console.log('The website is not being rendered in a webview.');
+ }
+},1000);
+
  
 
   function signOut() {
