@@ -13,6 +13,21 @@ function handleCredentialResponse(response) {
   localStorage.setItem('id_token', response.credential);
 }
 
+function handleCredentialResponseAndroid(response) {
+    const responsePayload = response.profile;
+    
+    // Show user information
+    document.getElementById('signout-button').classList.remove('hidden');
+    document.getElementById('avatar').classList.remove('hidden');
+    document.getElementById('avatar').src = responsePayload.picture;
+
+    // Hide the sign-in button
+    document.querySelector('.g_id_signin').classList.add('hidden');
+
+    localStorage.setItem('profile', JSON.stringify(responsePayload));
+    localStorage.setItem('id_token', response.credential);
+  }
+
 function decodeJwtResponse(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
