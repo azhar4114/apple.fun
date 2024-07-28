@@ -52,9 +52,7 @@ function signOut() {
 
 // Listen for the Google Sign-In button to render
 window.onload = function() {
-	if (isWebView()) {
-	  return;
-	}
+	
       const profile = JSON.parse(localStorage.getItem('profile'));
 
       if (profile) {
@@ -66,7 +64,7 @@ window.onload = function() {
 
         // Hide the sign-in button
         document.querySelector('.g_id_signin').classList.add('hidden');
-      } else {
+      } else if (!isWebView()) {
         // User is not logged in, initialize Google One Tap
 	       console.log("not logged in ");
         google.accounts.id.initialize({
