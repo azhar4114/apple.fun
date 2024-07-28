@@ -43,6 +43,7 @@ window.onload = function() {
       const profile = JSON.parse(localStorage.getItem('profile'));
 
       if (profile) {
+	      console.log("logged in ");
         // User is logged in
         document.getElementById('signout-button').classList.remove('hidden');
         document.getElementById('avatar').classList.remove('hidden');
@@ -52,6 +53,7 @@ window.onload = function() {
         document.querySelector('.g_id_signin').classList.add('hidden');
       } else {
         // User is not logged in, initialize Google One Tap
+	       console.log("not logged in ");
         google.accounts.id.initialize({
           client_id: '1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com',
           callback: handleCredentialResponse
