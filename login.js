@@ -37,28 +37,31 @@ function signOut() {
 
 // Listen for the Google Sign-In button to render
 window.onload = function() {
-  const profile = JSON.parse(localStorage.getItem('profile'));
+	if (isWebView()) {
+	  return;
+	}
+      const profile = JSON.parse(localStorage.getItem('profile'));
 
-  if (profile) {
-    // User is logged in
-    document.getElementById('signout-button').classList.remove('hidden');
-    document.getElementById('avatar').classList.remove('hidden');
-    document.getElementById('avatar').src = profile.picture;
+      if (profile) {
+        // User is logged in
+        document.getElementById('signout-button').classList.remove('hidden');
+        document.getElementById('avatar').classList.remove('hidden');
+        document.getElementById('avatar').src = profile.picture;
 
-    // Hide the sign-in button
-    document.querySelector('.g_id_signin').classList.add('hidden');
-  } else {
-    // User is not logged in
-    google.accounts.id.initialize({
-      client_id: '1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com',
-      callback: handleCredentialResponse
-    });
-    google.accounts.id.renderButton(
-      document.querySelector('.g_id_signin'),
-      { theme: 'outline', size: 'large' }  // customization attributes
-    );
-    google.accounts.id.prompt(); // Display the One Tap prompt
-  }
+        // Hide the sign-in button
+        document.querySelector('.g_id_signin').classList.add('hidden');
+      } else {
+        // User is not logged in, initialize Google One Tap
+        google.accounts.id.initialize({
+          client_id: '1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com',
+          callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+          document.querySelector('.g_id_signin'),
+          { theme: 'outline', size: 'large' }  // customization attributes
+        );
+        google.accounts.id.prompt(); // Display the One Tap prompt
+      }
 }
 
 function isWebView() {
@@ -74,12 +77,3 @@ function isWebView() {
   return isAndroidWebView || isIOSWebView || isAndroidWebViewFeature || isIOSWebViewFeature;
 }
 
-setTimeout(function(){	
-if (isWebView()) {
-  console.log('The website is being rendered in a webview.');
-	
-} else {
-	$(".login.hidden").removeClass("hidden");
-        console.log('The website is not being rendered in a webview.');
- }
-},1000);
