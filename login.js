@@ -38,6 +38,11 @@ function decodeJwtResponse(token) {
   return JSON.parse(jsonPayload);
 }
 
+function signInAndroid(){
+	Android.signIn();
+}
+
+
 function signOut() {
   // Hide user information
   document.getElementById('signout-button').classList.add('hidden');
@@ -48,6 +53,9 @@ function signOut() {
   document.querySelector('.g_id_signin').classList.remove('hidden');
   localStorage.removeItem('profile');
   localStorage.removeItem('id_token');
+  if (isWebView()) {
+	Android.signOut();  
+  }
 }
 
 // Listen for the Google Sign-In button to render
@@ -76,6 +84,10 @@ window.onload = function() {
           { theme: 'outline', size: 'large' }  // customization attributes
         );
         google.accounts.id.prompt(); // Display the One Tap prompt
+      }
+      else{
+	     document.getElementById('android-sign-in').classList.remove('hidden'); 
+	     document.querySelector('.g_id_signin').classList.add('hidden');
       }
 }
 
