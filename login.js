@@ -23,6 +23,8 @@ function handleCredentialResponseAndroid(response) {
 
     // Hide the sign-in button
     document.querySelector('.g_id_signin').classList.add('hidden');
+	
+    document.getElementById('android-sign-in').classList.add('hidden');
 
     localStorage.setItem('profile', JSON.stringify(responsePayload));
     localStorage.setItem('id_token', response.credential);
@@ -51,6 +53,7 @@ function signOut() {
   
   // Show the sign-in button
   document.querySelector('.g_id_signin').classList.remove('hidden');
+  document.getElementById('android-sign-in').classList.remove('hidden');
   localStorage.removeItem('profile');
   localStorage.removeItem('id_token');
   if (isWebView()) {
