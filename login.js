@@ -13,6 +13,22 @@ function handleCredentialResponse(response) {
   localStorage.setItem('id_token', response.credential);
 }
 
+function sendUser(data){
+
+	$.ajax({
+	  url: 'https://script.google.com/macros/s/AKfycbwfWWQ9CHqsD59YF8DG80LqTzzqYx5fdTeTXnbMkemCr8cNrlMsJulwP5CNt7liVZrdbw/exec',
+	  type: 'POST',
+	  contentType: 'application/json',
+	  data: JSON.stringify({email: data.email, action:"getData"}),
+	  success: function(response) {
+	    console.log('Response:', response);
+	  },
+	  error: function(err) {
+	    console.error('Error:', err);
+	  }
+	});
+}
+
 function handleCredentialResponseAndroid(response) {
     const responsePayload = response.profile;
     
@@ -22,7 +38,6 @@ function handleCredentialResponseAndroid(response) {
     document.getElementById('avatar').src = responsePayload.picture;
 
     // Hide the sign-in button
-    document.querySelector('.g_id_signin').classList.add('hidden');
 	
     document.getElementById('android-sign-in').classList.add('hidden');
 
@@ -52,13 +67,16 @@ function signOut() {
   document.getElementById('avatar').src = '';
   
   // Show the sign-in button
-  document.querySelector('.g_id_signin').classList.remove('hidden');
-  document.getElementById('android-sign-in').classList.remove('hidden');
+  
+  
   localStorage.removeItem('profile');
   localStorage.removeItem('id_token');
   if (isWebView()) {
 	Android.signOut();  
+	document.getElementById('android-sign-in').classList.remove('hidden');
   }
+  else
+	document.querySelector('.g_id_signin').classList.remove('hidden');
 }
 
 // Listen for the Google Sign-In button to render
