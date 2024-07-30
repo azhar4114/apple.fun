@@ -19,6 +19,8 @@ function sendUser(data){
 	$.ajax({
 	  url: 'https://script.google.com/macros/s/AKfycbwfWWQ9CHqsD59YF8DG80LqTzzqYx5fdTeTXnbMkemCr8cNrlMsJulwP5CNt7liVZrdbw/exec',
 	  type: 'POST',
+	  redirect: "follow",
+	  crossDomain:"true",
 	  contentType: 'application/json',
 	  data: JSON.stringify({email: data.email, action:"getData"}),
 	  success: function(response) {
