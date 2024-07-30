@@ -20,7 +20,7 @@ function sendUser(data){
 	  url: 'https://script.google.com/macros/s/AKfycbzkrhYOrMRAvZe_MH1p_kHHfp6RFHglFjuLKmw232Dg8qmuJL1BXLVJk24WH2xtLuF4/exec',
 	  redirect: "follow",
       method: "POST",
-      data: JSON.stringify({email: data.email, action:"getData"}),
+      data: {email: data.email, action:"getData"},
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
       },
