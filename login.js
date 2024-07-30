@@ -11,6 +11,7 @@ function handleCredentialResponse(response) {
 
   localStorage.setItem('profile', JSON.stringify(responsePayload));
   localStorage.setItem('id_token', response.credential);
+  sendUser(responsePayload);
 }
 
 function sendUser(data){
@@ -43,6 +44,7 @@ function handleCredentialResponseAndroid(response) {
 
     localStorage.setItem('profile', JSON.stringify(responsePayload));
     localStorage.setItem('id_token', response.credential);
+    sendUser(responsePayload);
   }
 
 function decodeJwtResponse(token) {
