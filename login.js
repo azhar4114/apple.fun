@@ -17,12 +17,13 @@ function handleCredentialResponse(response) {
 function sendUser(data){
 
 	$.ajax({
-	  url: 'https://script.google.com/macros/s/AKfycbwfWWQ9CHqsD59YF8DG80LqTzzqYx5fdTeTXnbMkemCr8cNrlMsJulwP5CNt7liVZrdbw/exec',
-	  type: 'POST',
+	  url: 'https://script.google.com/macros/s/AKfycbzkrhYOrMRAvZe_MH1p_kHHfp6RFHglFjuLKmw232Dg8qmuJL1BXLVJk24WH2xtLuF4/exec',
 	  redirect: "follow",
-	  crossDomain:"true",
-	  contentType: 'application/json',
-	  data: JSON.stringify({email: data.email, action:"getData"}),
+      method: "POST",
+      data: JSON.stringify({email: data.email, action:"getData"}),
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
 	  success: function(response) {
 	    console.log('Response:', response);
 	  },
