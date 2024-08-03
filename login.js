@@ -1,3 +1,4 @@
+
 function handleCredentialResponse(response) {
   const responsePayload = decodeJwtResponse(response.credential);
 
@@ -15,7 +16,7 @@ function handleCredentialResponse(response) {
 }
 
 function sendUser(data){
-
+     var idToken = localStorage.getItem('id_token');
 	$.ajax({
 	  url: 'https://script.google.com/macros/s/AKfycbzkrhYOrMRAvZe_MH1p_kHHfp6RFHglFjuLKmw232Dg8qmuJL1BXLVJk24WH2xtLuF4/exec',
 	  redirect: "follow",
@@ -23,6 +24,7 @@ function sendUser(data){
       data: JSON.stringify({email: data.email, action:"getData"}),
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
+	 'Authorization': 'Bearer ' + idToken
       },
 	  success: function(response) {
 	    console.log('Response:', response);
