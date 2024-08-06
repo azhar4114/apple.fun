@@ -283,7 +283,7 @@ $(document).ready(function(){
 		  $(".autoplay").removeClass("autoplay");
 		  $(bt[i]).addClass("autoplay");
 		  $(bt[i++]).click();
-		  if(i>11){
+		  if(i>29){
 			  setTimeout(function(){
 				  	$(".toggle-button.play").html("Play");
 					clearInterval(intv);
@@ -305,7 +305,7 @@ $(document).ready(function(){
     }, (audTime[ind].e-audTime[ind].s)*1000);
       $(this).addClass("clicked");
       this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if($(".clicked").length==12 && !expl){
+      if($(".clicked").length==30 && !expl){
         explodeConfetti();
         expl = true;
       }
