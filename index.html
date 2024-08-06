@@ -136,6 +136,16 @@ body {
 	.hidden{
 		display:none;
 	}
+	
+	 .search{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 40vh;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+}
 
 </style>
 </head>
@@ -155,8 +165,9 @@ body {
   <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
 	  </center>
     </header>
-  <div class="container" ng-controller="appCtrl"> 
-	  <div><input type="search" ng-model="search"></div>
+  <div  ng-controller="appCtrl"> 
+	  <center><input type="search" ng-model="search" class="search" placeholder="What are you looking for?"></center>
+	  <div class="container">
     <div class="card" ng-repeat="c in cards | filter: { t: search }">
         <div class="card-content">
             <h2 class="card-title">{{c.t}}</h2>
@@ -164,6 +175,7 @@ body {
             <a ng-href="{{c.l}}" class="btn">Learn More</a>
         </div>
     </div>
+	  </div>
     
    
 </div>
