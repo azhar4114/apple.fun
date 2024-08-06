@@ -7,6 +7,7 @@
     <meta name="description" content="Learning Through Fun and Play!. Fun and educational content for everyone!"/>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
    <script src="login.js" async defer></script>
 <style>
 
@@ -138,7 +139,7 @@ body {
 
 </style>
 </head>
-<body>
+<body ng-app="newApp">
   <header>
         <h1>Welcome to AForApple.Fun</h1>
         <p>Learning Through Fun and Play!</p>
@@ -154,70 +155,16 @@ body {
   <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
 	  </center>
     </header>
-  <div class="container"> 
-    <div class="card">
+  <div class="container" ng-controller="appCtrl"> 
+	  <div><input type="search" ng-model="search"></div>
+    <div class="card" ng-repeat="c in cards | filter: { t: search }">
         <div class="card-content">
-            <h2 class="card-title">Alphabet Chart</h2>
-            <p class="card-description">Colorful alphabet chart: Learn letters with vibrant illustrations!</p>
-            <a href="/Alphabet.html" class="btn">Learn More</a>
+            <h2 class="card-title">{{c.t}}</h2>
+            <p class="card-description">{{c.d}}</p>
+            <a ng-href="{{c.l}}" class="btn">Learn More</a>
         </div>
     </div>
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Alphabet Picture Chart</h2>
-            <p class="card-description">Unlocking the Alphabet Adventure: Illustrated Exploration from A to Z</p>
-            <a href="/AlphaPictureChart.html" class="btn">Learn More</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Trilingual Tracing Fun</h2>
-            <p class="card-description">Explore English, Hindi, and Telugu alphabets with our fun tracing page!  Little learners can practice writing A to Z in all three languages</p>
-            <a href="/trace.html" class="btn">Learn More</a>
-    	</div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Interactive Coloring Page</h2>
-            <p class="card-description">Get creative! Choose an image and start coloring like a pro</p>
-            <a href="/color.html" class="btn">Learn More</a>
-    	</div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Let's Count Together!</h2>
-            <p class="card-description">Learn your numbers 1 to 10 with fun activity. It's easy to count along and get ready for school!</p>
-            <a href="/numbers.html" class="btn">Learn More</a>
-    	</div>
-    </div> 
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title"> Let's Learn About Shapes!</h2>
-            <p class="card-description">Explore the world of circles, squares, triangles, and more! Fun activity to help you learn and draw different shapes.</p>
-            <a href="/shapes.html" class="btn">Learn More</a>
-    	</div>
-    </div> 
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">Learn Your Colors!</h2>
-            <p class="card-description">Red, Blue, Green... Learn the colors!</p>
-            <a href="/color-names.html" class="btn">Learn More</a>
-    	</div>
-    </div> 
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">हिंदी वर्णमाला चार्ट</h2>
-            <p class="card-description">रंगीन चित्रों की यात्रा: हिंदी वर्णमाला सीखें और सिखाएं</p>
-            <a href="/hindiAlpha.html" class="btn">Learn More</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <h2 class="card-title">తెలుగు వర్ణమాల చార్టు</h2>
-            <p class="card-description">తెలుగు వర్ణమాల వారి ఉచ్చారణతో</p>
-            <a href="/teluguAlpha.html" class="btn">Learn More</a>
-        </div>
-    </div>
+    
    
 </div>
   <footer>
@@ -230,6 +177,24 @@ body {
     </footer>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
+
+	var app = angular.module("newApp", []);
+
+app.controller('appCtrl', function($scope) {
+	$scope.search="";
+	$scope.cards = cards = [{t:"Alphabet Chart", d:"Colorful alphabet chart: Learn letters with vibrant illustrations!", l:"/Alphabet.html"},
+	  {t:"Alphabet Picture Chart",d:"Unlocking the Alphabet Adventure: Illustrated Exploration from A to Z",l:"/AlphaPictureChart.html"},
+	 {t:"Trilingual Tracing Fun",d:"Explore English, Hindi, and Telugu alphabets with our fun tracing page!",l:"/trace.html"},
+	  {t:"Animal Kingdom for Kids",d:"A perfect tool for parents and teachers to introduce animals to young children.",l:"/animals.html"},
+	  {t:"Let's Count Together!",d:"Learn your numbers 1 to 10 with fun activity.",l:"/numbers.html"},
+	 {t:"Let's Learn About Shapes!",d:"Explore the world of circles, squares, triangles, and more!",l:"/shapes.html"},
+	 {t:"Learn Your Colors!",d:"Red, Blue, Green... Learn the colors!",l:"/color-names.html"},
+	 {t:"Interactive Coloring Page",d:"Get creative! Choose an image and start coloring like a pro",l:"/color.html"},
+	 {t:"हिंदी वर्णमाला चार्ट",d:"रंगीन चित्रों की यात्रा: हिंदी वर्णमाला सीखें और सिखाएं",l:"/hindiAlpha.html"},
+	 {t:"తెలుగు వర్ణమాల చార్టు",d:"తెలుగు వర్ణమాల వారి ఉచ్చారణతో",l:"/teluguAlpha.html"}];
+});
+ 
+	
 	window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
