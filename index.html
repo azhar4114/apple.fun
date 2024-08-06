@@ -71,6 +71,7 @@
     padding: 3vh;
     grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
     padding-bottom: 20vh;
+    padding-top:1vh;
 }
 
 
@@ -166,7 +167,7 @@ body {
 	  </center>
     </header>
   <div  ng-controller="appCtrl"> 
-	  <center><input type="search" ng-model="search" class="search" placeholder="What are you looking for?"></center>
+	  <center style="padding-top:2vh;"><input type="search" ng-model="search" class="search" placeholder="What are you looking for?"></center>
 	  <div class="container">
     <div class="card" ng-repeat="c in cards | filter: { t: search }">
         <div class="card-content">
