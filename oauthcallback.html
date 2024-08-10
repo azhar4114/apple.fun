@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth Callback</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>OAuth Callback</h1>
+  <script>
+    $(document).ready(function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var code = urlParams.get('code');
+      if (code) {
+        // Exchange the authorization code for an access token
+        $.ajax({
+          url: 'https://script.google.com/macros/s/1YyNGs8e1ckZIiNewb9H35wODQXOY1lvBIt3ClJjF2GdL_6rQjUQtBNRm/usercallback', // Set this URL to the Apps Script endpoint that handles the token exchange
+          method: 'POST',
+          data: {
+            code: code
+          },
+          success: function(response) {
+            // Save the access token in localStorage
+            localStorage.setItem('accessToken', response.accessToken);
+            // Redirect back to your main page
+            window.location.href = '/';
+          },
+          error: function(xhr, status, error) {
+            console.error("Error: " + error);
+          }
+        });
+      } else {
+        console.error("Authorization code not found in the URL.");
+      }
+    });
+  </script>
+</body>
+</html>
