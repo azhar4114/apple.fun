@@ -22,7 +22,7 @@
 }
 
 .header a {
-  font-size: 2vh;
+  font-size: 40px;
   color: #ff6f61;
   text-decoration: none;
   display: inline-block;
@@ -91,10 +91,12 @@
   border: 0.4vh solid #4caf50;
 }
 	    .button.autoplay{
-		border: 0.5vh solid #9861ff;
-		transform: scale(1.09);
-	        box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
-	    }
+    border: 0.5vh solid #9861ff;
+    transform: scale(1.09);
+    background-color: #fff8e1;
+    box-shadow: 0 0 10px 10px rgba(255, 152, 0, 0.5);
+    transition: all 0.3s ease;
+}
 
 .toggle-buttons {
   display: flex;
@@ -209,6 +211,27 @@ font-size: 1.7vh;
             font-size: 3vh;
             text-align: center;
             }
+
+	    #scrollToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position on the page */
+    bottom: 20px; /* Position from the bottom */
+    right: 30px; /* Position from the right */
+    z-index: 99; /* Sit on top */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #ff9800; /* Background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+}
+
+#scrollToTopBtn:hover {
+    background-color: #555; /* Darker background on hover */
+}
+
    
    
        </style>
@@ -234,6 +257,8 @@ font-size: 1.7vh;
         </div>
             
         </div>
+	<button id="scrollToTopBtn" title="Go to top">Top</button>
+
         <script>
             const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
             const aud = new Audio("/AlphaPic.m4a");
@@ -333,6 +358,28 @@ font-size: 1.7vh;
               }
               $scope.populatePage(); 
             }); 
+		// Get the button
+const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {
+    scrollFunction();
+};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+    } else {
+        scrollToTopBtn.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+scrollToTopBtn.addEventListener("click", function() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+});
+
               </script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
         <script>
