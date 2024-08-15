@@ -22,7 +22,7 @@
 }
 
 .header a {
-  font-size: 40px;
+  font-size: 25px;
   color: #ff6f61;
   text-decoration: none;
   display: inline-block;
@@ -308,6 +308,8 @@ font-size: 1.7vh;
 		  });
               
               $(".button").click(function(){
+	 	if(!aud.paused)
+	          return;
                 console.log(anim[an],an, this);
                 $(this).addClass(anim[an]);
                 var ind = $(this).attr('data');
