@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aforapple.fun - Interactive Learning for Schools</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+.header p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+}
+
+.intro, .features, .pricing, .cta {
+    padding: 40px 0;
+}
+
+.intro h2, .features h2, .pricing h2, .cta h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.intro p, .cta p {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.pricing-table {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.plan {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 40%;
+    text-align: center;
+}
+
+.plan h3 {
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.cta button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.cta button:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin: 0;
+}
+.intro p strong {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Popup container */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup content */
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Input field */
+input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+} 
+
+/* Submit button */
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Subscription link */
+.popup-content p a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.popup-content p a:hover {
+    text-decoration: underline;
+}
+
+
+    </style>
+</head>
+<body>
+  <div id="activationPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Activate Your Subscription</h2>
+            <p>To access this content, please enter your activation key.</p>
+            <form id="activationForm">
+                <label for="activationKey">Activation Key:</label>
+                <input type="text" id="activationKey" name="activationKey" required>
+                <button type="submit">Activate</button>
+            </form>
+           
+        </div>
+    </div>
+    <header class="header">
+        <div class="container">
+            <h1>AForApple.Fun</h1>
+            <p>Learning Through Fun and Play!</p>
+        </div>
+    </header>
+
+    <section class="intro">
+    <div class="container">
+        <h2>Welcome to AForApple.Fun</h2>
+        <p>Engage your students with interactive stories, games, and activities designed to enhance learning in a fun and engaging way. Perfect for group learning in classrooms.</p>
+        <p><strong>Optimized for Smart TVs:</strong> Seamlessly integrate our content with your classroom’s Smart TV. Easily project interactive lessons and activities to keep students engaged.</p>
+    </div>
+</section>
+
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <div class="feature-cards">
+                <div class="card">
+                    <h3>Interactive Content</h3>
+                    <p>Keep your students engaged with interactive stories and games that align with the curriculum.</p>
+                </div>
+                <div class="card">
+                    <h3>Customizable</h3>
+                    <p>We offer customization options to tailor the platform to your school's specific needs and curriculum.</p>
+                </div>
+                <div class="card">
+                    <h3>Affordable Plans</h3>
+                    <p>Choose from flexible pricing plans that fit your school's budget.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2>Pricing Plans</h2>
+            <div class="pricing-table">
+                <div class="plan">
+                    <h3>Single Classroom Plan</h3>
+                    <p>₹1,500 - ₹2,500 per month</p>
+                    <p>Access for one classroom, ideal for group learning.</p>
+                </div>
+                <div class="plan">
+                    <h3>Multiple Classroom Plan</h3>
+                    <p>₹3,500 - ₹5,000 per month</p>
+                    <p>Access for multiple classrooms with customization options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Contact us to schedule a free trial and see how Aforapple.fun can enhance learning at your school. <button><a href="contact.html" style="color:white">Contact Us</a></button></p>
+          
+          <p>Already subscribed ? <a href="#" onclick="showPopup()">Click here</a> to activate</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Aforapple.fun. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+      // Get the popup element
+var popup = document.getElementById("activationPopup");
+
+// Get the close button element
+var closeBtn = document.querySelector(".close-btn");
+
+// Show the popup when the page loads
+function showPopup() {
+    // Here you would typically check if the user has an active subscription or key
+    var hasValidKey = false; // Replace this with your actual key validation logic
+
+    if (!hasValidKey) {
+        popup.style.display = "flex"; // Show the popup
+    }
+};
+
+// Close the popup when the user clicks the close button
+closeBtn.onclick = function() {
+    popup.style.display = "none";
+};
+
+// Close the popup when the user clicks anywhere outside of it
+window.onclick = function(event) {
+    if (event.target == popup) {
+        popup.style.display = "none";
+    }
+};
+
+// Handle the form submission
+document.getElementById("activationForm").onsubmit = function(event) {
+    event.preventDefault();
+    var key = document.getElementById("activationKey").value;
+
+    // Here, you'd typically send the key to your server to validate it
+    // For now, we'll just assume the key is valid if it's "12345"
+
+    if (key === "12345") {
+        alert("Key activated successfully!");
+        popup.style.display = "none";
+        // Redirect to the main content page or reload the current page
+        window.location.reload();
+    } else {
+        alert("Invalid key. Please try again.");
+    }
+};
+
+    </script>
+</body>
+</html>
