@@ -214,6 +214,8 @@ video {
 
 
     </style>
+    	<script src="validate.js"></script>
+
 </head>
 <body>
   <div id="activationPopup" class="popup">
@@ -336,22 +338,38 @@ window.onclick = function(event) {
     }
 };
 
+function activateKey(key, ip) {
+  const deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
+  const data = new URLSearchParams();
+  data.append('key', key);
+  data.append('action', "activate");
+  data.append('ip', ip); // Send IP address to the server
+  sendReq(data,function(response) {
+    console.log(response);
+    if (response.status==="success") {
+      document.cookie = "activationKey=" + key + ";path=/";
+      setCookie("keyvalidated","true", 1);
+      popup.style.display = "none";
+      alert("Key activated successfully.");
+    } else {
+      alert(response.message);
+    }
+  });
+}
+
 // Handle the form submission
 document.getElementById("activationForm").onsubmit = function(event) {
     event.preventDefault();
     var key = document.getElementById("activationKey").value;
 
-    // Here, you'd typically send the key to your server to validate it
-    // For now, we'll just assume the key is valid if it's "12345"
-
-    if (key === "12345") {
-        alert("Key activated successfully!");
-        popup.style.display = "none";
-        // Redirect to the main content page or reload the current page
-        window.location.reload();
-    } else {
-        alert("Invalid key. Please try again.");
-    }
+    getUserIP(function(ip) {
+	console.log(ip,key,"click");
+	    if (ip) {
+	        activateKey(key,ip);
+	    } else {
+	        console.log('Could not fetch IP address.');
+	    }
+	});
 };
 
     </script>
