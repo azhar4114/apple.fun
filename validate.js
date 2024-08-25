@@ -72,7 +72,6 @@ document.getElementById('validateButton').addEventListener('click', function() {
 	});
 });
 
-const deviceType = isAndroidWebViewOrSmartTV();
 
 window.onload = function() {
 
