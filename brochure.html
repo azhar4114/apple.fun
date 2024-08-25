@@ -342,6 +342,7 @@ function activateKey(key, ip) {
   const deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
   const data = new URLSearchParams();
   data.append('key', key);
+  data.append('deviceId', deviceId);
   data.append('action', "activate");
   data.append('ip', ip); // Send IP address to the server
   sendReq(data,function(response) {
