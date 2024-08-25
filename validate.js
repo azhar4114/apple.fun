@@ -59,18 +59,7 @@ const deviceType = isAndroidWebViewOrSmartTV();
 
 
 
-// Example usage: call this function when the user submits the key
-document.getElementById('validateButton').addEventListener('click', function() {
-    const key = document.getElementById('keyInput').value;
-	getUserIP(function(ip) {
-	console.log(ip,key,"click");
-	    if (ip) {
-	        activateKey(key,ip);
-	    } else {
-	        console.log('Could not fetch IP address.');
-	    }
-	});
-});
+
 
 
 window.onload = function() {
