@@ -77,23 +77,6 @@ window.onload = function() {
   
 }
 
-function activateKey(key, ip) {
-  const deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
-  const data = new URLSearchParams();
-  data.append('key', key);
-  data.append('action', "activate");
-  data.append('ip', ip); // Send IP address to the server
-  sendReq(data,function(response) {
-    console.log(response);
-    if (response.status==="success") {
-      document.cookie = "activationKey=" + key + ";path=/";
-      setCookie("keyvalidated","true", 1);
-      alert("Key activated successfully.");
-    } else {
-      alert(response.message);
-    }
-  });
-}
 
 function getDeviceId() {
   // Example: Use localStorage to generate/store a unique ID for the device
