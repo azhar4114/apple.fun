@@ -36,7 +36,7 @@ function checkKeyValidation() {
 	});
 }
 
-function detectDeviceType() {
+function isAndroidWebViewOrSmartTV() {
     const userAgent = navigator.userAgent.toLowerCase();
 
     // Check for Android WebView
