@@ -20,11 +20,8 @@ function getCookie(name) {
 
 // Function to check if the key has already been validated
 function checkKeyValidation() {
-    const validated = getCookie('keyvalidated');
-    if (validated === 'true') {
-        console.log('Access granted via cookie.');
-        return;
-    }
+    if(window.location.pathname === "/brochure.html")
+	return;
     const key = getCookie('activationKey');
   	getUserIP(function(ip) {
   	console.log(ip,key,"click");
@@ -108,6 +105,8 @@ function validateKeyWithRateLimit(key, ipAddress) {
 	         window.location.href = "/brochure.html";
 	   }
      else{
+	if(window.location.pathname === "/brochure.html")
+	   window.location.pathname = "/";
         setCookie("keyvalidated","true", 1);
      }
 	});
