@@ -20,9 +20,23 @@ function getCookie(name) {
 
 // Function to check if the key has already been validated
 function checkKeyValidation() {
+    
+    const key = getCookie('activationKey');
+    if(d!=null && d[0]!=null && window.location.pathname === "/brochure.html"){
+       
+	    getUserIP(function(ip) {
+  	     console.log(ip,key,"click");
+	    if (ip) {
+	        activateKey(key, ip);
+	    } else {
+	        console.log('Could not fetch IP address.');
+	    }
+	});
+    }
     if(window.location.pathname === "/brochure.html")
 	return;
-    const key = getCookie('activationKey');
+     
+    
   	getUserIP(function(ip) {
   	console.log(ip,key,"click");
 	    if (ip) {
@@ -77,7 +91,11 @@ window.onload = function() {
 
 function getDeviceId() {
   // Example: Use localStorage to generate/store a unique ID for the device
+  var d = window.location.href.match(/device-\w+$/);
+  if(d!=null && d[0]!=null)
+	return d[0];
   let deviceId = localStorage.getItem('deviceId');
+  
   if (!deviceId) {
     deviceId = 'device-' + Math.random().toString(36).substr(2, 16); // Example of generating a unique ID
     localStorage.setItem('deviceId', deviceId);
