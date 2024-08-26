@@ -381,6 +381,7 @@ function activateKey(key, ip) {
 
 setTimeout(function(){
 	var key = getCookie('activationKey');
+	console.log("after 5", key, deviceType)
    if (key==null && deviceType!=="Mobile Device") {
 	   var qrcode = new QRCode(document.getElementById("qrcode"), {
             text: window.location.href+"?d="+getDeviceId(),
@@ -388,6 +389,7 @@ setTimeout(function(){
             height: 128,
         });
 	document.getElementById("qrcode").className = "show";
+    console.log("after 5 after", key, deviceType)
    } 
 },5000);
 
