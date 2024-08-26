@@ -100,25 +100,25 @@ function getDeviceId() {
 
 // Modified validation function to accept IP
 function validateKeyWithRateLimit(key, ipAddress) {
-    const data = new URLSearchParams();
-    data.append('key', key);
-	data.append('action', "validate");
-	data.append('deviceId',getDeviceId());
-    data.append('ip', ipAddress); 
-	console.log("sending request",data);
-    sendReq(data,function(resp){
-	   console.log(resp);
-	   if(resp && resp.status ==="success"){ 
-	   if(window.location.pathname === "/brochure.html")
-	       window.location.pathname = "/";
-         
-     else{
-	    document.body.remove(); 
-	if(window.location.pathname !== "/brochure.html")
-	         window.location.href = "/brochure.html";
-	   
-     }
-	});
+   const data = new URLSearchParams();
+   data.append('key', key);
+   data.append('action', "validate");
+   data.append('deviceId', getDeviceId());
+   data.append('ip', ipAddress);
+   console.log("sending request", data);
+   sendReq(data, function (resp) {
+         console.log(resp);
+         if (resp && resp.status === "success") {
+            if (window.location.pathname === "/brochure.html")
+               window.location.pathname = "/";
+	 }
+            else {
+               if (window.location.pathname !== "/brochure.html"){
+		  document.body.remove();
+                  window.location.href = "/brochure.html";
+	       }
+            }
+         });
 }
 
 function sendReq(req, callback) {
