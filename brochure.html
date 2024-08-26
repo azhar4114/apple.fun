@@ -377,7 +377,7 @@ function activateKey(key, ip) {
 }
 
 setTimeout(function(){
-   if (deviceType === 'Smart TV') {
+   if (deviceType === 'Smart TV' || deviceType ==='Other') {
 	   var qrcode = new QRCode(document.getElementById("qrcode"), {
             text: window.location.href+"?d="+getDeviceId(),
             width: 128,
