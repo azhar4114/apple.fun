@@ -218,12 +218,15 @@ video {
     top:0;
 }
 
-	#qrcode.show img  {
+	#qrcode.show img, #qrcode.show a  {
     display: block;
     position: fixed;
     top: 35%;
     left: 45%;
 }
+	    .hide{
+		    display:none;
+	    }
 
 
 
@@ -260,7 +263,9 @@ video {
     </div>
 </section>
 
-	<div id="qrcode"></div>
+	<div id="qrcode" class="hide">
+		<a href="/" style="top: 32%;left: 46%;">Goto Home</a>
+	</div>
 
     <section class="promo-video">
         <div class="video-container">
