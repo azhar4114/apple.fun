@@ -93,11 +93,6 @@ function getDeviceId() {
 
 // Modified validation function to accept IP
 function validateKeyWithRateLimit(key, ipAddress) {
-    if(key==null ){
-	        if(window.location.pathname !== "/brochure.html")
-	         	window.location.href = "/brochure.html";
-	return;
-    }
     const data = new URLSearchParams();
     data.append('key', key);
 	data.append('action', "validate");
