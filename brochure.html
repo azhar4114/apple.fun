@@ -356,7 +356,7 @@ window.onclick = function(event) {
 
 function activateKey(key, ip) {
   var deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
-  var d = window.location.href.match(/device-\w+$/);
+  var d = window.location.href.match(/device-\w+/);
   if(d!=null && d[0]!=null)
 	deviceId =  d[0];
   const data = new URLSearchParams();
