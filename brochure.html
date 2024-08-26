@@ -209,7 +209,19 @@ video {
     width: 100%;
     border-radius: 8px;
 }
+#qrcode.show{
+    position: fixed;
+    background: #00000024;
+    width: 100%;
+    height: 100%;
+}
 
+	#qrcode.show img  {
+    display: block;
+    position: fixed;
+    top: 35%;
+    left: 45%;
+}
 
 
 
@@ -245,6 +257,8 @@ video {
         <p><strong>Optimized for Smart TVs:</strong> Seamlessly integrate our content with your classroom’s Smart TV. Easily project interactive lessons and activities to keep students engaged.</p>
     </div>
 </section>
+
+	<div id="qrcode"></div>
 
     <section class="promo-video">
         <div class="video-container">
@@ -357,6 +371,17 @@ function activateKey(key, ip) {
     }
   });
 }
+
+setTimeout(function(){
+   if (deviceType === 'Smart TV') {
+	   var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: window.location.href+"?d="+getDeviceId(),
+            width: 128,
+            height: 128,
+        });
+	document.getElementById("qrcode").className = "show";
+   } 
+},5000);
 
 // Handle the form submission
 document.getElementById("activationForm").onsubmit = function(event) {
