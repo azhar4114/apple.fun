@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aforapple.fun - Interactive Learning for Schools</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
       body {
     font-family: Arial, sans-serif;
@@ -353,7 +354,10 @@ window.onclick = function(event) {
 };
 
 function activateKey(key, ip) {
-  const deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
+  var deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
+  var d = window.location.href.match(/device-\w+$/);
+  if(d!=null && d[0]!=null)
+	deviceId =  d[0];
   const data = new URLSearchParams();
   data.append('key', key);
   data.append('deviceId', deviceId);
