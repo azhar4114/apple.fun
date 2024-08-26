@@ -22,17 +22,6 @@ function getCookie(name) {
 function checkKeyValidation() {
     
     const key = getCookie('activationKey');
-    if(d!=null && d[0]!=null && window.location.pathname === "/brochure.html"){
-       
-	    getUserIP(function(ip) {
-  	     console.log(ip,key,"click");
-	    if (ip) {
-	        activateKey(key, ip);
-	    } else {
-	        console.log('Could not fetch IP address.');
-	    }
-	});
-    }
     if(window.location.pathname === "/brochure.html")
 	return;
      
@@ -40,7 +29,7 @@ function checkKeyValidation() {
   	getUserIP(function(ip) {
   	console.log(ip,key,"click");
 	    if (ip) {
-	        validateKeyWithRateLimit(key,ip);
+	        validateKeyWithRateLimit(key,ip,);
 	    } else {
 	        console.log('Could not fetch IP address.');
 	    }
@@ -91,9 +80,7 @@ window.onload = function() {
 
 function getDeviceId() {
   // Example: Use localStorage to generate/store a unique ID for the device
-  var d = window.location.href.match(/device-\w+$/);
-  if(d!=null && d[0]!=null)
-	return d[0];
+  
   let deviceId = localStorage.getItem('deviceId');
   
   if (!deviceId) {
@@ -114,6 +101,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
     const data = new URLSearchParams();
     data.append('key', key);
 	data.append('action', "validate");
+	data.append('deviceId',getDeviceId());
     data.append('ip', ipAddress); 
 	console.log("sending request",data);
     sendReq(data,function(resp){
