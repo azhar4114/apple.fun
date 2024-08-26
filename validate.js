@@ -36,7 +36,7 @@ function checkKeyValidation() {
 	});
 }
 
-function isAndroidWebViewOrSmartTV() {
+function detectDeviceType() {
     const userAgent = navigator.userAgent.toLowerCase();
 
     // Check for Android WebView
@@ -46,10 +46,20 @@ function isAndroidWebViewOrSmartTV() {
     // Check for Smart TV
     const isSmartTV = /smart-tv|smarttv|appletv|googletv|hbbtv|netcast|viera|tizen|webos|sonydtv|firetv/.test(userAgent);
 
+    // Check for Mobile Device
+    const isMobile = /android|iphone|ipad|ipod|blackberry|bb|playbook|silk|opera mini|windows phone|iemobile/.test(userAgent);
+
+    // Check for Laptop or PC
+    const isLaptopOrPC = !isMobile && !isSmartTV && !isAndroid && !isWebView;
+
     if (isAndroid && isWebView) {
         return 'Android WebView';
     } else if (isSmartTV) {
         return 'Smart TV';
+    } else if (isMobile) {
+        return 'Mobile Device';
+    } else if (isLaptopOrPC) {
+        return 'Laptop or PC';
     } else {
         return 'Other';
     }
@@ -67,13 +77,10 @@ window.onload = function() {
    if (deviceType === 'Android WebView') {
        console.log("Content is being rendered on Android WebView.");
        
-   } else if (deviceType === 'Smart TV') {
-       console.log("Content is being rendered on Smart TV.");
-       checkKeyValidation();
    } else {
-       console.log("Content is being rendered on a different device.");
+       console.log("Content is being rendered on ", deviceType);
        checkKeyValidation();
-   }
+   } 
   
 }
 
@@ -101,14 +108,15 @@ function validateKeyWithRateLimit(key, ipAddress) {
 	console.log("sending request",data);
     sendReq(data,function(resp){
 	   console.log(resp);
-	   if(resp.status!=="success"){
-         if(window.location.pathname !== "/brochure.html")
-	         window.location.href = "/brochure.html";
-	   }
+	   if(resp && resp.status ==="success"){ 
+	   if(window.location.pathname === "/brochure.html")
+	       window.location.pathname = "/";
+         
      else{
-	if(window.location.pathname === "/brochure.html")
-	   window.location.pathname = "/";
-        setCookie("keyvalidated","true", 1);
+	    document.body.remove(); 
+	if(window.location.pathname !== "/brochure.html")
+	         window.location.href = "/brochure.html";
+	   
      }
 	});
 }
