@@ -1,170 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	<link rel="stylesheet" href="styles.css">
+	
 	  <title>Letter Tracing</title>
     <style>
-      .header {
-  padding: 2vh;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 1vh;
-  margin-bottom: 2vh;
-}
-
-.header h1 {
-  font-size: 5vh;
-  margin: 0;
-}
-
-.header a {
-  font-size: 2vh;
-  color: #ff6f61;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1vh;
-}
-
-.header a:hover {
-  text-decoration: underline;
-}
-      #controls, #controls div{
-    justify-content: center;
-  align-items: center;
-}
-	    .button {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  padding: 2vh 3vh;
-  border-radius: 1vh;
-  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.2);
-  margin: 1vh;
-  font-size: 4vh;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-  min-width: 10vh;
-  position: relative;
-}
-
-.button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
-  border: 0.4vh solid #ff6f61;
-}
-
-.button:active,
-.button.clicked {
-  border: 0.4vh solid #4caf50;
-}
-	    .button.autoplay{
-		border: 0.5vh solid #9861ff;
-		transform: scale(1.09);
-	        box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
-	    }
-
-.toggle-buttons {
-  display: flex;
-  justify-content: center;
-  margin: 2vh 0;
-}
-
-.toggle-button {
-  background-color: #f0f0f0;
-  color: #333;
-  padding: 1vh 2vh;
-  border: none;
-  border-radius: 0.5vh;
-  margin: 0 1vh;
-  cursor: pointer;
-  transition: background-color 0.3s;
-font-size: 1.7vh;
-}
-
-.toggle-button.active {
-  background-color: #ff6f61;
-  color: #fff;
-}
-      body {
-    background-image: url(flowersbg.jpeg);
-    background-size: 130% 120%;
-    animation: gradient 50s ease infinite;
-    height: 100vh;
-    margin: 0;
-    background-position: center;
-	font-family: Arial, sans-serif;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 0%;
+	    canvas {
+	  border: 1px solid black;
+	  background-color: #fff;
+	  margin-top: 10px;
 	}
-	50% {
-		background-position: 100% 100%;
+	    h1 {
+	  margin-bottom: 20px;
 	}
-	100% {
-		background-position: 0% 0%;
+	.game {
+	  margin: 20px;
+	  padding: 20px;
+	  border: 2px solid #000;
+	  border-radius: 10px;
+	  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+	  width: 90%;
+	  max-width: 600px;
+	  text-align: center;
 	}
-}
-
- header {
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        h1 {
-    font-size: 3.3vh;
-    margin: 1vh 0;
-}
-        p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-nav {
-            text-align: center;
-            margin-bottom: 1vh;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 2vh;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-      canvas {
-    border: 1px solid black;
-    background-color: #fff;
-    margin-top: 10px;
-  }
-      h1 {
-    margin-bottom: 20px;
-  }
-  .game {
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
-  }
-  .game h2 {
-    margin-bottom: 10px;
-  }
+	.game h2 {
+	  margin-bottom: 10px;
+	}
 
 	    .container{
 		    display: flex;
-    flex-direction: column;
-    align-items: center;
+	  flex-direction: column;
+	  align-items: center;
 	    }
+		body {
+		    background-image: url(flowersbg.jpeg);
+		}
     </style>
   </head>
   <body>
@@ -201,7 +74,7 @@ nav {
       </div>
       <canvas id="tracingCanvas" width="400" height="400"></canvas>
     </div>
-  </body>
+ 
     <script>
       var app = angular.module("newApp", []);
 
@@ -318,4 +191,5 @@ nav {
 
   gtag('config', 'G-1ZCM5PW9N9');
 </script>
+   </body>
 </html>

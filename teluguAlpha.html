@@ -6,114 +6,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	<link rel="stylesheet" href="styles.css">
 	  <title>Telugu Alphabet Chart</title>
-    <style>
-     div#alphabet{
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(18vh, 20vh));
-    padding: 2vh 3vh;
-    grid-gap: 3vh 3vh;
-}
-
-	    input[type="checkbox"]  {
-    -webkit-appearance: none; /* Remove default checkbox styles */
-    -moz-appearance: none;
-    appearance: none;
-    width: 1.5vh; /* Adjust the width as needed */
-    height: 1.5vh; /* Adjust the height as needed */
-    border: 2px solid #999; /* Optional: Add a border */
-    border-radius: .5vh; /* Optional: Add rounded corners */
-    outline: none; /* Optional: Remove focus outline */
-    cursor: pointer;
-}
-
-	    input[type="checkbox"]:checked {
-    background-color: #007bff; /* Example background color for checked checkboxes */
-    border-color: #007bff; /* Example border color for checked checkboxes */
-}
-
-#controls, #controls div{
-    justify-content: center;
-  align-items: center;
-}
-
-#controls div{
-    padding: 1vh 1vh;
-    text-align: center;
-    color: white;
-}
-
-.char{
-    display: grid;
-    width: 18vh;
-    height: 16vh;
-    font-size: 7vh;
-    border: 0.2vh solid white;
-    align-content: center;
-    justify-content: center;
-    animation-duration: .3s;
-    box-shadow: 1vh 1vh 1vh 0.6vh #1111115e;
-    border-radius: 1vh;
-    cursor: pointer;
-    background: #ddca7eb3;
-}
-
-.clicked{
-  background:#bcf6bc;
-}
-
-body {
-    background: linear-gradient(90deg, #ee7752, #f27daa, #7dd7f7, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    height: 100vh;
-    margin: 0;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
- header {
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        h1 {
-    font-size: 3.3vh;
-    margin: 1vh 0;
-}
-        p {
-            font-size: 18px;
-            margin: 10px 0;
+     <style>
+         #alphabet{
+        grid-template-columns: repeat(auto-fit, minmax(15vh, 25vh));
         }
 
-nav {
-            text-align: center;
-            margin-bottom: 1vh;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 2vh;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .button{
+        display: grid;
+        font-size: 7vh;
+        border: 0.2vh solid white;
+        align-content: center;
+        justify-content: center;
+        animation-duration: .3s;
+        box-shadow: 1vh 1vh 1vh 0.6vh #1111115e;
+        border-radius: 1vh;
+        background: #ddca7eb3;
+    	   padding: 5vh 6vh;
+    }
 
 
-    </style>
+    body {
+        background-image: linear-gradient(90deg, #ee7752, #f27daa, #7dd7f7, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+        margin: 0;
+    }
+    
+     </style>
   </head>
 <body ng-app="newApp">
   
@@ -126,36 +48,36 @@ nav {
     </header>
   </div>
     <div id="alphabet">
-      <div class="char ng-cloak" ng-repeat="n in range(0,15)" data="{{n}}"><div><span >{{chars[n].c}}</span></div></div>
+      <div class="button ng-cloak" ng-repeat="n in range(0,15)" data="{{n}}"><div><span >{{chars[n].c}}</span></div></div>
     </div>
     <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(16,20)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(16,20)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(21,25)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(21,25)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(26,30)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(26,30)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(31,35)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(31,35)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(36,40)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(36,40)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(41,48)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(41,48)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       <div id="alphabet">
-        <div class="char ng-cloak" ng-repeat="n in range(49,51)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
+        <div class="button ng-cloak" ng-repeat="n in range(49,51)" data="{{n}}"><div><span>{{chars[n].c}}</span></div></div>
       </div>
       
       
     </div>
-
+<button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
   <script>
-const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
-var an=0, expl=false;
+
 const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'ఈ', p:'ईई'}, {c:'ఉ', p:'उ'}, {c:'ఊ', p:'उउ'}, {c:'ఋ', p:'रु'}, {c:'ౠ', p:'रू'}, {c:'ఎ', p:'ए'}, {c:'ఏ', p:'एए'}, {c:'ఐ', p:'i'}, {c:'ఒ', p:'o'}, {c:'ఓ', p:'O'}, {c:'ఔ',p:'अउ'}, {c:'అం', p:'अम'}, {c:'అః', p:'अहा'}, 
 {c:'క', p:'क'}, {c:'ఖ', p:'ख'}, {c:'గ', p:'ग'}, {c:'ఘ', p:'घ'}, {c:'ఙ', p:'na'}, 
 {c:'చ', p:'च'}, {c:'ఛ', p:'छ'}, {c:'జ', p:'ज'}, {c:'ఝ', p:'झ'}, {c:'ఞ', p:'na'}, 
@@ -164,22 +86,11 @@ const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'�
 {c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
 {c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
 {c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
+if(speechSynthesis){
 var voices = speechSynthesis.getVoices();
 var desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
 $(document).ready(function(){
-  
- $(".char").mouseenter(function() {
-    $(this).addClass("animate__pulse");
-}).mouseleave(function() {
-    $(this).removeClass("animate__pulse").removeClass(anim[an]);
-});
-  
-
-    // Speak the text
-    
-  
-  
-  $(".char").click(function(){
+	$(".char").click(function(){
     console.log(anim[an],an, this);
     $(this).addClass(anim[an]);
     var ind = $(this).attr('data');
@@ -210,6 +121,8 @@ if(an>=anim.length)
   })
 });
 
+}
+
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
@@ -236,13 +149,6 @@ app.controller('appCtrl', function($scope) {
 };
   $scope.populatePage(); 
 }); 
-function explodeConfetti() {
-  confetti({
-    particleCount: 1000,
-    spread: 300,
-    origin: { y: .5}
-  });
-}
   </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>

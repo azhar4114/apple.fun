@@ -2,200 +2,25 @@
 <html>
   <head>
 	  <script src="validate.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
 	  <title>Learn Numbers</title>
+	  
     <style>
-     #alphabet{
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
-    padding: 2vh 3vh;
-    grid-gap: 3vh 3vh;
-}
-
-	   .header {
-  padding: 2vh;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 1vh;
-  margin-bottom: 2vh;
-}
-
-.header h1 {
-  font-size: 5vh;
-  margin: 0;
-}
-
-.header a {
-  font-size: 2vh;
-  color: #ff6f61;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1vh;
-}
-
-.header a:hover {
-  text-decoration: underline;
-}
-
-	    input[type="checkbox"]  {
-    -webkit-appearance: none; /* Remove default checkbox styles */
-    -moz-appearance: none;
-    appearance: none;
-    width: 1.5vh; /* Adjust the width as needed */
-    height: 1.5vh; /* Adjust the height as needed */
-    border: 2px solid #999; /* Optional: Add a border */
-    border-radius: .5vh; /* Optional: Add rounded corners */
-    outline: none; /* Optional: Remove focus outline */
-    cursor: pointer;
-}
-
-	    input[type="checkbox"]:checked {
-    background-color: #007bff; /* Example background color for checked checkboxes */
-    border-color: #007bff; /* Example border color for checked checkboxes */
-}
-
-#controls, #controls div{
-    justify-content: center;
-  align-items: center;
-}
+		#alphabet{
+		    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
+		}
+		
 	    .button {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
   padding: 2vh 3vh;
-  border-radius: 1vh;
-  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.2);
-  margin: 1vh;
   font-size: 4vh;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-  min-width: 10vh;
-  position: relative;
-}
-
-.button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
-  border: 0.4vh solid #ff6f61;
-}
-
-.button:active,
-.button.clicked {
-  border: 0.4vh solid #4caf50;
-}
-	    .button.autoplay{
-		border: 0.5vh solid #9861ff;
-		transform: scale(1.09);
-	        box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.3);
-	    }
-
-.toggle-buttons {
-  display: flex;
-  justify-content: center;
-  margin: 2vh 0;
-}
-
-.toggle-button {
-  background-color: #f0f0f0;
-  color: #333;
-  padding: 1vh 2vh;
-  border: none;
-  border-radius: 0.5vh;
-  margin: 0 1vh;
-  cursor: pointer;
-  transition: background-color 0.3s;
-font-size: 1.7vh;
-}
-
-.toggle-button.active {
-  background-color: #ff6f61;
-  color: #fff;
-}
-
-
-#controls div{
-    padding: 1vh 1vh;
-    text-align: center;
-    color: white;
-}
-
-.char{
-    display: grid;
-    width: 18vh;
-    height: 16vh;
-    font-size: 7vh;
-    border: 0.2vh solid white;
-    align-content: center;
-    justify-content: center;
-    animation-duration: .3s;
-    box-shadow: 1vh 1vh 1vh 0.6vh #1111115e;
-    border-radius: 1vh;
-    cursor: pointer;
-    background: #ddca7eb3;
-}
-
-.clicked{
-  background:#bcf6bc;
 }
 
 body {
-    background-image: url(space1.jpeg);
-    background-size: 130% 120%;
-    animation: gradient 50s ease infinite;
-    height: 100vh;
-    margin: 0;
-    background-position: center;
-	font-family: Arial, sans-serif;
+	background-image: url(space1.jpeg);
 }
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 0%;
-	}
-	50% {
-		background-position: 100% 100%;
-	}
-	100% {
-		background-position: 0% 0%;
-	}
-}
-
- header {
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        h1 {
-    font-size: 3.3vh;
-    margin: 1vh 0;
-}
-        p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-nav {
-            text-align: center;
-            margin-bottom: 1vh;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 2vh;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-
     </style>
   </head>
 <body ng-app="newApp">
@@ -213,68 +38,12 @@ nav {
     </div>
       
     </div>
-
+<button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
   <script>
-const anim = ["animate__zoomOutRight","animate__hinge","animate__rotateOut", "animate__shakeY", "animate__rubberBand", "animate__headShake", "animate__swing", "animate__tada", "animate__wobble", "animate__jello", "animate__heartBeat", "animate__shakeX", "animate__rotateIn"];
 const aud = new Audio("/numbers.m4a");
 const audTime = [{s:0, e:1,c:1}, {s:1, e:1.6,c:2},{s:1.6, e:2.38,c:3},{s:2.38, e:3.15,c:4},{s:3.15, e:4.03,c:5},{s:4.03, e:4.94,c:6},{s:4.94, e:5.79,c:7},{s:5.79, e:6.48,c:8},{s:6.48, e:7.28,c:9},{s:7.28, e:8.3,c:10}];
-var an=0, expl=false;
-
-$(document).ready(function(){
-  
- $(".char").mouseenter(function() {
-    $(this).addClass("animate__pulse");
-}).mouseleave(function() {
-    $(this).removeClass("animate__pulse").removeClass(anim[an]);
-});
-  var intv;
-	
-  $(".toggle-button.play").click(function(e){
-	  var i=0;
-	  var bt = $(".button");
-	  if(intv!=null){
-	  	$(this).html("Play");
-		clearInterval(intv);
-		$(".autoplay").removeClass("autoplay");
-		$(this).addClass("active");
-		intv = null;
-		return;
-	  } 
-	  $(this).removeClass("active");
-	  $(this).html("Stop");
-	  intv = setInterval(function(){
-		  $(".autoplay").removeClass("autoplay");
-		  $(bt[i]).addClass("autoplay");
-		  $(bt[i++]).click();
-		  if(i>9){
-			  setTimeout(function(){
-				  	$(".toggle-button.play").html("Play");
-					clearInterval(intv);
-					$(".autoplay").removeClass("autoplay");
-					$(".toggle-button.play").addClass("active");
-					intv = null;
-			 },1000);
-	  	  }
-	  },1200);
-	  
-  });
-  
-  $(".button").click(function(){
-    var ind = $(this).attr('data');
-    aud.currentTime = audTime[ind].s;
-    aud.play();
-    setTimeout(function(){
-      aud.pause();
-    }, (audTime[ind].e-audTime[ind].s)*1000);
-      $(this).addClass("clicked");
-      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if($(".clicked").length==10 && !expl){
-        explodeConfetti();
-        expl = true;
-      }
-        
-  })
-});
+gap = 1200;
 
 var app = angular.module("newApp", []);
 
@@ -289,29 +58,12 @@ app.controller('appCtrl', function($scope) {
       $scope.ctrl.showCaps = true;
   };
 
-	/*$scope.read = function(l, ind){
-    	    aud.currentTime = audTime[ind].s;
-	    aud.play();
-	    setTimeout(function(){
-	      aud.pause();
-	    }, (audTime[ind].e-audTime[ind].s)*1000);
-	      
-	      if($(".clicked").length==26 && !expl){
-	        explodeConfetti();
-	        expl = true;
-	      }
-	}*/
   
 }); 
-function explodeConfetti() {
-  confetti({
-    particleCount: 300,
-    spread: 300,
-    origin: { y: .5}
-  });
-}
+
 
   </script>
+<script src="script.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];

@@ -10,6 +10,8 @@
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
    <script src="login.js" async defer></script>
+   
+
 <style>
 
 	#avatar {
@@ -150,6 +152,16 @@ body {
     outline: none;
 }
 
+#scrollToTopBtn {
+	display: none; /* Hidden by default */ position: fixed; /* Fixed position on the page */ bottom: 20px; /* Position from the bottom */ right: 30px; /* Position from the right */
+	z-index: 99; /* Sit on top */ border: none; /* Remove borders */ outline: none; /* Remove outline */ background-color: #ff9800; /* Background color */ color: white; /* Text color */ cursor: pointer;
+	/* Add a pointer cursor on hover */ padding: 15px; /* Some padding */ border-radius: 10px; /* Rounded corners */ font-size: 18px; /* Increase font size */
+}
+
+#scrollToTopBtn:hover {
+	background-color: #555; /* Darker background on hover */
+}
+
 </style>
 </head>
 <body ng-app="newApp">
@@ -168,10 +180,10 @@ body {
   <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
 	  </center>
     </header>
-  <div  ng-controller="appCtrl"> 
+  <div  ng-controller="appCtrl" class="ng-cloak"> 
 	  <center style="padding:2vh 0 1vh 0;"><input type="search" ng-model="search" class="search" placeholder="What are you looking for?"></center>
 	  <div class="container">
-    <div class="card" ng-repeat="c in cards | filter: { t: search }">
+    <div class="card" ng-repeat="c in cards | filter: { t: search }" ng-click="open(c)">
         <div class="card-content">
             <h2 class="card-title">{{c.t}}</h2>
             <p class="card-description">{{c.d}}</p>
@@ -182,6 +194,8 @@ body {
     
    
 </div>
+	<button id="scrollToTopBtn" title="Go to top">Top</button>
+
   <footer>
         <p>&copy; 2024 AForApple.Fun. All rights reserved.</p>
         <div class="footer-links">
@@ -190,6 +204,7 @@ body {
             <a href="/contact.html">Contact Us</a>
         </div>
     </footer>
+	<script src="script.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
 
@@ -207,6 +222,10 @@ app.controller('appCtrl', function($scope) {
 	 {t:"Interactive Coloring Page",d:"Get creative! Choose an image and start coloring like a pro",l:"/color.html"},
 	 {t:"हिंदी वर्णमाला चार्ट",d:"रंगीन चित्रों की यात्रा: हिंदी वर्णमाला सीखें और सिखाएं",l:"/hindiAlpha.html"},
 	 {t:"తెలుగు వర్ణమాల చార్టు",d:"తెలుగు వర్ణమాల వారి ఉచ్చారణతో",l:"/teluguAlpha.html"}];
+	 $scope.open = function(card){
+		 window.location.href=card.l;
+	 }
+	 
 });
  
 	

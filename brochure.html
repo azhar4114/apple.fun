@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aforapple.fun - Interactive Learning for Schools</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
       body {
@@ -92,6 +93,12 @@
     color: #007bff;
 }
 
+.cta{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+}
+
 .cta button {
     background-color: #007bff;
     color: white;
@@ -99,7 +106,6 @@
     padding: 15px 30px;
     border-radius: 8px;
     font-size: 1.2em;
-    cursor: pointer;
 }
 
 .cta button:hover {
@@ -152,7 +158,6 @@
     top: 10px;
     right: 10px;
     font-size: 18px;
-    cursor: pointer;
 }
 
 /* Input field */
@@ -172,7 +177,6 @@ button[type="submit"] {
     padding: 10px 20px;
     border: none;
     border-radius: 3px;
-    cursor: pointer;
 }
 
 button[type="submit"]:hover {
@@ -210,23 +214,13 @@ video {
     width: 100%;
     border-radius: 8px;
 }
-#qrcode.show{
-    position: fixed;
-    background: #00000024;
-    width: 100%;
-    height: 100%;
-    top:0;
-}
-
-	#qrcode.show img, #qrcode.show a  {
-    display: block;
-    position: fixed;
-    top: 35%;
-    left: 45%;
-}
 	    .hide{
 		    display:none;
 	    }
+		
+		body,a,button{
+			cursor: url('cursor.png'), auto;
+		}
 
 
 
@@ -243,7 +237,7 @@ video {
             <form id="activationForm">
                 <label for="activationKey">Activation Key:</label>
                 <input type="text" id="activationKey" name="activationKey" required>
-                <button type="submit">Activate</button>
+                <button type="submit" id="activate">Activate</button>
             </form>
            
         </div>
@@ -262,10 +256,6 @@ video {
         <p><strong>Optimized for Smart TVs:</strong> Seamlessly integrate our content with your classroom’s Smart TV. Easily project interactive lessons and activities to keep students engaged.</p>
     </div>
 </section>
-
-	<div id="qrcode" class="hide">
-		<a href="/" style="top: 30%;left: 46%;background: white;padding: 10px;">Goto Home</a>
-	</div>
 
     <section class="promo-video">
         <div class="video-container">
@@ -321,7 +311,10 @@ video {
             <p>Contact us to schedule a free trial and see how Aforapple.fun can enhance learning at your school. <button><a href="contact.html" style="color:white">Contact Us</a></button></p>
           
           <p>Already subscribed ? <a href="#" onclick="showPopup()">Click here</a> to activate</p>
+		  <p>Already activated? <a href="/" style="top: 30%;left: 46%;background: white;padding: 10px;">Start using</a></p>
         </div>
+		<div id="qrcode" class="hide">
+		</div>
     </section>
 
     <footer class="footer">
@@ -362,6 +355,7 @@ window.onclick = function(event) {
 function activateKey(key, ip) {
   var deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
   var d = window.location.href.match(/device-\w+/);
+  $("#activate").prop('disabled', true);
   if(d!=null && d[0]!=null)
 	deviceId =  d[0];
   const data = new URLSearchParams();
@@ -370,6 +364,7 @@ function activateKey(key, ip) {
   data.append('action', "activate");
   data.append('ip', ip); // Send IP address to the server
   sendReq(data,function(response) {
+	  $("#activate").prop('disabled', false);;
     console.log(response);
     if (response.status==="success") {
       document.cookie = "activationKey=" + key + ";path=/";
@@ -396,7 +391,7 @@ setTimeout(function(){
 	document.getElementById("qrcode").className = "show";
     console.log("after 5 after", key, deviceType)
    } 
-},5000);
+},1000);
 
 // Handle the form submission
 document.getElementById("activationForm").onsubmit = function(event) {

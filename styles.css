@@ -1,0 +1,202 @@
+.header {
+	padding: 2vh;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 1vh;
+	margin-bottom: 2vh;
+}
+
+.header h1 {
+	font-size: 5vh;
+	margin: 0;
+}
+
+.header a {
+	font-size: 25px;
+	color: #ff6f61;
+	text-decoration: none;
+	display: inline-block;
+	margin-top: 1vh;
+}
+
+.header a:hover {
+	text-decoration: underline;
+}
+
+#alphabet {
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
+	padding: 2vh 3vh;
+	grid-gap: 3vh 3vh;
+	box-sizing: border-box;
+}
+
+#controls, #controls div {
+	justify-content: center;
+	align-items: center;
+}
+
+.button {
+	background-color: rgba(255, 255, 255, 0.9);
+	color: #333;
+	padding: 2vh 11vh;
+	border-radius: 1vh;
+	box-shadow: 0
+	0.4vh 0.8vh rgba(0, 0, 0, 0.2);
+	margin: 1vh;
+	font-size: 4vh;
+	font-weight: bold;
+	text-align: center;
+	transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+	min-width: 10vh;
+	position: relative;
+}
+
+.cursor-hide{
+	cursor:none;
+}
+
+
+.button:active {
+	border: 0.4vh solid #4caf50;
+}
+.button.autoplay,.button:hover,.button:focus {
+	border: 0.5vh solid #9861ff;
+	transform: scale(1.09);
+	background-color: #fff8e1;
+	box-shadow: 0 0 10px 10px rgba(255,
+		152, 0, 0.5);
+		transition: all 0.3s ease;
+	}
+
+	.toggle-buttons {
+		display: flex;
+		justify-content: center;
+		margin: 2vh 0;
+	}
+
+	.toggle-button {
+		background-color: #f0f0f0;
+		color: #333;
+		padding: 1vh 2vh;
+		border: none;
+		border-radius: 0.5vh;
+		margin: 0 1vh;
+		transition: background-color 0.3s;
+		font-size: 18px;
+	}
+
+	.toggle-button.active {
+		background-color: #ff6f61;
+		color: #fff;
+	}
+
+	#controls div {
+		padding: 1vh 1vh;
+		text-align: center;
+		color: white;
+	}
+
+	.char {
+		display: grid;
+		width: 35vh;
+		height: 35vh;
+		font-size: 7vh;
+		border: 0.2vh solid white;
+		align-content: center;
+		justify-content: center;
+		animation-duration: .3s;
+		box-shadow: 1vh 1vh 1vh 0.6vh
+		#1111115e;
+		border-radius: 1vh;
+		background: #ddca7eb3;
+	}
+
+	.clicked {
+		background: rgba(188,246,188,0.9);
+	}
+
+	body {
+		background-image: url(space2.jpeg);
+		background-size: cover;
+		animation: gradient 50s ease infinite;
+		height: 100vh;
+		margin: 0;
+		background-position: center;
+		font-family: Arial, sans-serif;
+		cursor: url('cursor.png'), auto;
+	}
+	
+	body,a,button{
+		cursor: url('cursor.png'), auto;
+	}
+
+    @keyframes gradient {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 50% 50%;
+	}
+	100% {
+		background-position: 0% 0%;
+	}
+}
+	
+
+header {
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+}
+h1 {
+	font-size: 3.3vh;
+	margin: 1vh 0;
+}
+p {
+	font-size: 18px;
+	margin: 10px 0;
+}
+
+nav {
+	text-align: center;
+	margin-bottom: 1vh;
+}
+nav a {
+	color: #fff;
+	text-decoration: none;
+	margin: 0 20px;
+	font-size: 2vh;
+}
+nav a:hover {
+	text-decoration: underline;
+}
+.letter {
+	font-size: 7vh;
+	font-weight: bold;
+	text-align: center;
+}
+
+.img {
+	font-size: 15vh;
+	text-align: center;
+}
+
+.description {
+	margin-top: 10px;
+	font-size: 3vh;
+	text-align: center;
+}
+
+#scrollToTopBtn {
+	display: none; /* Hidden by default */ position: fixed; /* Fixed position on the page */ bottom: 20px; /* Position from the bottom */ right: 30px; /* Position from the right */
+	z-index: 99; /* Sit on top */ border: none; /* Remove borders */ outline: none; /* Remove outline */ background-color: #ff9800; /* Background color */ color: white;
+	padding: 15px; /* Some padding */ border-radius: 10px; /* Rounded corners */ font-size: 18px; /* Increase font size */
+}
+
+#scrollToTopBtn:hover {
+	background-color: #555; /* Darker background on hover */
+}

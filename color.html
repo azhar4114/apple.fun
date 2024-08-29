@@ -3,60 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
 <title>Interactive Coloring Page</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 20px;
-    background-image: url(rainbow2.jpeg);
-    background-size: 130% 120%;
-    animation: gradient 50s ease infinite;
-    height: 100vh;
-    margin: 0;
-    background-position: center;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    padding-bottom: 5vh;
-}
-
-  @keyframes gradient {
-	0% {
-		background-position: 0% 0%;
-	}
-	50% {
-		background-position: 100% 100%;
-	}
-	100% {
-		background-position: 0% 0%;
-	}
-}
-  .header {
-  padding: 2vh;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 1vh;
-  margin-bottom: 2vh;
-}
-
-.header h1 {
-  font-size: 5vh;
-  margin: 0;
-}
-
-.header a {
-  font-size: 2vh;
-  color: #ff6f61;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1vh;
-}
-
-.header a:hover {
-  text-decoration: underline;
-}
+  
   canvas {
     border: 1px solid #000;
     margin-top: 20px;
@@ -87,7 +37,22 @@
     margin: 10px;
     width: 100px;
     height: 100px;
-    cursor: pointer;
+  }
+  body{
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+      background-image: url(rainbow2.jpeg);
+      background-size: 130% 120%;
+      animation: gradient 50s ease infinite;
+      height: 100vh;
+      margin: 0;
+      background-position: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding-bottom: 5vh;
   }
 </style>
 	<script src="validate.js"></script>
