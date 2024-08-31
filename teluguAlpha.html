@@ -77,51 +77,10 @@
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
+	  const aud = new Audio("/telugu.wav");
+	  gap = 1200;
+const audTime= [{"c":"అ","p":"अ","s":"2.16","e":"2.85"},{"c":"ఆ","p":"आ","s":"2.85","e":"3.77"},{"c":"ఇ","p":"इ","s":"3.77","e":"4.61"},{"c":"ఈ","p":"ईई","s":"4.61","e":"5.42"},{"c":"ఉ","p":"उ","s":"5.42","e":"6.30"},{"c":"ఊ","p":"उउ","s":"6.30","e":"7.28"},{"c":"ఋ","p":"रु","s":"7.28","e":"8.31"},{"c":"ౠ","p":"रू","s":"8.31","e":"9.26"},{"c":"ఎ","p":"ए","s":"9.26","e":"10.43"},{"c":"ఏ","p":"एए","s":"10.43","e":"11.49"},{"c":"ఐ","p":"i","s":"11.49","e":"12.63"},{"c":"ఒ","p":"o","s":"12.63","e":"13.76"},{"c":"ఓ","p":"O","s":"13.76","e":"14.82"},{"c":"ఔ","p":"अउ","s":"14.82","e":"15.92"},{"c":"అం","p":"अम","s":"15.92","e":"16.73"},{"c":"అః","p":"अहा","s":"16.73","e":"17.86"},{"c":"క","p":"क","s":"19.80","e":"20.57"},{"c":"ఖ","p":"ख","s":"20.57","e":"21.41"},{"c":"గ","p":"ग","s":"21.41","e":"22.25"},{"c":"ఘ","p":"घ","s":"22.25","e":"23.02"},{"c":"ఙ","p":"na","s":"23.02","e":"24.01"},{"c":"చ","p":"च","s":"25.91","e":"26.68"},{"c":"ఛ","p":"छ","s":"26.68","e":"27.41"},{"c":"జ","p":"ज","s":"27.41","e":"28.25"},{"c":"ఝ","p":"झ","s":"28.25","e":"29.02"},{"c":"ఞ","p":"na","s":"29.02","e":"29.65"},{"c":"ట","p":"ट","s":"31.69","e":"32.54"},{"c":"ఠ","p":"ठ","s":"32.54","e":"33.27"},{"c":"డ","p":"ड","s":"33.27","e":"34.11"},{"c":"ఢ","p":"ढ","s":"34.11","e":"34.88"},{"c":"ణ","p":"ण","s":"34.88","e":"35.79"},{"c":"త","p":"त","s":"37.73","e":"38.39"},{"c":"థ","p":"थ","s":"38.39","e":"39.20"},{"c":"ద","p":"द","s":"39.20","e":"40.00"},{"c":"ధ","p":"ध","s":"40.00","e":"40.70"},{"c":"న","p":"न","s":"40.70","e":"41.47"},{"c":"ప","p":"प","s":"43.41","e":"44.21"},{"c":"ఫ","p":"फ","s":"44.21","e":"45.13"},{"c":"బ","p":"ब","s":"45.13","e":"45.90"},{"c":"భ","p":"भ","s":"45.90","e":"46.70"},{"c":"మ","p":"म","s":"46.70","e":"47.58"},{"c":"య","p":"य","s":"49.15","e":"49.85"},{"c":"ర","p":"र","s":"51.02","e":"51.57"},{"c":"ల","p":"ल","s":"52.81","e":"53.43"},{"c":"వ","p":"व","s":"54.64","e":"55.19"},{"c":"శ","p":"श","s":"56.98","e":"57.79"},{"c":"ష","p":"ष","s":"57.79","e":"58.52"},{"c":"స","p":"स","s":"58.52","e":"59.44"},{"c":"హ","p":"ह","s":"59.44","e":"60.13"},{"c":"ళ","p":"la","s":"60.13","e":"61.01"},{"c":"క్ష","p":"sha","s":"63.06","e":"63.57"},{"c":"ఱ","p":"bundira","s":"63.57","e":"64.16"}];
 
-const conso= [{c:'అ', p:'अ'}, {c:'ఆ', p:'आ'}, {c:'ఇ', p:'इ'}, {c:'ఈ', p:'ईई'}, {c:'ఉ', p:'उ'}, {c:'ఊ', p:'उउ'}, {c:'ఋ', p:'रु'}, {c:'ౠ', p:'रू'}, {c:'ఎ', p:'ए'}, {c:'ఏ', p:'एए'}, {c:'ఐ', p:'i'}, {c:'ఒ', p:'o'}, {c:'ఓ', p:'O'}, {c:'ఔ',p:'अउ'}, {c:'అం', p:'अम'}, {c:'అః', p:'अहा'}, 
-{c:'క', p:'क'}, {c:'ఖ', p:'ख'}, {c:'గ', p:'ग'}, {c:'ఘ', p:'घ'}, {c:'ఙ', p:'na'}, 
-{c:'చ', p:'च'}, {c:'ఛ', p:'छ'}, {c:'జ', p:'ज'}, {c:'ఝ', p:'झ'}, {c:'ఞ', p:'na'}, 
-{c:'ట', p:'ट'}, {c:'ఠ', p:'ठ'}, {c:'డ', p:'ड'}, {c:'ఢ', p:'ढ'}, {c:'ణ', p:'ण'}, 
-{c:'త', p:'त'}, {c:'థ', p:'थ'}, {c:'ద', p:'द'}, {c:'ధ', p:'ध'}, {c:'న', p:'न'}, 
-{c:'ప', p:'प'}, {c:'ఫ', p:'फ'}, {c:'బ', p:'ब'}, {c:'భ', p:'भ'}, {c:'మ', p:'म'}, 
-{c:'య', p:'य'}, {c:'ర', p:'र'}, {c:'ల', p:'ल'}, {c:'వ', p:'व'}, {c:'శ', p:'श'}, {c:'ష', p:'ष'}, {c:'స', p:'स'}, {c:'హ', p:'ह'}, 
-{c:'ళ', p:'la'}, {c:'క్ష', p:'sha'}, {c:'ఱ', p:'bundira'}];
-if(speechSynthesis){
-var voices = speechSynthesis.getVoices();
-var desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
-$(document).ready(function(){
-	$(".char").click(function(){
-    console.log(anim[an],an, this);
-    $(this).addClass(anim[an]);
-    var ind = $(this).attr('data');
-    const utterance = new SpeechSynthesisUtterance();
-    voices = speechSynthesis.getVoices();
-    // Set the text and language for speech synthesis
-    
-    desiredVoice = voices.find(voice => voice.name === "Google हिन्दी");
-
-// Set the desired voice
-utterance.voice = desiredVoice;
-  utterance.pitch = 1;
-  utterance.rate = 1.3;
-    utterance.lang = 'hi'; // English language for IPA
-    utterance.text = conso[ind].p;
-    console.log(utterance);
-    speechSynthesis.speak(utterance);
-    setTimeout(function(){ $("."+anim[an]).removeClass(anim[an]);
-                          an++;
-if(an>=anim.length)
-   an=0;
-    },500);
-      $(this).addClass("clicked");
-      if($(".clicked").length==conso.length && !expl){
-        explodeConfetti();
-        expl = true;
-      }
-  })
-});
-
-}
 
 var app = angular.module("newApp", []);
 
@@ -137,7 +96,7 @@ app.controller('appCtrl', function($scope) {
   
   $scope.populatePage = function(){
     var i,c="",C="";
-    $scope.chars = conso;
+    $scope.chars = audTime;
   }
   $scope.range = function(min, max, step) {
     step = step || 1;
