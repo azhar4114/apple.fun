@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script src="validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	<link rel="stylesheet" href="styles.css">
+	
+	  <title>Learn The Spectrum of Emotions</title>
+    <style>
+	    .button {
+    padding: 0;
+    font-size: 2.3vh;
+}
+
+      .shapes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
+  gap: 3vh;
+  width: 100%;
+}
+
+.shape-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px 40px;
+    transition: transform 0.2s;
+}
+
+.shape-card:hover {
+  transform: scale(1.05);
+}
+
+.shape-box {
+  width: 25vh;
+  height: 25vh;
+  margin-bottom: 1vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+     #alphabet{
+    grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
+}
+
+body{
+	background-image:url(clouds2.jpeg);
+}
+    </style>
+  </head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl">
+   <div class="header">
+    <h1>Learn The Spectrum of Emotions</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+  <div class="toggle-buttons">
+   <button class="toggle-button play active">Play</button>
+  </div>
+    <div id="alphabet" class="shapes-grid">
+      <div class="button ng-cloak" ng-repeat="s in shapes" data="{{$index}}">
+        <div>
+        <div class="shape-card" >
+          <h2>{{s}}</h2>
+          <div class="shape-box" ng-style="{'background-image': 'url(' + s.toLowerCase() + '.jpeg)'}"></div>
+        </div>
+      </div>
+      </div>
+      
+    </div>
+      
+    </div>
+<button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
+  <script>
+const aud = new Audio("emotions.m4a");
+const audTime = [{"s":"0.15","e":"0.76"},{"s":"0.76","e":"1.43"},{"s":"1.43","e":"2.23"},{"s":"2.23","e":"3.14"},{"s":"3.14","e":"4.12"},{"s":"4.12","e":"4.95"},{"s":"4.95","e":"5.98"},{"s":"5.98","e":"6.68"}];
+gap = 2300;
+var app = angular.module("newApp", []);
+
+app.controller('appCtrl', function($scope) {
+  $scope.shapes = ["Happy","Sad","Angry","Excited","Surprised","Scared","Confused","Bored"];
+  $scope.showSmallClck = function(){
+    //$scope.aud.play();
+	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+    if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+      $scope.ctrl.showCaps = true;
+  };
+  
+}); 
+
+  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</body>
+</html>
