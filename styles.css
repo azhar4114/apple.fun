@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
 .header {
 	padding: 2vh;
 	text-align: center;
@@ -126,7 +128,7 @@
 		height: 100vh;
 		margin: 0;
 		background-position: center;
-		font-family: Arial, sans-serif;
+		font-family: "Handlee", cursive;
 		cursor: url('cursor.png'), auto;
 	}
 	

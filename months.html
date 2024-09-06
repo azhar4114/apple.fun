@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script src="validate.js"></script>
+	<link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	  <title>Learn Months of Year</title>
+	  
+    <style>
+		#alphabet{
+		    grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
+		}
+		
+	    .button  {
+    padding: 2vh 3vh;
+    font-size: 4vh;
+    width: 22vh;
+    height: 22vh;
+    text-align: center;
+    align-items: center;
+    place-content: center;
+}
+
+body {
+	background-image: url(space2.jpeg);
+}
+    </style>
+  </head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl">
+   <div class="header">
+    <h1>Learn Months of Year</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+  <div class="toggle-buttons">
+   <button class="toggle-button play active">Play</button>
+  </div>
+    <div id="alphabet">
+      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span>{{l}}</span></div></div>
+    </div>
+      
+    </div>
+<button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
+  <script>
+const aud = new Audio("months.m4a");
+const audTime = [{"s":"0.16","e":"1.08"},{"s":"1.08","e":"2.05"},{"s":"2.05","e":"3.01"},{"s":"3.01","e":"3.91"},{"s":"3.91","e":"4.72"},{"s":"4.72","e":"5.52"},{"s":"5.52","e":"6.34"},{"s":"6.34","e":"7.16"},{"s":"7.16","e":"8.23"},{"s":"8.23","e":"9.42"},{"s":"9.42","e":"10.39"},{"s":"10.37","e":"11.18"}];
+gap = 2000;
+
+var app = angular.module("newApp", []);
+
+app.controller('appCtrl', function($scope) {
+  $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
+  $scope.chars = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+  $scope.showSmallClck = function(){
+    //$scope.aud.play();
+	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+    if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+      $scope.ctrl.showCaps = true;
+  };
+
+  
+}); 
+
+
+  </script>
+<script src="script.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</body>
+</html>
