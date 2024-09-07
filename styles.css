@@ -123,13 +123,15 @@
 
 	body {
 		background-image: url(space2.jpeg);
-		background-size: cover;
 		animation: gradient 50s ease infinite;
 		height: 100vh;
 		margin: 0;
-		background-position: center;
 		font-family: "Handlee", cursive;
 		cursor: url('cursor.png'), auto;
+	    background-size: cover;
+	     background-attachment: fixed;
+	     background-position: center center;
+	     min-height: 100vh;
 	}
 	
 	body,a,button{
