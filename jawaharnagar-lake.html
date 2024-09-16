@@ -11,17 +11,12 @@
     
     <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
     <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-	<title>Jawaharnagar Lake</title>
+	<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <title>Jawaharnagar Lake</title>
     
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -89,6 +84,7 @@
 			    </footer>
         
 </body>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script>
     
     
@@ -111,42 +107,23 @@
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             ).addTo(map_10b69c8877d66feef41282329d26243b);
-			var m = [[17.51247, 78.58591306],
-[17.51228111, 78.58577306],
-[17.51208306, 78.58569889],
-[17.51279806, 78.58634806],
-[17.51265389, 78.58607694],
-[17.51261389, 78.58672861],
-[17.51250806, 78.58753611],
-[17.51241194, 78.586955],
-[17.51219194, 78.58716],
-[17.512395, 78.58823194],
-[17.51183306, 78.58581806],
-[17.51156806, 78.58579306],
-[17.51147389, 78.58548389],
-[17.51136611, 78.58462306],
-[17.51129194, 78.584975],
-[17.51130194, 78.5853],
-[17.51139806, 78.587875],
-[17.51120611, 78.58778389],
-[17.51106861, 78.58798],
-[17.51078194, 78.58802611],
-[17.51065806, 78.58827889],
-[17.51027, 78.58862611],
-[17.50787806, 78.58537111],
-[17.50764389, 78.58513806],
-[17.50744611, 78.58547806],
-[17.507165, 78.58580694],
-[17.5069, 78.58591111],
-[17.50662611, 78.58574889],
-[17.50649611, 78.58580611]],i;
+			var m = [{"coord":[17.51027,78.58862611],"label":"A22"},{"coord":[17.51065806,78.58827889],"label":"A21"},{"coord":[17.51078194,78.58802611],"label":"A20"},{"coord":[17.51106861,78.58798],"label":"A19"},{"coord":[17.51120611,78.58778389],"label":"A18"},{"coord":[17.51139806,78.587875],"label":"A17"},{"coord":[17.512395,78.58823194],"label":"A10"},{"coord":[17.51250806,78.58753611],"label":"A7"},{"coord":[17.51219194,78.58716],"label":"A9"},{"coord":[17.51241194,78.586955],"label":"A8"},{"coord":[17.51261389,78.58672861],"label":"A6"},{"coord":[17.51279806,78.58634806],"label":"A4"},{"coord":[17.51265389,78.58607694],"label":"A5"},{"coord":[17.51247,78.58591306],"label":"A1"},{"coord":[17.51228111,78.58577306],"label":"A2"},{"coord":[17.51208306,78.58569889],"label":"A3"},{"coord":[17.51183306,78.58581806],"label":"A11"},{"coord":[17.51156806,78.58579306],"label":"A12"},{"coord":[17.51147389,78.58548389],"label":"A13"},{"coord":[17.51130194,78.5853],"label":"A16"},{"coord":[17.51129194,78.584975],"label":"A15"},{"coord":[17.51136611,78.58462306],"label":"A14"},{"coord":[17.50787806,78.58537111],"label":"A23"},{"coord":[17.50764389,78.58513806],"label":"A24"},{"coord":[17.50744611,78.58547806],"label":"A25"},{"coord":[17.507165,78.58580694],"label":"A26"},{"coord":[17.5069,78.58591111],"label":"A27"},{"coord":[17.50662611,78.58574889],"label":"A28"},{"coord":[17.50649611,78.58580611],"label":"A29"}],i;
 
 for(i=0;i<m.length;i++){
-	L.marker(
-	                m[i],
+	var mark = L.marker(
+	                m[i].coord,
 	                {}
 	            ).addTo(map_10b69c8877d66feef41282329d26243b);
+   mark.bindPopup(m[i].label);
 }
+var polylinePoints = m.map(p => p.coord);
+        polylinePoints.push(m[0].coord); // Close the loop by adding the first point to the end
+
+        // Draw a polyline connecting the points and closing the loop
+        var polyline = L.polyline(polylinePoints, {color: 'blue'}).addTo(map_10b69c8877d66feef41282329d26243b);
+
+        // Zoom the map to fit the polyline
+        map_10b69c8877d66feef41282329d26243b.fitBounds(polyline.getBounds());
     
         
     

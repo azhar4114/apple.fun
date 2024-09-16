@@ -30,7 +30,7 @@
 	justify-items: center;
 	align-items: center;
 	justify-content: center;
-	grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(32vh, 1fr));
 	padding: 2vh 3vh;
 	grid-gap: 3vh 3vh;
 	box-sizing: border-box;
@@ -44,7 +44,7 @@
 .button {
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #333;
-	padding: 2vh 11vh;
+	padding: 2vh 10vh;
 	border-radius: 1vh;
 	box-shadow: 0
 	0.4vh 0.8vh rgba(0, 0, 0, 0.2);
