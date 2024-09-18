@@ -53,7 +53,7 @@ body{
   </head>
 <body ng-app="newApp">
   
-  <div ng-controller="appCtrl">
+  <div ng-controller="appCtrl" id="controller">
    <div class="header">
     <h1>Learn Shapes</h1>
     <a href="index.html">Go to Home</a>
@@ -61,6 +61,7 @@ body{
   <div class="toggle-buttons">
    <button class="toggle-button play active">Play</button>
   </div>
+  <loader id="loader"></loader>
     <div id="alphabet" class="shapes-grid">
       <div class="button ng-cloak" ng-repeat="s in shapes" data="{{$index}}">
         <div>
@@ -82,6 +83,18 @@ var audTime = [];
 gap = 2300;
 var app = angular.module("newApp", []);
 
+app.directive('loader', function($http, $templateCache) {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      // Load the loader.html file and inject it
+      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+        element.html(response.data);
+      });
+    }
+  };
+});
+
 app.controller('appCtrl', function($scope) {
   $scope.shapes = [];
   $scope.showSmallClck = function(){
@@ -90,6 +103,13 @@ app.controller('appCtrl', function($scope) {
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
+  
+  $scope.initiate = function(data){
+ 	 aud = new Audio(data.aud);
+ 	 audTime = data.audTime;
+ 	 $('#loader').hide();
+	 $scope.shapes = data.shapes;
+  }
   
 }); 
 
