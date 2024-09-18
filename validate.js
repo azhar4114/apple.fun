@@ -83,7 +83,8 @@ function validateKeyWithRateLimit(key, ipAddress) {
 			var s =angular.element("#controller").scope();
 			s.$apply(function(){
 				s.initiate(resp.data);
-			})
+			});
+			setTimeout(attachListeners,500);
 		    }
             if (window.location.pathname === "/brochure.html")
                 window.location.pathname = "/"
