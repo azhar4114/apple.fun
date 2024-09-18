@@ -80,7 +80,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
         console.log(resp);
         if (resp && resp.status === "success") {
 			if(resp.data!=null){
-			var s =angular.element($("#controller")).scope();
+			var s =angular.element("#controller").scope();
 			s.$apply(function(){
 				s.initiate(resp.data);
 			})
