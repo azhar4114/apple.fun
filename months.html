@@ -46,15 +46,15 @@ body {
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
-const aud = new Audio("months.m4a");
-const audTime = [{"s":"0.16","e":"1.08"},{"s":"1.08","e":"2.05"},{"s":"2.05","e":"3.01"},{"s":"3.01","e":"3.91"},{"s":"3.91","e":"4.72"},{"s":"4.72","e":"5.52"},{"s":"5.52","e":"6.34"},{"s":"6.34","e":"7.16"},{"s":"7.16","e":"8.23"},{"s":"8.23","e":"9.42"},{"s":"9.42","e":"10.39"},{"s":"10.37","e":"11.18"}];
+var aud;
+var audTime = [];
 gap = 2000;
 
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
-  $scope.chars = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  $scope.chars = [];
   
   $scope.showSmallClck = function(){
     //$scope.aud.play();

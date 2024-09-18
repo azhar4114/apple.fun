@@ -77,13 +77,13 @@ body{
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
-const aud = new Audio("seasons.m4a");
-const audTime = [{"s":"0.17","e":"0.73"},{"s":"0.73","e":"1.46"},{"s":"1.46","e":"2.52"},{"s":"2.52","e":"3.21"},{"s":"3.21","e":"3.88"}];
+var aud;
+var audTime = [];
 gap = 2300;
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
-  $scope.shapes = ["Summer", "Winter", "Monsoon", "Spring", "Autumn"];
+  $scope.shapes = [];
   $scope.showSmallClck = function(){
     //$scope.aud.play();
 	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;

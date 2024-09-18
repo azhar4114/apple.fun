@@ -70,15 +70,15 @@ body {
 	
 <script src="script.js"></script>
   <script>
-const aud = new Audio("/colors.m4a");
-const audTime = [{s:0, e:1.16,c:1}, {s:1.16, e:2.49,c:2},{s:2.49, e:3.68,c:3},{s:3.68, e:4.92,c:4},{s:4.92, e:6.31,c:5},{s:6.31, e:7.72,c:6},{s:7.72, e:8.81,c:7},{s:8.81, e:10.08,c:8},{s:10.08, e:11.46,c:9},{s:11.46, e:12.79,c:10}];
+	  var aud ;
+var audTime = [];
 gap = 2300;
 
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
-  $scope.chars = ["Red", "Green", "Blue", "Yellow", "Orange","Purple","Pink","Black", "White","Brown"];
+  $scope.chars = [];
   
   $scope.showSmallClck = function(){
     //$scope.aud.play();

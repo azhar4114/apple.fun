@@ -77,13 +77,13 @@ body{
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
-const aud = new Audio("profession.m4a");
-const audTime = [{"s":"0.15","e":"0.87"},{"s":"0.87","e":"1.75"},{"s":"1.75","e":"2.85"},{"s":"2.85","e":"3.99"},{"s":"3.99","e":"4.69"},{"s":"4.69","e":"5.59"},{"s":"5.59","e":"6.24"},{"s":"6.24","e":"6.95"},{"s":"6.95","e":"7.76"},{"s":"7.76","e":"8.71"}];
+var aud;
+var audTime = [];
 gap = 2300;
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
-  $scope.shapes = ["Doctor","Teacher","Firefighter","Police Officer","Farmer","Engineer","Chef","Pilot","Artist","Scientist"];
+  $scope.shapes = [];
   $scope.showSmallClck = function(){
     //$scope.aud.play();
 	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;

@@ -204,3 +204,65 @@ nav a:hover {
 #scrollToTopBtn:hover {
 	background-color: #555; /* Darker background on hover */
 }
+
+/* Loader container */
+.loader {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: rgb(240 240 240 / 75%);
+    width: 100%;
+	top:0;
+}
+
+/* Outer rotating circle */
+.outer-circle {
+  border: 6px solid rgba(0, 123, 255, 0.2); /* Light blue border */
+  border-top: 6px solid #007bff; /* Darker blue rotating border */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite; /* Rotation animation */
+}
+
+/* Inner circle for a cleaner look */
+.inner-circle {
+  border: 6px solid rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+  border-top: 6px solid #007bff;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  animation: spin-reverse 1s linear infinite;
+}
+
+.inner-circle1 {
+  border: 6px solid rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+  border-top: 6px solid #007bff;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  animation: spin 1s linear infinite;
+}
+
+/* Animation for the spinning effect */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

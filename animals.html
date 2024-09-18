@@ -76,8 +76,8 @@ body{
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
-const aud = new Audio("/Animals.m4a");
-const audTime = [{s:0, e:.96},{s:0.96, e:1.84},{s:1.84, e:2.7},{s:2.7, e:3.57},{s:3.57, e:4.37},{s:4.37, e:5.63},{s:5.63, e:6.34},{s:6.34, e:7.08},{s:7.08, e:7.90},{s:7.90, e:8.65},{s:8.65, e:9.52},{s:9.52, e:10.53},{s:10.53, e:11.5},{s:11.5, e:12.29},{s:12.29, e:13.67},{s:13.67, e:14.42},{s:14.42, e:15.27},{s:15.27, e:16.25},{s:16.25, e:17.09},{s:17.09, e:18.06},{s:18.06, e:18.78},{s:18.78, e:19.6},{s:19.6, e:20.55},{s:20.55, e:21.37},{s:21.37, e:22.31},{s:22.31, e:23},{s:23, e:24},{s:24, e:24.95},{s:24.95, e:25.68},{s:25.68, e:26.5}];
+	  var aud ;
+var audTime = [];
 var an=0, expl=false;
 
 gap = 2300;
@@ -85,36 +85,7 @@ gap = 2300;
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
-  $scope.animals = ["Ant",
-"Bison",
-"Buffalo",
-"Cat",
-"Chicken",
-"Chimpanzee",
-"Cow",
-"Crow",
-"Deer",
-"Dog",
-"Donkey",
-"Elephant",
-"Fox",
-"Goat",
-"Hippopotamus",
-"Horse",
-"Leopard",
-"Lion",
-"Monkey",
-"Parrot",
-"Pigeon",
-"Rabbit",
-"Rat",
-"Rhino",
-"Rooster",
-"Shark",
-"Snake",
-"Tiger",
-"Whale",
-"Zebra"];
+  $scope.animals = [];
   $scope.showSmallClck = function(){
     //$scope.aud.play();
 	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;

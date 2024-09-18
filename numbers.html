@@ -41,15 +41,15 @@ body {
 <button id="scrollToTopBtn" title="Go to top">Top</button>
 <script src="script.js"></script>
   <script>
-const aud = new Audio("/numbers.m4a");
-const audTime = [{s:0, e:1,c:1}, {s:1, e:1.6,c:2},{s:1.6, e:2.38,c:3},{s:2.38, e:3.15,c:4},{s:3.15, e:4.03,c:5},{s:4.03, e:4.94,c:6},{s:4.94, e:5.79,c:7},{s:5.79, e:6.48,c:8},{s:6.48, e:7.28,c:9},{s:7.28, e:8.3,c:10}];
+var aud ;
+var audTime = [];
 gap = 1200;
 
 var app = angular.module("newApp", []);
 
 app.controller('appCtrl', function($scope) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
-  $scope.chars = [1,2,3,4,5,6,7,8,9,10];
+  $scope.chars = [];
   
   $scope.showSmallClck = function(){
     //$scope.aud.play();
