@@ -76,18 +76,20 @@ function validateKeyWithRateLimit(key, ipAddress) {
     data.append('deviceId', getDeviceId());
     data.append('ip', ipAddress);
     data.append('url', window.location.href);
-	var k = window.location.href.match(/\/(\w+)(?:\.html)/),ky;
+	var k = window.location.href.match(/\/(\w+)(?:\.html)/),ky,cd;
 	if(k==null)
 	  ky="index";
 	else if (k!=null && k[1]!=null)
 	  ky = k[1];
     console.log("sending request", data);
 	const cachedData = localStorage.getItem(ky);
+	if(cachedData)
+		cd = JSON.parse(cachedData)
     
 	const now = new Date().getTime();
     
 	    // Check if data exists and hasn't expired
-	if (cachedData && cachedData.cacheExpiry && now < parseInt(cachedData.cacheExpiry, 10)) {
+	if (cachedData && cd.cacheExpiry && now < parseInt(cd.cacheExpiry, 10)) {
 	     console.log('Using cached data');
 	     passData(JSON.parse(cachedData));
 	} else {
@@ -97,7 +99,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
         if (resp && resp.status === "success") {
             if (window.location.pathname === "/brochure.html")
                 window.location.pathname = "/"
-			resp.cacheExpiryKey = now + cacheTTL;
+			resp.cacheExpiry = now + cacheTTL;
 			localStorage.setItem(ky, JSON.stringify(resp));
 			passData(resp);
 			
