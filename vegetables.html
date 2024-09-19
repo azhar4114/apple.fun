@@ -132,7 +132,7 @@ app.controller('appCtrl', function($scope) {
 	$scope.counts = {};
   $scope.items.Common = [];
   $scope.items.Leafy = [];
-  $scope.items.Root = []];
+  $scope.items.Root = [];
   $scope.items.Gourd = [];
   $scope.items.Legumes = [];
   $scope.items.Cruciferous = [];
@@ -147,7 +147,7 @@ app.controller('appCtrl', function($scope) {
 	  }
 	  $scope.counts.cat = c;
   }
-  $scope.setCounts();
+ 
   $scope.showSmallClck = function(){
     //$scope.aud.play();
 	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
@@ -168,6 +168,7 @@ app.controller('appCtrl', function($scope) {
 	 $scope.items.Nightshade = data.Legumes;
 	 $scope.items.Tropical = data.Cruciferous;
 	 $scope.items.Common = data.Common;
+	  $scope.setCounts();
   }
   
 }); 

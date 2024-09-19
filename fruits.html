@@ -145,7 +145,7 @@ app.controller('appCtrl', function($scope) {
 	  }
 	  $scope.counts.cat = c;
   }
-  $scope.setCounts();
+  
   $scope.showSmallClck = function(){
     //$scope.aud.play();
 	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
@@ -164,6 +164,7 @@ app.controller('appCtrl', function($scope) {
 	 $scope.items.Citrus = data.Citrus;
 	 $scope.items.Berries = data.Berries;
 	 $scope.items.Common = data.Common;
+	 $scope.setCounts();
   }
   
 }); 
