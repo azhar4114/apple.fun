@@ -48,6 +48,7 @@
 	  <div class="toggle-buttons">
 	   <button class="toggle-button play active">Play</button>
 	  </div>
+	  <loader id="loader"></loader>
     <div id="alphabet">
       <div class="button ng-cloak" ng-repeat="n in range(0,12)" data="{{n}}"><div><span >{{chars[n].c}}</span></div></div>
     </div>
@@ -85,6 +86,18 @@ var audTime= [];
 
 var app = angular.module("newApp", []);
 
+app.directive('loader', function($http, $templateCache) {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      // Load the loader.html file and inject it
+      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+        element.html(response.data);
+      });
+    }
+  };
+});
+
 app.controller('appCtrl', function($scope) {
   $scope.ctrl = {showSmall:true, showCaps:true};
   $scope.chars = [];
@@ -107,7 +120,12 @@ app.controller('appCtrl', function($scope) {
     }
     return input;
 };
-  $scope.populatePage(); 
+$scope.initiate = function(data){
+ aud = new Audio(data.aud);
+ audTime = data.audTime;
+ $('#loader').hide();
+ $scope.populatePage();
+}
 }); 
   </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>

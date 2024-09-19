@@ -67,6 +67,7 @@ function getDeviceId() {
     }
     return deviceId
 }
+const cacheTTL = 19 * 60 * 60 * 1000;
 
 function validateKeyWithRateLimit(key, ipAddress) {
     const data = new URLSearchParams();
@@ -75,19 +76,31 @@ function validateKeyWithRateLimit(key, ipAddress) {
     data.append('deviceId', getDeviceId());
     data.append('ip', ipAddress);
     data.append('url', window.location.href);
+	var k = url.match(/\/(\w+)(?:\.html)/),ky;
+	if(k==null)
+	  ky="index";
+	else if (k!=null && k[1]!=null)
+	  ky = k[1];
     console.log("sending request", data);
+	const cachedData = localStorage.getItem(ky);
+    
+	const now = new Date().getTime();
+    
+	    // Check if data exists and hasn't expired
+	if (cachedData && cachedData.cacheExpiry && now < parseInt(cachedData.cacheExpiry, 10)) {
+	     console.log('Using cached data');
+	     passData(JSON.parse(cachedData));
+	} else {
+	        console.log('Fetching new data from the server');
     sendReq(data, function(resp) {
         console.log(resp);
         if (resp && resp.status === "success") {
-			if(resp.data!=null){
-			var s =angular.element("#controller").scope();
-			s.$apply(function(){
-				s.initiate(resp.data);
-			});
-			setTimeout(attachListeners,500);
-		    }
             if (window.location.pathname === "/brochure.html")
                 window.location.pathname = "/"
+			resp.cacheExpiryKey = now + cacheTTL;
+			localStorage.setItem(ky, JSON.stringify(resp));
+			passData(resp);
+			
         } else {
             if (window.location.pathname !== "/brochure.html") {
                 document.body.remove();
@@ -95,6 +108,16 @@ function validateKeyWithRateLimit(key, ipAddress) {
             }
         }
     })
+}
+
+function passData(resp){
+	if(resp.data!=null){
+	var s =angular.element("#controller").scope();
+	s.$apply(function(){
+		s.initiate(resp.data);
+	});
+	setTimeout(attachListeners,500);
+    }
 }
 
 function sendReq(req, callback) {

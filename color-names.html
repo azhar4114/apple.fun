@@ -4,6 +4,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	<script src="validate.js"></script>
 	<link rel="stylesheet" href="styles.css">
 	  <title>Learn Colors</title>
     <style>
@@ -58,6 +59,7 @@ body {
   <div class="toggle-buttons">
    <button class="toggle-button play active">Play</button>
   </div>
+  <loader id="loader"></loader>
     <div id="alphabet">
       <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}">
       <div class="color-card"><h2>{{l}}</h2>
@@ -76,6 +78,19 @@ gap = 2300;
 
 var app = angular.module("newApp", []);
 
+app.directive('loader', function($http, $templateCache) {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      // Load the loader.html file and inject it
+      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+        element.html(response.data);
+      });
+    }
+  };
+});
+
+
 app.controller('appCtrl', function($scope) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
   $scope.chars = [];
@@ -86,6 +101,13 @@ app.controller('appCtrl', function($scope) {
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
+  
+  $scope.initiate = function(data){
+ 	 aud = new Audio(data.aud);
+ 	 audTime = data.audTime;
+ 	 $('#loader').hide();
+	 $scope.chars = data.chars;
+  }
   
 }); 
 

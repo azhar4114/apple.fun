@@ -88,6 +88,7 @@ body{
    <button class="toggle-button play active">Play</button>
    <button class="toggle-button" ng-repeat = "c in categories" ng-class="{'active':!ctrl[c]}" ng-click="ctrl[c]=!ctrl[c]"><span ng-hide="ctrl[c]">Hide</span> <span ng-show="ctrl[c]">Show</span> {{c}}</button>
   </div>
+  <loader id="loader"></loader>
   <div ng-repeat = "c in categories" ng-hide="ctrl[c]" class="category">
   <h1 data="{{counts.cat+$index}}" class="button">{{c}} Fruits</h1>
     <div id="alphabet" class="shapes-grid" >
@@ -112,6 +113,18 @@ var aud ;
 var audTime = [];
 gap = 2300;
 var app = angular.module("newApp", []);
+
+app.directive('loader', function($http, $templateCache) {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      // Load the loader.html file and inject it
+      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+        element.html(response.data);
+      });
+    }
+  };
+});
 
 app.controller('appCtrl', function($scope) {
 	$scope.items = {};
@@ -139,6 +152,19 @@ app.controller('appCtrl', function($scope) {
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
+  
+  $scope.initiate = function(data){
+ 	 aud = new Audio(data.aud);
+ 	 audTime = data.audTime;
+ 	 $('#loader').hide();
+	 $scope.categories = data.categories;
+	 $scope.items.Tropical = data.Tropical;
+	 $scope.items.Stone = data.Stone;
+	 $scope.items.Exotic = data.Exotic;
+	 $scope.items.Citrus = data.Citrus;
+	 $scope.items.Berries = data.Berries;
+	 $scope.items.Common = data.Common;
+  }
   
 }); 
 
