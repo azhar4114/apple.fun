@@ -53,6 +53,7 @@ const deviceType = isAndroidWebViewOrSmartTV();
 window.onload = function() {
     if (deviceType === 'Android WebView') {
         console.log("Content is being rendered on Android WebView.")
+		checkKeyValidation()
     } else {
         console.log("Content is being rendered on ", deviceType);
         checkKeyValidation()
