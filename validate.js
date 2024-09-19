@@ -76,7 +76,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
     data.append('deviceId', getDeviceId());
     data.append('ip', ipAddress);
     data.append('url', window.location.href);
-	var k = window.location.href.match(/\/(\w+)(?:\.html)/),ky,cd;
+	var k = window.location.href.match(/\/([\w-]+)(?:\.html)/),ky,cd;
 	if(k==null)
 	  ky="index";
 	else if (k!=null && k[1]!=null)
