@@ -76,7 +76,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
     data.append('deviceId', getDeviceId());
     data.append('ip', ipAddress);
     data.append('url', window.location.href);
-	var k = url.match(/\/(\w+)(?:\.html)/),ky;
+	var k = window.location.href.match(/\/(\w+)(?:\.html)/),ky;
 	if(k==null)
 	  ky="index";
 	else if (k!=null && k[1]!=null)
@@ -108,6 +108,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
             }
         }
     })
+}
 }
 
 function passData(resp){
