@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 .header {
 	padding: 2vh;
@@ -40,7 +40,7 @@
 	justify-content: center;
 	align-items: center;
 }
-
+/*
 .button {
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #333;
@@ -56,12 +56,12 @@
 	min-width: 10vh;
 	position: relative;
 }
-
+*/
 .cursor-hide{
 	cursor:none;
 }
 
-
+/*
 .button:active {
 	border: 0.4vh solid #4caf50;
 }
@@ -73,7 +73,7 @@
 		152, 0, 0.5);
 		transition: all 0.3s ease;
 	}
-
+*/
 	.toggle-buttons {
 		display: flex;
 		justify-content: center;
@@ -120,13 +120,84 @@
 	.clicked {
 		background: rgba(188,246,188,0.9);
 	}
+	
+	.button {
+	      background: #232b34; /* Dark chalkboard color */
+	      border: 10px solid #8B4513; /* Wooden frame */
+	      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	      border-radius: 15px;
+	      position: relative;
+	      overflow: hidden;
+	      transition: all 0.3s ease;
+	      font-size:4vh;
+	      min-width: 10vh;
+    	     position: relative;
+padding: 2vh 10vh;
+
+	    }
+
+	    /* Adding chalk doodle image as a background */
+	    .button::before {
+	      content: '';
+	      position: absolute;
+	      top: 10px;
+	      left: 10px;
+	      width: 30px;
+	      height: 30px;
+	      background-image: url('anime.png'); /* Replace with your chalk doodle image */
+	      background-size: contain;
+	      background-repeat: no-repeat;
+	      opacity: 0.8;
+	      z-index: 0;
+	      transform: rotate(15deg);
+	    }
+
+	    .button div {
+	      color: white;
+	      text-align: center;
+	      z-index: 1;
+	    }
+
+	    .button span {
+	      margin: 0;
+	      
+	      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	    }
+
+	    /* Hover Effect */
+	    .button:hover {
+	      transform: scale(1.05); /* Slightly increase the size */
+	      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Add more shadow */
+	    }
+
+	    /* Active Effect */
+	    .button:active {
+	      transform: scale(0.98); /* Slightly decrease size on click */
+	      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	      border-color: #6B8E23; /* Change border to give it a pressed effect */
+	    }
+
+	    /* Focus Effect */
+	    .button:focus {
+	      outline: 4px dashed #FFD700; /* Add yellow dashed outline */
+	      outline-offset: 5px;
+	    }
+
+	    /* Clicked Style (Persistent) */
+	    .button.clicked {
+	      background-color: #3B6B50; /* Change background to represent clicked state */
+	      border-color: #FFD700; /* Golden border */
+	      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+	      transform: scale(1.05); /* Maintain the hover scale effect */
+	    }
+	
 
 	body {
 		background-image: url(space2.jpeg);
 		animation: gradient 50s ease infinite;
 		height: 100vh;
 		margin: 0;
-		font-family: "Handlee", cursive;
+		font-family: 'Patrick Hand', cursive;
 		cursor: url('cursor.png'), auto;
 	    background-size: cover;
 	     background-attachment: fixed;
