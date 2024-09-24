@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script src="validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	<link rel="stylesheet" href="styles.css">
+	
+	  <title>Phonics Sounds for Kids</title>
+    <style>
+	    .button {
+    padding: 0;
+    font-size: 2.3vh;
+}
+
+      .shapes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
+  gap: 3vh;
+  width: 100%;
+}
+
+.shape-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px 40px;
+    transition: transform 0.2s;
+}
+
+.shape-card:hover {
+  transform: scale(1.05);
+}
+
+.word-list {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+.shape-box {
+  width: 25vh;
+  height: 25vh;
+  margin-bottom: 1vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+     #alphabet{
+    grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
+	padding-top: 0;
+}
+
+body{
+	background-image:url(flowersbg2.jpeg);
+}
+
+.category{
+    padding: 20px;
+}
+
+.category h1{
+    color: brown;
+    background: linear-gradient(40deg, #fdfbfb, transparent);
+    padding: 10px 40px;
+    font-size: 3.5vh;
+    text-align: left;
+}
+
+.category h1:hover,.category h1:focus,.category h1.autoplay{
+	transform:scale(1.0);
+}
+
+.toggle-buttons{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 20px;
+}
+
+
+
+    </style>
+  </head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl" id="controller">
+   <div class="header">
+    <h1>Phonics: Building Strong Reading Skills</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+  <div class="toggle-buttons">
+   <button class="toggle-button play active">Play</button>
+   <button class="toggle-button" ng-repeat = "c in categories" ng-class="{'active':!ctrl[c]}" ng-click="ctrl[c]=!ctrl[c]"><span ng-hide="ctrl[c]">Hide</span> <span ng-show="ctrl[c]">Show</span> {{c}}</button>
+  </div>
+  <loader id="loader"></loader>
+  <div ng-repeat = "c in categories" ng-hide="ctrl[c]" class="category">
+  <h1 data="{{counts.cat+$index}}" class="button">{{c}}</h1>
+    <div id="alphabet" class="shapes-grid" >
+	 
+      <div class="button ng-cloak" ng-repeat="v in items[c]" data="{{counts[c]+$index}}">
+		   
+		<h2>{{v.split(" as in ")[0]}}</h2>
+		<div class="word-list">{{v.split(" as in ")[1]}}</div>
+      </div>
+      </div>
+      
+    </div>
+      </div>
+    </div>
+<button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
+  <script>
+var aud ;
+var audTime = [];
+gap = 2300;
+var app = angular.module("newApp", []);
+
+app.directive('loader', function($http, $templateCache) {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      // Load the loader.html file and inject it
+      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+        element.html(response.data);
+      });
+    }
+  };
+});
+
+app.controller('appCtrl', function($scope) {
+	$scope.items = {};
+	$scope.ctrl = {};
+	$scope.counts = {};
+  $scope.categories = [];
+  $scope.setCounts = function(){
+	  var i,c=0;
+	  for(i=0;i<$scope.categories.length;i++){
+		  $scope.counts[$scope.categories[i]] = c;
+		  c += $scope.items[$scope.categories[i]].length;
+	  }
+	  $scope.counts.cat = c;
+  }
+  
+  $scope.showSmallClck = function(){
+    //$scope.aud.play();
+	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+    if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+      $scope.ctrl.showCaps = true;
+  };
+  
+  $scope.initiate = function(data){
+ 	 aud = new Audio(data.aud);
+ 	 audTime = data.audTime;
+ 	 $('#loader').hide();
+	 $scope.categories = data.categories;
+	 $scope.items = data.items;
+	 $scope.setCounts();
+  }
+  
+}); 
+
+  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</body>
+</html>
