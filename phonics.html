@@ -73,7 +73,7 @@ body{
    <button class="toggle-button" ng-repeat = "c in categories" ng-class="{'active':!ctrl[c]}" ng-click="ctrl[c]=!ctrl[c]"><span ng-hide="ctrl[c]">Hide</span> <span ng-show="ctrl[c]">Show</span> {{c}}</button>
   </div>
   <loader id="loader"></loader>
-  <div ng-repeat = "c in categories" ng-hide="ctrl[c]" class="category">
+  <div ng-repeat = "c in categories" ng-hide="ctrl[c.replaceAll(' ','')]" class="category">
   <h1 data="{{counts.cat+$index}}" class="button">{{c}}</h1>
     <div id="alphabet" class="shapes-grid" >
 	 
@@ -115,7 +115,7 @@ app.controller('appCtrl', function($scope) {
   $scope.setCounts = function(){
 	  var i,c=0;
 	  for(i=0;i<$scope.categories.length;i++){
-		  $scope.counts[$scope.categories[i]] = c;
+		  $scope.counts[$scope.categories[i].replaceAll(' ','')] = c;
 		  c += $scope.items[$scope.categories[i].replaceAll(' ','')].length;
 	  }
 	  $scope.counts.cat = c;
