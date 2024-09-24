@@ -70,14 +70,14 @@ body{
   </div>
   <div class="toggle-buttons">
    <button class="toggle-button play active">Play</button>
-   <button class="toggle-button" ng-repeat = "c in categories" ng-class="{'active':!ctrl[c]}" ng-click="ctrl[c]=!ctrl[c]"><span ng-hide="ctrl[c]">Hide</span> <span ng-show="ctrl[c]">Show</span> {{c}}</button>
+   <button class="toggle-button" ng-repeat = "c in categories" ng-class="{'active':!ctrl[c]}" ng-click="ctrl[c.replaceAll(' ','')]=!ctrl[c.replaceAll(' ','')]"><span ng-hide="ctrl[c.replaceAll(' ','')]">Hide</span> <span ng-show="ctrl[c.replaceAll(' ','')]">Show</span> {{c}}</button>
   </div>
   <loader id="loader"></loader>
   <div ng-repeat = "c in categories" ng-hide="ctrl[c.replaceAll(' ','')]" class="category">
   <h1 data="{{counts.cat+$index}}" class="button">{{c}}</h1>
     <div id="alphabet" class="shapes-grid" >
 	 
-      <div class="button ng-cloak" ng-repeat="v in items[c]" data="{{counts[c]+$index}}">
+      <div class="button ng-cloak" ng-repeat="v in items[c.replaceAll(' ','')]" data="{{counts[c.replaceAll(' ','')]+$index}}">
 		   
 		<h2>{{v.split(" as in ")[0]}}</h2>
 		<div class="word-list">{{v.split(" as in ")[1]}}</div>
