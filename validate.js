@@ -68,6 +68,15 @@ function getDeviceId() {
     }
     return deviceId
 }
+
+function changeBackground(backgroundImages) {
+            // Generate a random index
+            const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+
+            // Set the background image
+            document.body.style.backgroundImage = 'url("'+backgroundImages[randomIndex]+'")' ;
+}
+		
 const cacheTTL = 19 * 60 * 60 * 1000;
 
 function validateKeyWithRateLimit(key, ipAddress) {
@@ -120,6 +129,8 @@ function passData(resp){
 	s.$apply(function(){
 		s.initiate(resp.data);
 	});
+	if(resp.data.bg && resp.data.bg.length>0)
+		changeBackground(resp.data.bg);
 	setTimeout(attachListeners,500);
     }
 }
