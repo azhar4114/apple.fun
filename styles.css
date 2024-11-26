@@ -169,6 +169,7 @@ padding: 2vh 10vh;
 	      transform: scale(1.05); /* Slightly increase the size */
 	      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Add more shadow */
 		  outline: 4px dashed #FFD700;
+		  outline-offset: 5px;
 	    }
 
 	    /* Active Effect */
@@ -180,13 +181,13 @@ padding: 2vh 10vh;
 
 	    /* Focus Effect */
 	    .button:focus {
-	      outline: 4px dashed #FFD700; /* Add yellow dashed outline */
+	      outline: 4px dashed #0d033a; /* Add yellow dashed outline */
 	      outline-offset: 5px;
 	    }
 
 	    /* Clicked Style (Persistent) */
 	    .button.clicked {
-	      background-color: #3B6B50; /* Change background to represent clicked state */
+	      background-color: #173f29; /* Change background to represent clicked state */
 	     /* border-color: #FFD700;  Golden border */
 		 border-color: #6B8E23;
 	      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow */
