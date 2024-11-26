@@ -41,7 +41,7 @@ def reduce_images_in_folder(input_folder, output_folder, default_quality=30, max
 
                 # Background images: retain size, set quality to 60
                 if is_background:
-                    quality = 60
+                    quality = 100
                 else:
                     quality = default_quality
                     # Resize if max_width is specified and not a background image
