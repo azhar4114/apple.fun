@@ -32,7 +32,7 @@
 	justify-content: center;
 	grid-template-columns: repeat(auto-fit, minmax(40vh, 1fr));
 	padding: 2vh 3vh;
-	grid-gap: 5vh 10vh;
+	grid-gap: 10vh 10vh;
 	box-sizing: border-box;
 }
 
@@ -168,13 +168,14 @@ padding: 2vh 10vh;
 	    .button:hover {
 	      transform: scale(1.05); /* Slightly increase the size */
 	      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Add more shadow */
+		  outline: 4px dashed #FFD700;
 	    }
 
 	    /* Active Effect */
 	    .button:active {
 	      transform: scale(0.98); /* Slightly decrease size on click */
 	      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	      border-color: #6B8E23; /* Change border to give it a pressed effect */
+	      border-color: #FFD700; /* Change border to give it a pressed effect */
 	    }
 
 	    /* Focus Effect */
@@ -186,7 +187,8 @@ padding: 2vh 10vh;
 	    /* Clicked Style (Persistent) */
 	    .button.clicked {
 	      background-color: #3B6B50; /* Change background to represent clicked state */
-	      border-color: #FFD700; /* Golden border */
+	     /* border-color: #FFD700;  Golden border */
+		 border-color: #6B8E23;
 	      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow */
 	      transform: scale(1.05); /* Maintain the hover scale effect */
 	    }

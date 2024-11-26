@@ -74,7 +74,7 @@ function changeBackground(backgroundImages) {
             const randomIndex = Math.floor(Math.random() * backgroundImages.length);
 
             // Set the background image
-            document.body.style.backgroundImage = 'url("'+backgroundImages[randomIndex]+'")' ;
+            document.body.style.backgroundImage = 'url("images/'+backgroundImages[randomIndex]+'")' ;
 }
 		
 const cacheTTL = 19 * 60 * 60 * 1000;
