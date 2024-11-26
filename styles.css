@@ -144,7 +144,7 @@ padding: 2vh 10vh;
 	      left: 10px;
 	      width: 30px;
 	      height: 30px;
-	      background-image: url('anime.png'); /* Replace with your chalk doodle image */
+	      background-image: url('images/anime.png'); /* Replace with your chalk doodle image */
 	      background-size: contain;
 	      background-repeat: no-repeat;
 	      opacity: 0.8;
@@ -193,12 +193,12 @@ padding: 2vh 10vh;
 	
 
 	body {
-		background-image: url(space2.jpeg);
+		background-image: url(images/space2.jpeg);
 		animation: gradient 50s ease infinite;
 		height: 100vh;
 		margin: 0;
 		font-family: 'Patrick Hand', cursive;
-		cursor: url('cursor.png'), auto;
+		cursor: url('images/cursor.png'), auto;
 	    background-size: cover;
 	     background-attachment: fixed;
 	     background-position: center center;
@@ -206,7 +206,7 @@ padding: 2vh 10vh;
 	}
 	
 	body,a,button{
-		cursor: url('cursor.png'), auto;
+		cursor: url('images/cursor.png'), auto;
 	}
 
     @keyframes gradient {
