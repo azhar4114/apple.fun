@@ -30,7 +30,7 @@
 	justify-items: center;
 	align-items: center;
 	justify-content: center;
-	grid-template-columns: repeat(auto-fit, minmax(40vh, 50vh));
+	grid-template-columns: repeat(auto-fit, minmax(50vh, 50vh));
 	padding: 2vh 3vh;
 	grid-gap: 10vh 10vh;
 	box-sizing: border-box;
@@ -179,9 +179,7 @@ padding: 2vh 10vh;
 	      border-color: #FFD700; /* Change border to give it a pressed effect */
 	    }
 
-		.button.autoplay {
-			border-color: #FFD700;
-		}
+		
 
 	    /* Focus Effect */
 	    .button:focus {
@@ -343,4 +341,9 @@ nav a:hover {
   100% {
     transform: rotate(-360deg);
   }
+}
+
+
+.button.autoplay {
+	border-color: #FFD700;
 }
