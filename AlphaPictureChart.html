@@ -140,6 +140,20 @@
           gtag('js', new Date());
         
           gtag('config', 'G-1ZCM5PW9N9');
+
+		  document.fonts.load('1em "Noto Color Emoji"').then((fonts) => {
+    if (!fonts.length) {
+      // Font didn't load, fallback to sprite classes
+      document.querySelectorAll('.emoji').forEach((el) => {
+        el.textContent = ''; // Remove Unicode character
+      });
+    }
+  }).catch(() => {
+    // Handle if `document.fonts` isn't supported
+    document.querySelectorAll('.emoji').forEach((el) => {
+      el.textContent = '';
+    });
+  });
         </script>
 </body>
 </html>
