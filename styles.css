@@ -179,6 +179,10 @@ padding: 2vh 10vh;
 	      border-color: #FFD700; /* Change border to give it a pressed effect */
 	    }
 
+		.button.autoplay {
+			border-color: #FFD700;
+		}
+
 	    /* Focus Effect */
 	    .button:focus {
 	      outline: 4px dashed #0d033a; /* Add yellow dashed outline */
