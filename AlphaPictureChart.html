@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet"> -->
 	
 	<meta charset="UTF-8">
 	<title>Alphabet Picture Chart</title>
@@ -21,15 +21,40 @@
 
 		.emoji {
     display: inline-block;
-    width: 20vh;
-    height: 20vh;
+    width: 25vh;
+    height: 25vh;
     background: url(https://aforapple.fun/images/sprite.png) no-repeat;
-    background-size: 200vh auto;
+    background-size: 220vh auto;
 }
 
 /* Define positions for each emoji */
 
-
+.emoji.a { background-position: 0 0; } /* 😊 */
+.emoji.b { background-position: -25vh 0; } /* 😂 */
+.emoji.c { background-position: -50vh 0; } /* 😍 */
+.emoji.d { background-position: -75vh 0; } /* 🎉 */
+.emoji.e { background-position: -100vh 0; }
+.emoji.f { background-position: -125vh 0; }
+.emoji.g { background-position: -150vh 0; }
+.emoji.h { background-position: -175vh 0; }
+.emoji.i { background-position: -200vh 0; }
+.emoji.j { background-position: 0 -23vh; }
+.emoji.k { background-position: -25vh -23vh; }
+.emoji.l { background-position: -50vh -23vh; }
+.emoji.m { background-position: -75vh -23vh; }
+.emoji.n { background-position: -100vh -23vh; }
+.emoji.o { background-position: -125vh -23vh; }
+.emoji.p { background-position: -150vh -23vh; }
+.emoji.q { background-position: -175vh -23vh; }
+.emoji.r { background-position: -200vh -23vh; }
+.emoji.s { background-position: 0 -46vh; }
+.emoji.t { background-position: -25vh -46vh; }
+.emoji.u { background-position: -50vh -46vh; }
+.emoji.v { background-position: -75vh -46vh; }
+.emoji.w { background-position: -100vh -46vh; }
+.emoji.x { background-position: -125vh -46vh; }
+.emoji.y { background-position: -150vh -46vh; }
+.emoji.z { background-position: -175vh -46vh; }
 		
 	</style>
 </head>
@@ -49,7 +74,7 @@
         <div id="alphabet">
             <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}">
                 <div class="letter"><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div>
-                <div class="img">{{l[2]}}</div>
+                <div class="img emoji" ng-class="l[1]">{{l[2]}}</div>
                 <div class="description">{{l[3]}}</div>
             </div>
         </div>
