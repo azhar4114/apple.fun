@@ -68,8 +68,10 @@ $(document).ready(function() {
 });
 
 function explodeConfetti() {
+    if(!settings.confettiEnabled)
+        return;
     confetti({
-        particleCount: 300,
+        particleCount: 30,
         spread: 300,
         origin: {
             y: .5

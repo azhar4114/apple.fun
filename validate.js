@@ -208,6 +208,17 @@ const settings = {
     localStorage.setItem('siteSettings', JSON.stringify(settings));
     applySettings();
   }
+
+  function toggleConfetti() {
+    settings.confettiEnabled = document.getElementById('toggle-confetti').checked;
+    localStorage.setItem('siteSettings', JSON.stringify(settings));
+  }
+
+  function toggletoggleBgAnimations() {
+    settings.bgAnimationEnabled = document.getElementById('toggle-bg-motion').checked;
+    localStorage.setItem('siteSettings', JSON.stringify(settings));
+    applySettings();
+  }
   
   // Apply settings dynamically
   function applySettings() {
@@ -218,11 +229,17 @@ const settings = {
       document.body.style.backgroundImage = 'none';
     }
   
-    if (settings.animationsEnabled) {
-      document.body.classList.add('enable-animations'); // Add an animation class
+    if (!settings.animationsEnabled) {
+      document.body.classList.add('no-animations'); // Add an animation class
     } else {
-      document.body.classList.remove('enable-animations');
+      document.body.classList.remove('no-animations');
     }
+
+    if (!settings.bgAnimationEnabled) {
+        document.body.classList.add('no--bg-animations'); // Add an animation class
+      } else {
+        document.body.classList.remove('no--bg-animations');
+      }
   }
   
   
