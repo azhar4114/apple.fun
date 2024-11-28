@@ -176,10 +176,10 @@ const settings = {
       settings.backgroundEnabled = storedSettings.backgroundEnabled;
       settings.animationsEnabled = storedSettings.animationsEnabled;
     }
-  
-    document.getElementById('toggle-background').checked = settings.backgroundEnabled;
-    document.getElementById('toggle-animations').checked = settings.animationsEnabled;
-  
+    if(location.pathname=="/" || location.pathname=="/index.html"){
+        document.getElementById('toggle-background').checked = settings.backgroundEnabled;
+        document.getElementById('toggle-animations').checked = settings.animationsEnabled;
+    }
     applySettings();
   }
   
