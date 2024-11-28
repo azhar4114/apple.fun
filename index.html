@@ -20,6 +20,35 @@
       border-radius: 50%;
     }
 	
+/* Gear Icon */
+#settings-gear {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1000;
+}
+
+/* Popup */
+#settings-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+
 .card {
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -228,6 +257,13 @@ body {
   }
 }
 
+#settings-gear img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+
 
 </style>
 </head>
@@ -246,6 +282,9 @@ body {
   <img id="avatar" class="hidden" src="" alt="User Avatar">
   <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
 	  </center>
+    <div id="settings-gear" onclick="toggleSettingsPopup()">
+      <img src="gear.png" alt="Settings" width="24" height="24">
+    </div>
     </header>
 	<loader id="loader"></loader>
     
@@ -264,7 +303,20 @@ body {
    
 </div>
 	<button id="scrollToTopBtn" title="Go to top">Top</button>
-
+<!-- Popup -->
+<div id="settings-popup" class="hidden">
+  <h3>Settings</h3>
+  <label>
+    <input type="checkbox" id="toggle-background" onchange="toggleBackground()">
+    Enable Background Images
+  </label>
+  <br>
+  <label>
+    <input type="checkbox" id="toggle-animations" onchange="toggleAnimations()">
+    Enable Animations
+  </label>
+  <button onclick="toggleSettingsPopup()">Close</button>
+</div>
   <footer>
         <p>&copy; 2024 AForApple.Fun. All rights reserved.</p>
         <div class="footer-links">

@@ -161,3 +161,66 @@ function getUserIP(callback) {
         callback(null)
     })
 }
+
+// Store the settings in localStorage
+const settings = {
+    backgroundEnabled: false,
+    animationsEnabled: false
+  };
+  
+  // Initialize settings from localStorage
+  function initializeSettings() {
+    const storedSettings = JSON.parse(localStorage.getItem('siteSettings'));
+    if (storedSettings) {
+      settings.backgroundEnabled = storedSettings.backgroundEnabled;
+      settings.animationsEnabled = storedSettings.animationsEnabled;
+    }
+  
+    document.getElementById('toggle-background').checked = settings.backgroundEnabled;
+    document.getElementById('toggle-animations').checked = settings.animationsEnabled;
+  
+    applySettings();
+  }
+  
+  // Toggle settings popup visibility
+  function toggleSettingsPopup() {
+    document.getElementById('settings-popup').classList.toggle('hidden');
+  }
+  
+  // Close settings popup
+  function closeSettingsPopup() {
+    document.getElementById('settings-popup').classList.add('hidden');
+  }
+  
+  // Toggle background image
+  function toggleBackground() {
+    settings.backgroundEnabled = document.getElementById('toggle-background').checked;
+    localStorage.setItem('siteSettings', JSON.stringify(settings));
+    applySettings();
+  }
+  
+  // Toggle animations
+  function toggleAnimations() {
+    settings.animationsEnabled = document.getElementById('toggle-animations').checked;
+    localStorage.setItem('siteSettings', JSON.stringify(settings));
+    applySettings();
+  }
+  
+  // Apply settings dynamically
+  function applySettings() {
+    if (settings.backgroundEnabled) {
+      document.body.style.backgroundImage = 'url("background.jpg")'; // Replace with your image path
+    } else {
+      document.body.style.backgroundImage = 'none';
+    }
+  
+    if (settings.animationsEnabled) {
+      document.body.classList.add('enable-animations'); // Add an animation class
+    } else {
+      document.body.classList.remove('enable-animations');
+    }
+  }
+  
+  // Initialize on page load
+  initializeSettings();
+  

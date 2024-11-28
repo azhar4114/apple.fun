@@ -193,8 +193,7 @@ padding: 2vh 10vh;
 	     /* border-color: #FFD700;  Golden border */
 		 border-color: #6B8E23;
 	      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow */
-	      transform: scale(1.05); /* Maintain the hover scale effect */
-	    }
+	      }
 	
 
 	body {
@@ -346,4 +345,18 @@ nav a:hover {
 
 .button.autoplay {
 	border-color: #FFD700;
+	outline: 5px dashed #08b44a;
+	outline-offset: 5px;
 }
+
+/* Disable Backgrounds */
+body.no-background {
+	background-image: none !important;
+  }
+  
+  /* Disable Animations */
+  body.no-animations * {
+	animation: none !important;
+	transition: none !important;
+  }
+  
