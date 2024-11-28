@@ -176,10 +176,14 @@ const settings = {
     if (storedSettings) {
       settings.backgroundEnabled = storedSettings.backgroundEnabled;
       settings.animationsEnabled = storedSettings.animationsEnabled;
+      settings.confettiEnabled = storedSettings.confettiEnabled;
+      settings.bgAnimationEnabled = storedSettings.bgAnimationEnabled;
     }
     if(location.pathname=="/" || location.pathname=="/index.html"){
         document.getElementById('toggle-background').checked = settings.backgroundEnabled;
         document.getElementById('toggle-animations').checked = settings.animationsEnabled;
+        document.getElementById('toggle-bg-motion').checked = settings.backgroundEnabled;
+        document.getElementById('toggle-confetti').checked = settings.animationsEnabled;
     }
     applySettings();
   }
