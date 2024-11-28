@@ -75,6 +75,7 @@ function changeBackground(backgroundImages) {
             const randomIndex = Math.floor(Math.random() * backgroundImages.length);
 
             // Set the background image
+            if(settings.backgroundEnabled)
             document.body.style.backgroundImage = 'url("images/'+backgroundImages[randomIndex]+'")' ;
 }
 		
@@ -198,6 +199,7 @@ const settings = {
     settings.backgroundEnabled = document.getElementById('toggle-background').checked;
     localStorage.setItem('siteSettings', JSON.stringify(settings));
     applySettings();
+    location.reload();
   }
   
   // Toggle animations
@@ -210,7 +212,8 @@ const settings = {
   // Apply settings dynamically
   function applySettings() {
     if (settings.backgroundEnabled) {
-      document.body.style.backgroundImage = 'url("background.jpg")'; // Replace with your image path
+      //document.body.style.backgroundImage = 'url("background.jpg")'; // Replace with your image path
+      //location.reload();
     } else {
       document.body.style.backgroundImage = 'none';
     }
