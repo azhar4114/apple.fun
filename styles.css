@@ -199,7 +199,7 @@ padding: 2vh 10vh;
 	body {
 		background-image: url(images/space2.jpeg);
 		animation: gradient 50s ease infinite;
-		background-color: cadetblue;
+		background-color: #589c9e;
 		height: 100vh;
 		margin: 0;
 		font-family: 'Patrick Hand', cursive;

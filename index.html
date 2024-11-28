@@ -112,7 +112,7 @@ body {
     font-family: "Handlee", cursive;
     background-image: url(images/clouds2.jpeg);
     background-size: cover;
-	
+    background-color: #589c9e;
     animation: gradient 50s ease infinite;
     background-size: cover;
      background-attachment: fixed;
@@ -262,7 +262,21 @@ body {
   cursor: pointer;
 }
 
+/* Disable Backgrounds */
+body.no-background {
+	background-image: none !important;
+  }
+  
+  /* Disable Animations */
+  body.no-animations * {
+	animation: none !important;
+	transition: none !important;
+  }
 
+  body.no-bg-animations{
+	animation: none !important;
+	transition: none !important;
+  }
 
 </style>
 </head>
@@ -313,11 +327,11 @@ body {
   <label>
     <input type="checkbox" id="toggle-animations" onchange="toggleAnimations()">
     Enable Animations
-  </label>
+  </label><br>
   <label>
     <input type="checkbox" id="toggle-confetti" onchange="toggleConfetti()">
     Enable Confetti
-  </label>
+  </label><br>
   <label>
     <input type="checkbox" id="toggle-bg-motion" onchange="toggleBgAnimations()">
     Enable Background Animation

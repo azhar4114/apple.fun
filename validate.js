@@ -236,9 +236,9 @@ const settings = {
     }
 
     if (!settings.bgAnimationEnabled) {
-        document.body.classList.add('no--bg-animations'); // Add an animation class
+        document.body.classList.add('no-bg-animations'); // Add an animation class
       } else {
-        document.body.classList.remove('no--bg-animations');
+        document.body.classList.remove('no-bg-animations');
       }
   }
   
