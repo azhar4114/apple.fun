@@ -58,6 +58,7 @@ window.onload = function() {
         console.log("Content is being rendered on ", deviceType);
         checkKeyValidation()
     }
+    initializeSettings();
 }
 
 function getDeviceId() {
@@ -221,6 +222,5 @@ const settings = {
     }
   }
   
-  // Initialize on page load
-  initializeSettings();
+  
   
