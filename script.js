@@ -72,7 +72,7 @@ function explodeConfetti() {
         return;
     confetti({
         particleCount: 30,
-        spread: 300,
+        spread: 100,
         origin: {
             y: .5
         }
