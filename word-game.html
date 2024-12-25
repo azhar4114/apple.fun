@@ -50,14 +50,8 @@
       border-color: #1565C0;
     }
 
-    .clear-word-btn {
-      padding: 5px 15px;
+    #clear-word-btn {
       background-color: #FF5722;
-      color: white;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
     }
 
     .dropzone p {
@@ -72,12 +66,12 @@
       color: white;
       border: none;
       font-size: 18px;
-      cursor: pointer;
       border-radius: 5px;
     }
 
     .dropzone span {
         font-weight: bold;
+        font-size:30px;
     }
 
     .btn:hover {
@@ -156,7 +150,7 @@ app.controller('appCtrl', function($scope) {
 });
 
   const populateLetters = (words) => {
-    const letters = words.join('').split('').sort(() => 0.5 - Math.random());
+    const letters = [...new Set(words.join('').split(''))].sort(() => 0.5 - Math.random());
     draggableContainer.innerHTML = '';
     letters.forEach((letter, index) => {
       const span = document.createElement('span');
@@ -196,7 +190,8 @@ app.controller('appCtrl', function($scope) {
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropzone.classList.remove('hover');
-    document.querySelector('#word-dropzone p').remove()
+    if(document.querySelector('#word-dropzone p'))
+        document.querySelector('#word-dropzone p').remove()
     const letter = e.dataTransfer.getData('text');
     const span = document.createElement('span');
     span.textContent = letter.toUpperCase();
