@@ -23,7 +23,6 @@
       color: white;
       font-size: 18px;
       border-radius: 5px;
-      cursor: pointer;
       user-select: none;
       display: inline-block;
       transition: all 0.3s ease;
@@ -197,6 +196,7 @@ app.controller('appCtrl', function($scope) {
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropzone.classList.remove('hover');
+    document.querySelector('#word-dropzone p').remove()
     const letter = e.dataTransfer.getData('text');
     const span = document.createElement('span');
     span.textContent = letter.toUpperCase();
