@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script src="validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+    <title>Graph Plotter</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js"></script>
+    <style>
+
+    .container {
+      width: 90%; /* Use more of the screen width */
+      max-width: 1920px; /* Max width for large screens */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center content horizontally */
+      gap: 2em; /* Larger gaps */
+      padding: 2em;
+      box-sizing: border-box;
+    }
+
+
+    #graph {
+      width: 900px;
+      height: 600px; /* Increased graph height */
+      border: 2px solid #000;
+      margin: 0 auto; /* Center the graph vertically */
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      width: 100%; /* Make input groups fill container width */
+      justify-content: center;
+    }
+
+    label {
+      width: 20%; /* Fixed width for labels */
+      text-align: right;
+      font-weight: bold;
+      display: inline-block; /* Single line for labels */
+      margin-right: 0.5em;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 0.5em;
+      font-size: 1em;
+      width: 30%; /* Adjust input width */
+      box-sizing: border-box;
+    }
+
+    .btn {
+      background: #2196F3;
+      color: #fff;
+      padding: 0.8em 1.6em;
+      font-size: 1.2em;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 1em;
+    }
+
+    .btn:hover {
+      background: #1976D2;
+    }
+    </style>
+</head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl" id="controller">
+   <div class="header">
+    <h1>Graph Plotter</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+
+<div class="container">
+
+    <div class="input-group">
+        <label for="equation">Equation:</label>
+        <input type="text" id="equation" value="sin(x)">
+    </div>
+
+    <div class="input-group">
+        <label for="xMin">X Minimum:</label>
+        <input type="number" id="xMin" value="-10">
+    </div>
+
+    <div class="input-group">
+        <label for="xMax">X Maximum:</label>
+        <input type="number" id="xMax" value="10">
+    </div>
+
+    <div class="input-group">
+        <label for="yMin">Y Minimum:</label>
+        <input type="number" id="yMin" value="-10">
+    </div>
+
+    <div class="input-group">
+        <label for="yMax">Y Maximum:</label>
+        <input type="number" id="yMax" value="10">
+    </div>
+
+    <div id="graph"></div>
+    <btn class="btn" id="plot-graph-btn">Plot Graph</btn>
+</div>
+<script>
+  const width = 900;
+  const height = 600;
+
+  var app = angular.module("newApp", []);
+app.directive('loader', function($http, $templateCache) {
+return {
+  restrict: 'E',
+  link: function(scope, element) {
+    // Load the loader.html file and inject it
+    $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+      element.html(response.data);
+    });
+  }
+};
+});
+
+app.controller('appCtrl', function($scope) {
+
+$scope.initiate = function(data){
+
+  const svg = d3.select('#graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+  function plotGraph() {
+    const equation = document.getElementById('equation').value;
+    const xMin = parseFloat(document.getElementById('xMin').value);
+    const xMax = parseFloat(document.getElementById('xMax').value);
+    const yMin = parseFloat(document.getElementById('yMin').value);
+    const yMax = parseFloat(document.getElementById('yMax').value);
+
+    const xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, width]);
+    const yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, height]); // Invert y-axis
+
+    try {
+        const compiledFunction = math.compile(equation);
+        const data = [];
+        const step = (xMax - xMin) / 200; // Increase for smoother curves
+        for (let x = xMin; x <= xMax; x += step) {
+            const y = compiledFunction.evaluate({ x: x });
+            data.push({ x: x, y: y });
+        }
+
+        svg.selectAll('*').remove();
+
+        svg.append('g')
+        .attr("transform", `translate(0, ${height/2})`)
+        .call(d3.axisBottom(xScale));
+
+        svg.append('g')
+        .attr("transform", `translate(${width/2}, 0)`)
+        .call(d3.axisLeft(yScale));
+
+        svg.append('path')
+            .data([data])
+            .attr('d', d3.line()
+                .x(d => xScale(d.x))
+                .y(d => yScale(d.y)))
+            .attr('fill', 'none')
+            .attr('stroke', 'red')
+            .attr('stroke-width', 2);
+    } catch (error) {
+        alert("Invalid equation: " + error.message);
+    }
+  }
+
+  document.getElementById('plot-graph-btn').addEventListener('click', plotGraph);
+  plotGraph();
+}
+
+});
+  
+</script>
+
+</body>
+</html>

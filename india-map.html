@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script src="validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+	
+    <title>India Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.timeline, .map {
+  margin: 10px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+#timeline {
+  width: 100%;
+  height: 200px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+#map {
+  width: 1200px;
+  height: 800px;
+  background-color: #eef;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+
+    </style>
+  </head>
+<body ng-app="newApp">
+  
+  <div ng-controller="appCtrl" id="controller">
+   <div class="header">
+    <h1>Interactive India Map</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+  <div class="container">
+    
+    <div class="map">
+      <svg id="map"></svg>
+    </div>
+  </div>
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+<script src="script.js"></script>
+<script>
+
+  var aud;
+  var audTime =[];
+gap = 1200;
+
+
+var app = angular.module("newApp", []);
+app.directive('loader', function($http, $templateCache) {
+return {
+  restrict: 'E',
+  link: function(scope, element) {
+    // Load the loader.html file and inject it
+    $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+      element.html(response.data);
+    });
+  }
+};
+});
+
+app.controller('appCtrl', function($scope) {
+$scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
+$scope.chars = [];
+
+$scope.showSmallClck = function(){
+  //$scope.aud.play();
+  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+  if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+    $scope.ctrl.showCaps = true;
+};
+
+$scope.initiate = function(data){
+ // Initialize SVG
+const svg = d3.select('#map')
+  .attr('width', 1200)
+  .attr('height', 800);
+
+const g = svg.append('g'); // Group to hold the map for zooming and panning
+
+const width = 1200;
+const height = 800;
+
+// Create a div for tooltips
+const tooltip = d3.select('body')
+  .append('div')
+  .style('position', 'absolute')
+  .style('background', '#fff')
+  .style('border', '1px solid #004085')
+  .style('border-radius', '4px')
+  .style('padding', '8px 12px') // Increased padding for larger text
+  .style('font-size', '16px') // Increased font size
+  .style('box-shadow', '0px 2px 5px rgba(0,0,0,0.3)')
+  .style('pointer-events', 'none')
+  .style('display', 'none');
+
+// Add zoom behavior
+const zoom = d3.zoom()
+  .scaleExtent([1, 8]) // Set zoom scale limits
+  .on('zoom', (event) => {
+    g.attr('transform', event.transform); // Apply zoom transform to the group
+  });
+
+svg.call(zoom); // Attach zoom behavior to the SVG
+
+// Add a world map background
+d3.json(data.json)
+  .then((data) => {
+    const projection = d3.geoMercator().scale(150).translate([width / 2, height / 1.5]);
+    const path = d3.geoPath().projection(projection);
+
+    // Draw the map
+    g.selectAll('path')
+      .data(data.features)
+      .enter()
+      .append('path')
+      .attr('d', path)
+      .attr('fill', '#cce5ff')
+      .attr('stroke', '#004085')
+      .on('mouseover', function (event, d) {
+        d3.select(this).attr('fill', '#0056b3');
+        tooltip.style('display', 'block').text(d.properties.name);
+      })
+      .on('mousemove', (event) => {
+        tooltip
+          .style('left', `${event.pageX + 10}px`)
+          .style('top', `${event.pageY + 10}px`);
+      })
+      .on('mouseout', function () {
+        d3.select(this).attr('fill', '#cce5ff');
+        tooltip.style('display', 'none');
+      })
+      .on('click', (event, d) => {
+        alert(`You clicked on ${d.properties.name}`);
+      });
+
+    // Add country labels with filtering
+    g.selectAll('text')
+      .data(data.features.filter(d => {
+        // Filter out small countries by area (approximation)
+        return d3.geoArea(d) > 0.01;
+      }))
+      .enter()
+      .append('text')
+      .attr('x', d => projection(d3.geoCentroid(d))[0])
+      .attr('y', d => projection(d3.geoCentroid(d))[1])
+      .attr('text-anchor', 'middle')
+      .attr('font-size', d => `${Math.sqrt(d3.geoArea(d)) * 20}px`) // Scale font size dynamically
+      .attr('fill', '#000')
+      .text(d => d.properties.name)
+      .style('pointer-events', 'none') // Prevent interfering with mouse events on paths
+      .style('opacity', 0.8); // Reduce opacity for better blending
+  })
+  .catch((error) => console.error('Error loading the map:', error));
+
+}
+
+}); 
+
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-1ZCM5PW9N9');
+</script>
+</body>
+</html>
