@@ -12,8 +12,6 @@
     <style>
 
     .container {
-      width: 90%; /* Use more of the screen width */
-      max-width: 1920px; /* Max width for large screens */
       display: flex;
       flex-direction: column;
       align-items: center; /* Center content horizontally */
@@ -39,7 +37,6 @@
     }
 
     label {
-      width: 20%; /* Fixed width for labels */
       text-align: right;
       font-weight: bold;
       display: inline-block; /* Single line for labels */
@@ -77,6 +74,7 @@
     <a href="index.html">Go to Home</a>
   </div>
 
+  <loader id="loader"></loader>
 <div class="container">
 
     <div class="input-group">
@@ -88,7 +86,6 @@
         <label for="xMin">X Minimum:</label>
         <input type="number" id="xMin" value="-10">
     </div>
-    <loader id="loader"></loader>
     <div class="input-group">
         <label for="xMax">X Maximum:</label>
         <input type="number" id="xMax" value="10">
@@ -176,6 +173,7 @@ app.controller('appCtrl', function($scope) {
 
 $scope.initiate = function(data){
     console.log("initiated...")
+    $('#loader').hide();
   document.getElementById('plot-graph-btn').addEventListener('click', plotGraph);
   plotGraph();
 }

@@ -94,6 +94,7 @@ $scope.showSmallClck = function(){
 
 $scope.initiate = function(data){
  // Initialize SVG
+ $('#loader').hide();
 const svg = d3.select('#map')
   .attr('width', 1200)
   .attr('height', 800);
