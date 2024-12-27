@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <title>Interactive Whiteboard</title>
+</head>
+<style>
+  .toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.tool {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+}
+
+.tool:hover {
+  background-color: #0056b3;
+}
+
+canvas {
+  border: 2px solid #ddd;
+  background: white;
+  display: block;
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  touch-action: none;
+}
+</style>
+<body ng-app="newApp">
+  
+    <div ng-controller="appCtrl" id="controller">
+     <div class="header">
+      <h1>Interactive Whiteboard</h1>
+      <a href="index.html">Go to Home</a>
+    </div>
+    <loader id="loader"></loader>
+  <div class="toolbar">
+    <button id="draw" class="tool">✏️ Draw</button>
+    <button id="erase" class="tool">🧽 Erase</button>
+    <input type="color" id="colorPicker" class="tool" value="#000000">
+    <input type="range" id="thickness" class="tool" min="1" max="20" value="5">
+    <button id="clear" class="tool">🗑️ Clear</button>
+  </div>
+  <canvas id="whiteboard"></canvas>
+  </div>
+  <script>
+
+var app = angular.module("newApp", []);
+app.directive('loader', function($http, $templateCache) {
+return {
+  restrict: 'E',
+  link: function(scope, element) {
+    // Load the loader.html file and inject it
+    $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+      element.html(response.data);
+    });
+  }
+};
+});
+
+app.controller('appCtrl', function($scope) {
+$scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
+$scope.chars = [];
+
+$scope.showSmallClck = function(){
+  //$scope.aud.play();
+  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+  if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
+    $scope.ctrl.showCaps = true;
+};
+
+const canvas = document.getElementById('whiteboard');
+const ctx = canvas.getContext('2d');
+const drawButton = document.getElementById('draw');
+const eraseButton = document.getElementById('erase');
+const clearButton = document.getElementById('clear');
+const colorPicker = document.getElementById('colorPicker');
+const thickness = document.getElementById('thickness');
+
+let isDrawing = false;
+let isErasing = false;
+let startX = 0;
+let startY = 0;
+
+$scope.initiate = function(data){
+ // Initialize SVG
+ $('#loader').hide();
+ resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Start drawing
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('touchstart', (e) => startDrawing(e.touches[0]));
+
+// Stop drawing
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseout', stopDrawing);
+canvas.addEventListener('touchend', stopDrawing);
+
+// Drawing on canvas
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', (e) => draw(e.touches[0]));
+}
+
+
+// Resize canvas to fit screen
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Start drawing
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('touchstart', (e) => startDrawing(e.touches[0]));
+
+// Stop drawing
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseout', stopDrawing);
+canvas.addEventListener('touchend', stopDrawing);
+
+// Drawing on canvas
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', (e) => draw(e.touches[0]));
+
+function startDrawing(e) {
+  isDrawing = true;
+  startX = e.offsetX || e.clientX - canvas.offsetLeft;
+  startY = e.offsetY || e.clientY - canvas.offsetTop;
+}
+
+function stopDrawing() {
+  isDrawing = false;
+  ctx.beginPath(); // Reset the path
+}
+
+function draw(e) {
+  if (!isDrawing) return;
+
+  const x = e.offsetX || e.clientX - canvas.offsetLeft;
+  const y = e.offsetY || e.clientY - canvas.offsetTop;
+
+  ctx.lineWidth = thickness.value;
+  ctx.lineCap = 'round';
+
+  if (isErasing) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineWidth = 20; // Eraser thickness
+  } else {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.strokeStyle = colorPicker.value;
+  }
+
+  ctx.lineTo(x, y);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+}
+
+// Erase button functionality
+eraseButton.addEventListener('click', () => {
+  isErasing = true;
+});
+
+// Draw button functionality
+drawButton.addEventListener('click', () => {
+  isErasing = false;
+});
+
+// Clear the canvas
+clearButton.addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+});
+  </script>
+</body>
+</html>
