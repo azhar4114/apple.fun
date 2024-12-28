@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+    <title>Math Fun</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #4c6ef5;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #container {
+            display: grid;
+            justify-content: center;
+            margin: 0 auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .side {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(55px, 55px));
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, #ff6b6b, #f06595); /* Red to Pink */
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Initially hidden */
+            transform: scale(0.5); /* Initially smaller */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            font-size: 1.5em;
+        }
+
+        .circle.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #problem-area  {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            font-size:1.8em;
+            font-weight:bold;
+        }
+
+        #user-answer {
+            padding: 10px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            width: 100px;
+            text-align: center;
+        }
+
+        #submit-answer {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #4c6ef5;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submit-answer:hover {
+            background-color: #365df0;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        #feedback.correct {
+            color: green;
+        }
+
+        #feedback.incorrect {
+            color: red;
+        }
+
+        #controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="MyController" id="controller">
+        <div class="header">
+            <h1>Math Fun!</h1>
+         <a href="index.html">Go to Home</a>
+       </div>
+       <loader id="loader"></loader>
+    <div style="overflow:auto;width:100%">
+       
+        <div id="problem-area">
+            <span id="num1">{{num1}}</span>
+            <span id="operator">{{currentOperation}}</span>
+            <span id="num2">{{num2}}</span>
+            <span>=</span>
+            <input type="number" id="user-answer" ng-model="userAnswer">
+            <button id="submit-answer" ng-click="submit()">Submit</button>
+        </div>
+        <div id="container">
+            <div class="side" id="left-side">
+                <div class="circle" ng-repeat="circle in leftCircles" ng-class="{show: circle.show}">
+                    {{circle.number}}
+                </div>
+            </div>
+            <div class="side" id="right-side">
+                <div class="circle" ng-repeat="circle in rightCircles" ng-class="{show: circle.show}">
+                    {{circle.number}}
+                </div>
+            </div>
+        </div>
+        <div id="feedback" ng-class="{'correct': feedbackDisplay === 'Correct!', 'incorrect': feedbackDisplay === 'Incorrect. Try again.'}">
+            {{feedbackDisplay}}
+        </div>
+        <div id="controls">
+            <button id="addition" ng-click="addition()">Addition</button>
+            <button id="subtraction" ng-click="subtraction()">Subtraction</button>
+            <button id="nextProblem" ng-click="generateProblem()">Next Problem</button>
+        </div>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('MyController', function ($scope, $timeout) {
+                $scope.leftCircles = [];
+                $scope.rightCircles = [];
+                $scope.currentOperation = "+";
+
+                function createCircles(count, array) {
+                    for (let i = 0; i < count; i++) {
+                        array.push({
+                            number: i + 1,
+                            show: false
+                        });
+                    }
+                    $timeout(function() {
+                        $scope.leftCircles.forEach(circle => circle.show = true);
+                        $scope.rightCircles.forEach(circle => circle.show = true);
+                    }, 100);
+                }
+
+                $scope.addCircles = function() {
+                    let j = $scope.leftCircles.length + 1;
+                    for (let i = 0; i < $scope.rightCircles.length; i++) {
+                        $scope.leftCircles.push({
+                            number: j + i,
+                            show: false
+                        });
+                    }
+                    $timeout(function() {
+                        $scope.leftCircles.forEach(circle => circle.show = true);
+                    }, 100);
+                    $scope.rightCircles = [];
+                }
+
+                $scope.addition = function() {
+                    $scope.currentOperation = "+";
+                    $scope.generateProblem();
+                };
+
+                $scope.subtraction = function() {
+                    $scope.currentOperation = "-";
+                    $scope.generateProblem();
+                };
+
+                $scope.generateProblem = function() {
+                    $scope.num1 = Math.floor(Math.random() * 10) + 1;
+                    $scope.num2 = Math.floor(Math.random() * 10) + 1;
+                    $scope.leftCircles = [];
+                    $scope.rightCircles = [];
+
+                    if ($scope.currentOperation === "-" && $scope.num2 > $scope.num1) {
+                        [$scope.num1, $scope.num2] = [$scope.num2, $scope.num1];
+                    }
+                    if ($scope.currentOperation === "+") {
+                        createCircles($scope.num1, $scope.leftCircles);
+                        createCircles($scope.num2, $scope.rightCircles);
+                    } else if ($scope.currentOperation === "-") {
+                        createCircles($scope.num1, $scope.leftCircles);
+                    }
+
+                    $scope.userAnswer = "";
+                    $scope.feedbackDisplay = "";
+                };
+
+                $scope.subCircles = function() {
+                    for (let i = $scope.num1 - $scope.num2; i < $scope.leftCircles.length; i++) {
+                        $scope.leftCircles[i].show = false;
+                    }
+                };
+
+                $scope.submit = function() {
+                    const correctAnswer = ($scope.currentOperation === "+") ? $scope.num1 + $scope.num2 : $scope.num1 - $scope.num2;
+                    console.log($scope.userAnswer, correctAnswer, $scope.currentOperation);
+                    if ($scope.userAnswer === correctAnswer) {
+                        $scope.feedbackDisplay = "Correct!";
+                        if ($scope.currentOperation === "+") {
+                            $scope.addCircles();
+                        } else if ($scope.currentOperation === '-') {
+                            $scope.subCircles();
+                        }
+                    } else { 
+                        $scope.feedbackDisplay = "Incorrect. Try again.";
+                    }
+                };
+
+                $scope.initiate = function(data){
+                    $('#loader').hide();
+                    $scope.generateProblem();
+                }
+            });
+    </script>
+</body>
+</html>

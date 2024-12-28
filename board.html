@@ -16,15 +16,17 @@
   justify-content: center;
   gap: 10px;
   margin: 10px 0;
+  align-items: center;
 }
 
 .tool {
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #5b98f5;
+    color: white;
+    font-weight: bold;
+    border: 1px solid;
 }
 
 .tool:hover {
@@ -36,9 +38,10 @@ canvas {
   background: white;
   display: block;
   width: 90%;
-  max-width: 800px;
   aspect-ratio: 16 / 9;
   touch-action: none;
+  margin: 0 auto;
+  cursor: inherit;
 }
 </style>
 <body ng-app="newApp">

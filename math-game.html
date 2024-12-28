@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+    <title>Math Fun</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.game-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#question {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#answer {
+    width: 50%;
+    height: 30px;
+    font-size: 18px;
+    padding: 10px;
+}
+
+#submit {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#next {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#result {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#operation {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+#difficulty {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+#score {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#time-remaining {
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+    </style>
+    </head>
+    <body>
+        <script>
+
+let num1, num2, correctAnswer;
+let operation = "addition";
+let difficulty = "easy";
+let score = 0;
+let timerEnabled = false;
+let timeRemaining = 60; // 1 minute
+let intervalId;
+
+document.getElementById("operation").addEventListener("change", (e) => {
+    operation = e.target.value;
+    generateQuestion();
+});
+
+document.getElementById("difficulty").addEventListener("change", (e) => {
+    difficulty = e.target.value;
+    generateQuestion();
+});
+
+document.getElementById("timer-checkbox").addEventListener("change", (e) => {
+    timerEnabled = e.target.checked;
+    if (timerEnabled) {
+        startTimer();
+    } else {
+        stopTimer();
+    }
+});
+
+function generateQuestion() {
+    let maxNum;
+    switch (difficulty) {
+        case "easy":
+            maxNum = 10;
+            break;
+        case "medium":
+            maxNum = 20;
+            break;
+        case "hard":
+            maxNum = 50;
+            break;
+    }
+
+    num1 = Math.floor(Math.random() * maxNum) + 1;
+    num2 = Math.floor(Math.random() * maxNum) + 1;
+
+    switch (operation) {
+        case "addition":
+            correctAnswer = num1 + num2;
+            document.getElementById("question").innerText = `What is ${num1} + ${num2}?`;
+            break;
+        case "subtraction":
+            if (num1 < num2) {
+                [num1, num2] = [num2, num1]; // Ensure num1 is greater than num2
+            }
+            correctAnswer = num1 - num2;
+            document.getElementById("question").innerText = `What is ${num1} - ${num2}?`;
+            break;
+        case "multiplication":
+            correctAnswer = num1 * num2;
+            document.getElementById("question").innerText = `What is ${num1} × ${num2}?`;
+            break;
+        case "division":
+            correctAnswer = num1 / num2;
+            document.getElementById("question").innerText = `What is ${num1} ÷ ${num2}?`;
+            break;
+    }
+}
+
+
+
+document.getElementById("submit").addEventListener("click", () => {
+    let userAnswer = parseFloat(document.getElementById("answer").value);
+    if (userAnswer === correctAnswer) {
+        score++;
+        document.getElementById("score").innerText = `Score: ${score}`;
+        document.getElementById("result").innerText = "Correct!";
+    } else {
+        document.getElementById("result").innerText = `Sorry, the correct answer is ${correctAnswer}.`;
+    }
+    document.getElementById("answer").value = "";
+    generateQuestion();
+});
+
+document.getElementById("next").addEventListener("click", () => {
+    generateQuestion();
+    document.getElementById("answer").value = "";
+    document.getElementById("result").innerText = "";
+});
+
+function startTimer() {
+    intervalId = setInterval(() => {
+        timeRemaining--;
+        document.getElementById("time-remaining").innerText = `Time remaining: ${timeRemaining} seconds`;
+        if (timeRemaining === 0) {
+            stopTimer();
+            alert("Time's up!");
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
+    timeRemaining = 60;
+    document.getElementById("time-remaining").innerText = "";
+}
+
+            angular.module('myApp', [])
+            .controller('MyController', function ($scope, $timeout) {
+                $scope.initiate = function(data){
+                    $('#loader').hide();
+                    generateQuestion();
+                }
+            });
+        </script>
+    </body>
+    </html>
