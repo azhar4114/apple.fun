@@ -198,7 +198,7 @@ const settings = {
     document.getElementById('settings-popup').classList.add('hidden');
   }
   
-  // Toggle background image
+  // Toggle background imageasdfsadf asdf
   function toggleBackground() {
     settings.backgroundEnabled = document.getElementById('toggle-background').checked;
     localStorage.setItem('siteSettings', JSON.stringify(settings));
@@ -218,7 +218,7 @@ const settings = {
     localStorage.setItem('siteSettings', JSON.stringify(settings));
   }
 
-  function toggletoggleBgAnimations() {
+  function toggleBgAnimations() { 
     settings.bgAnimationEnabled = document.getElementById('toggle-bg-motion').checked;
     localStorage.setItem('siteSettings', JSON.stringify(settings));
     applySettings();

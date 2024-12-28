@@ -87,7 +87,37 @@
 }
     </style>
     </head>
-    <body>
+    <body ng-app="myApp">
+
+        <div class="container" ng-controller="MyController" id="controller">
+            <div class="header">
+                <h1>Math Game</h1>
+             <a href="index.html">Go to Home</a>
+           </div>
+           <loader id="loader"></loader>
+            <div class="game-container">
+                <p id="question"></p>
+                <input type="number" id="answer" />
+                <button id="submit">Submit</button>
+                <p id="result"></p>
+                <button id="next">Next Question</button>
+                <select id="operation">
+                    <option value="addition">Addition</option>
+                    <option value="subtraction">Subtraction</option>
+                    <option value="multiplication">Multiplication</option>
+                    <option value="division">Division</option>
+                </select>
+                <select id="difficulty">
+                    <option value="easy">Easy (1-10)</option>
+                    <option value="medium">Medium (1-20)</option>
+                    <option value="hard">Hard (1-50)</option>
+                </select>
+                <label><input type="checkbox" id="timer-checkbox"> Enable Timer</label>
+                <p id="score">Score: 0</p>
+                <p id="time-remaining"></p>
+            </div>
+        </div>
+
         <script>
 
 let num1, num2, correctAnswer;
