@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
     <title>Math Fun</title>
+    <script src="script.js"></script>
     <style>
 
         h1 {
@@ -21,7 +22,7 @@
             justify-content: center;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            background: #ffffff9e;
+            background: #ffffffe3;
             margin: 0 50px;
             padding: 20px;
             border-radius: 10px;
@@ -169,12 +170,13 @@
                 </div>
             </div>
         </div>
-        <div id="feedback" ng-class="{'correct': feedbackDisplay === 'Correct!', 'incorrect': feedbackDisplay === 'Incorrect. Try again.'}">
+        <div id="feedback" ng-class="{'correct': feedbackDisplay === 'Correct!', 'incorrect': feedbackDisplay === 'Incorrect. Try again.'}" ng-show="feedbackDisplay!=''">
             {{feedbackDisplay}}
         </div>
         <div id="controls">
             <button id="addition" ng-click="addition()">Addition</button>
             <button id="subtraction" ng-click="subtraction()">Subtraction</button>
+            <button id="multiplication" ng-click="multiplication()">Multiplication</button>
             <button id="nextProblem" ng-click="generateProblem()">Next Problem</button>
         </div>
     </div>

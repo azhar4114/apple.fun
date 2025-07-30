@@ -262,10 +262,152 @@ body {
   cursor: pointer;
 }
 
+.category-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    padding: 30px;
+}
+
+.category-section h2 {
+    color: #28a745; /* A slightly darker green for headings */
+    font-size: 2em;
+    margin-top: 0;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.category-description {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.subcategory {
+    margin-bottom: 30px;
+}
+
+.subcategory h3 {
+    color: #007bff; /* A friendly blue for subcategory headings */
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #e9ecef;
+    padding-bottom: 5px;
+}
+
+.tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between tiles */
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #f0f8ff; /* Very light blue for tiles */
+    border: 1px solid #e0f2f7;
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.tile:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.tile img {
+    width: 80px; /* Size of the icon */
+    height: 80px;
+    margin-bottom: 15px;
+    object-fit: contain; /* Ensure image fits without distortion */
+}
+
+.tile h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #343a40; /* Darker text for title */
+}
+
+.tile p {
+    font-size: 0.9em;
+    color: #555;
+    flex-grow: 1; /* Allow description to take up available space */
+}
+
 /* Disable Backgrounds */
 body.no-background {
 	background-image: none !important;
   }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow navigation items to wrap on smaller screens */
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: rgb(54, 54, 54);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    nav ul li {
+        margin: 5px 0;
+    }
+    main {
+        padding: 15px;
+    }
+    .category-section {
+        padding: 20px;
+    }
+    .tiles-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Smaller tiles on small screens */
+    }
+    .tile img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tiles-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+    }
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    background-color: #dbdbdb; /* Slightly lighter green on hover */
+}
   
   /* Disable Animations */
   body.no-animations * {
@@ -282,8 +424,12 @@ body.no-background {
 </head>
 <body ng-app="newApp">
   <header>
-        <h1>Welcome to AForApple.Fun</h1>
-        <p>Learning Through Fun and Play!</p>
+        <h2 style="
+    margin: 10px;
+">Welcome to AForApple.Fun<br>
+          <i style="font-size: 15px;vertical-align: text-top;">Learning Through Fun and Play!</i>
+        </h2>
+        
 	  <center class="login">
 	 <div id="g_id_onload"
        data-client_id="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com"
@@ -295,23 +441,47 @@ body.no-background {
   <img id="avatar" class="hidden" src="" alt="User Avatar">
   <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
 	  </center>
+    <nav>
+            <ul>
+                <li><a href="#early-learning">Early Learning</a></li>
+                <li><a href="#exploring-world">Exploring the World</a></li>
+                <li><a href="#language-literacy">Language & Literacy</a></li>
+                <li><a href="#math-logic">Math & Logic</a></li>
+            </ul>
+        </nav>
     <div id="settings-gear" onclick="toggleSettingsPopup()">
       <img src="images/gear.png" alt="Settings" width="24" height="24">
     </div>
     </header>
 	<loader id="loader"></loader>
     
-  <div  ng-controller="appCtrl" class="ng-cloak" id="controller"> 
-	  <center style="padding:2vh 0 1vh 0;"><input type="search" ng-model="search" class="search" placeholder="What are you looking for?"></center>
-	  <div class="container">
-    <div class="card" ng-repeat="c in cards | filter: { t: search }" ng-click="open(c)">
-        <div class="card-content">
-            <h2 class="card-title">{{c.t}}</h2>
-            <p class="card-description">{{c.d}}</p>
-            <a ng-href="{{c.l}}" class="btn">Learn More</a>
-        </div>
+  <div ng-controller="appCtrl" class="ng-cloak" id="controller">
+    <center style="padding:2vh 0 1vh 0;">
+        <input type="search" ng-model="search" class="search" placeholder="What are you looking for?">
+    </center>
+
+    <div class="container">
+        <section ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
+                 id="{{category.category_title | lowercase | spaceless}}"
+                 class="category-section">
+            <h2>{{category.category_title}}</h2>
+            <p class="category-description">{{category.category_description}}</p>
+
+            <div ng-repeat="subcategory in category.subcategories | filter: { subcategory_title: search, items: { t: search } }"
+                 class="subcategory">
+                <h3>{{subcategory.subcategory_title}}</h3>
+                <div class="tiles-grid">
+                    <a ng-repeat="item in subcategory.items | filter: { t: search }"
+                       ng-click="open(item)"
+                       ng-href="{{item.l}}" class="tile">
+                         <h4>{{item.t}}</h4>
+                        <p>{{item.d}}</p>
+                        </a>
+                </div>
+            </div>
+        </section>
     </div>
-	  </div>
+</div>
     
    
 </div>
@@ -363,6 +533,25 @@ body.no-background {
 	    }
 	  };
 	});
+
+  app.filter('spaceless', function() {
+    return function(input) {
+        if (input) {
+            return input.replace(/\s+/g, '-').toLowerCase(); // Replaces spaces with hyphens and converts to lowercase
+        }
+        return '';
+    };
+});
+
+app.filter('replaceSpaces', function() { // <-- Renamed from 'spaceless' to 'replaceSpaces'
+    return function(input) {
+        if (input) {
+            // This will convert "Alphabet Chart" to "alphabet-chart"
+            return input.replace(/\s+/g, '-').toLowerCase();
+        }
+        return '';
+    };
+});
 
 app.controller('appCtrl', function($scope) {
 	$scope.search="";
