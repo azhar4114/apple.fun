@@ -494,7 +494,7 @@ nav ul li a:focus {
         <input type="search" ng-model="search" class="search" placeholder="What are you looking for?">
     </center>
 
-    <div class="container">
+    <main>
         <section ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
                  id="{{category.category_title | lowercase | spaceless}}"
                  class="category-section">
@@ -515,7 +515,7 @@ nav ul li a:focus {
             </div>
         </section>
     </div>
-</div>
+  </main>
     
    
 </div>
