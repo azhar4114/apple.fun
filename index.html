@@ -555,14 +555,14 @@ app.filter('replaceSpaces', function() { // <-- Renamed from 'spaceless' to 'rep
 
 app.controller('appCtrl', function($scope) {
 	$scope.search="";
-	$scope.category = category = [];
+	$scope.categories = categories = [];
 	 $scope.open = function(card){
 		 window.location.href=card.l;
 	 }
 	 
 	 $scope.initiate = function(data){
-		 category = data;
-		 $scope.category = data;
+		 categories = data;
+		 $scope.categories = data;
 		 $('#loader').hide();
 	 }
 	 
