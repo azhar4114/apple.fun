@@ -35,19 +35,22 @@
 }
 
 canvas {
-  border: 2px solid #ddd;
   background: white;
   display: block;
   width: 90%;
   aspect-ratio: 16 / 9;
   touch-action: none;
   margin: 0 auto;
-  cursor: inherit;
+  cursor: cell;
+  border: 5px solid #ccc; /* A thin base border */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 0 0 5px #4285f4, /* A blue inner shadow */
+            0 0 0 10px #0f9d58; /* A green outer shadow */
 }
 </style>
 <body ng-app="newApp">
   
-    <div ng-controller="appCtrl" id="controller">
+    <div ng-controller="appCtrl" id="controller" style="padding-bottom: 20px;">
      <div class="header">
       <h1>Interactive Whiteboard</h1>
       <a href="index.html">Go to Home</a>
@@ -56,7 +59,7 @@ canvas {
   <div class="toolbar">
     <button id="draw" class="tool">✏️ Draw</button>
     <button id="erase" class="tool">🧽 Erase</button>
-    <input type="color" id="colorPicker" class="tool" value="#000000">
+    <input type="color" id="colorPicker" value="#000000">
     <input type="range" id="thickness" class="tool" min="1" max="20" value="5">
     <button id="clear" class="tool">🗑️ Clear</button>
   </div>
