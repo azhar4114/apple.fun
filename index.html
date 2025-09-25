@@ -490,11 +490,8 @@ nav ul li a:focus {
 	<loader id="loader"></loader>
     
   <div ng-controller="appCtrl" class="ng-cloak" id="controller">
-    <center style="padding:2vh 0 1vh 0;">
-        <input type="search" ng-model="search" class="search" placeholder="What are you looking for?">
-    </center>
 
-    <main>
+    <main style="padding-top: 40px;">
         <section ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
                  id="{{category.category_title | lowercase | spaceless}}"
                  class="category-section">
