@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
   <head>
 	  <script src="validate.js"></script>
@@ -26,6 +26,7 @@
       width: 900px;
       height: 600px; /* Increased graph height */
       border: 2px solid #000;
+      background: #fff;
       margin: 0 auto; /* Center the graph vertically */
     }
 
@@ -55,7 +56,7 @@
     .btn {
       background: #2196F3;
       color: #fff;
-      padding: 0.8em 1.6em;
+      padding: 0.5em 1.6em;
       font-size: 1.2em;
       border: none;
       border-radius: 5px;
@@ -78,32 +79,27 @@
   <loader id="loader"></loader>
 <div class="container">
 
-    <div class="input-group">
+    <div style="display: grid;grid-template-columns: repeat(2, 1fr);gap: 10px;background: rgba(255, 255, 255, 0.8);padding: 10px;border-radius: 5px;color: darkorange;">
+      <div class="input-group" style="
+    grid-column: 1 / -1;
+    justify-self: center;">
         <label for="equation">Equation:</label>
         <input type="text" id="equation" value="sin(x)">
-    </div>
-
-    <div class="input-group">
+    </div><div class="input-group">
         <label for="xMin">X Minimum:</label>
         <input type="number" id="xMin" value="-10">
-    </div>
-    <div class="input-group">
+    </div><div class="input-group">
         <label for="xMax">X Maximum:</label>
         <input type="number" id="xMax" value="10">
-    </div>
-
-    <div class="input-group">
+    </div><div class="input-group">
         <label for="yMin">Y Minimum:</label>
         <input type="number" id="yMin" value="-10">
-    </div>
-
-    <div class="input-group">
+    </div><div class="input-group">
         <label for="yMax">Y Maximum:</label>
         <input type="number" id="yMax" value="10">
-    </div>
+    </div><btn class="btn" id="plot-graph-btn" style="grid-column: 1 / -1; justify-self: center;">Plot Graph</btn></div>
 
     <div id="graph"></div>
-    <btn class="btn" id="plot-graph-btn">Plot Graph</btn>
 </div>
 <script>
   const width = 900;
