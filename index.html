@@ -1,610 +1,948 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A for Apple - Learning Through Fun and Play</title>
-    <meta name="description" content="Learning Through Fun and Play!. Fun and educational content for everyone!"/>
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script src="validate.js"></script>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-   <script src="login.js" async defer></script>
-   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aforapple.fun | Interactive Multilingual Classroom Learning</title>
+  <meta
+    name="description"
+    content="Interactive multilingual classroom lessons for Preschool to Grade 2 on smart TVs, projectors, tablets, and laptops."
+  >
+  <script src="pilot-utils.js"></script>
+  <script src="validate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap");
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
-	#avatar {
-      width: 50px;
-      height: 50px;
+    :root {
+      --ink: #15324b;
+      --ink-soft: #45667d;
+      --paper: #fdf8ed;
+      --card: rgba(255, 255, 255, 0.9);
+      --line: rgba(21, 50, 75, 0.12);
+      --orange: #ff7f36;
+      --orange-deep: #ea5f32;
+      --blue: #0f73b8;
+      --green: #1f8d62;
+      --gold: #f3c969;
+      --shadow: 0 28px 60px rgba(15, 35, 53, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 215, 146, 0.62), transparent 34%),
+        radial-gradient(circle at top right, rgba(104, 197, 255, 0.55), transparent 28%),
+        linear-gradient(180deg, #fdf7eb 0%, #f3fbff 42%, #eef8f2 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 24px;
+      background: rgba(255, 252, 246, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(21, 50, 75, 0.08);
+    }
+
+    .brand {
+      font-family: "Baloo 2", sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: #e36d22;
+    }
+
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .site-nav a,
+    .mini-cta,
+    .button,
+    .ghost-button,
+    .lesson-link,
+    .text-link,
+    .catalog-item {
+      text-decoration: none;
+    }
+
+    .site-nav a {
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .mini-cta,
+    .button,
+    .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .mini-cta,
+    .button.primary {
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      color: #fff;
+      box-shadow: 0 18px 32px rgba(255, 107, 61, 0.28);
+    }
+
+    .ghost-button,
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      border: 1px solid rgba(21, 50, 75, 0.14);
+      box-shadow: 0 16px 28px rgba(21, 50, 75, 0.08);
+    }
+
+    .mini-cta:hover,
+    .button:hover,
+    .ghost-button:hover,
+    .lesson-link:hover,
+    .catalog-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .marketing {
+      display: block;
+      padding-bottom: 72px;
+    }
+
+    .catalog-shell {
+      display: none;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto 72px;
+    }
+
+    .catalog-ready .marketing {
+      display: none;
+    }
+
+    .catalog-ready .catalog-shell {
+      display: block;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+      gap: 28px;
+      align-items: stretch;
+      padding: 34px 0 28px;
+    }
+
+    .hero-card,
+    .panel,
+    .section-card,
+    .pricing-card,
+    .sample-card,
+    .feature-card,
+    .trust-card,
+    .catalog-header,
+    .catalog-toolbar,
+    .catalog-category {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
+      background: rgba(243, 201, 105, 0.32);
+      filter: blur(10px);
     }
-	
-/* Gear Icon */
-#settings-gear {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 24px;
-  z-index: 1000;
-}
 
-/* Popup */
-#settings-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  border: 1px solid #ccc;
-  padding: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
-
-.hidden {
-  display: none;
-}
-
-
-.card {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-    display: inline-block;
-    align-content: end;
-    min-width: 170px;
-    min-height: 170px;
-    padding-top: 10px;
-}
-        .card-title {
-            font-size: 1.5em;
-             margin-bottom: 10px;
-        }
-        .card-description {
-            font-size: 1em;
-            color: #555555;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #ff6f61;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-              box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-              transition: background-color 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #ff3b2e;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-
-
-.card:hover{
-  box-shadow: 4px 3px 6px 2px #1111115e;
-}
-
-.card:active{
-  box-shadow: 3px 2px 6px 0px #1111115e;
-}
-
-.container {
-    display: grid;
-    padding: 3vh;
-    grid-template-columns: repeat(auto-fit, 280px);
-    padding-bottom: 20vh;
-    padding-top: 1vh;
-    justify-content: center;
-    gap: 35px;
-}
-
-
-body {
-    margin: 0;
-    font-family: "Handlee", cursive;
-    background-image: url(images/clouds2.jpeg);
-    background-size: cover;
-    background-color: #589c9e;
-    animation: gradient 50s ease infinite;
-    background-size: cover;
-     background-attachment: fixed;
-     background-position: center center;
-     min-height: 100vh;
-}
-
-    @keyframes gradient {
-	0% {
-		background-position: 0% 0%;
-	}
-	50% {
-		background-position: 50% 50%;
-	}
-	100% {
-		background-position: 0% 0%;
-	}
-}
-
-        header {
-    padding: 20px 0;
-    text-align: center;
-    background-color: #f0f0f0;
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-        h1 {
-            font-size: 36px;
-            margin: 10px 0;
-        }
-        p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            bottom: 0;
-            width: 100%;
-            font-size:smaller;
-            margin-top: 20px;
-        }
-        .footer-links {
-            margin-top: 10px;
-            color: #ff6f61;
-              text-decoration: none;
-        }
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-	.hidden{
-		display:none;
-	}
-	
-	 .search{
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 225px;
-    box-sizing: border-box;
-    font-size: 16px;
-    outline: none;
-}
-
-#scrollToTopBtn {
-	display: none; /* Hidden by default */ position: fixed; /* Fixed position on the page */ bottom: 20px; /* Position from the bottom */ right: 30px; /* Position from the right */
-	z-index: 99; /* Sit on top */ border: none; /* Remove borders */ outline: none; /* Remove outline */ background-color: #ff9800; /* Background color */ color: white; /* Text color */ cursor: pointer;
-	/* Add a pointer cursor on hover */ padding: 15px; /* Some padding */ border-radius: 10px; /* Rounded corners */ font-size: 18px; /* Increase font size */
-}
-
-#scrollToTopBtn:hover {
-	background-color: #555; /* Darker background on hover */
-}
-
-/* Loader container */
-.loader {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: rgb(240 240 240 / 75%);
-    width: 100%;
-	top:0;
-}
-
-/* Outer rotating circle */
-.outer-circle {
-  border: 6px solid rgba(0, 123, 255, 0.2); /* Light blue border */
-  border-top: 6px solid #007bff; /* Darker blue rotating border */
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite; /* Rotation animation */
-}
-
-/* Inner circle for a cleaner look */
-.inner-circle {
-  border: 6px solid rgba(0, 123, 255, 0.2);
-  border-radius: 50%;
-  border-top: 6px solid #007bff;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  animation: spin-reverse 1s linear infinite;
-}
-
-.inner-circle1 {
-  border: 6px solid rgba(0, 123, 255, 0.2);
-  border-radius: 50%;
-  border-top: 6px solid #007bff;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  animation: spin 1s linear infinite;
-}
-
-/* Animation for the spinning effect */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin-reverse {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-
-#settings-gear img {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.category-section {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 40px;
-    padding: 30px;
-}
-
-.category-section h2 {
-    color: #28a745; /* A slightly darker green for headings */
-    font-size: 2em;
-    margin-top: 0;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.category-description {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 30px;
-}
-
-.subcategory {
-    margin-bottom: 30px;
-}
-
-.subcategory h3 {
-    color: #007bff; /* A friendly blue for subcategory headings */
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    border-bottom: 1px dashed #e9ecef;
-    padding-bottom: 5px;
-}
-
-.tiles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between tiles */
-}
-
-.tile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: #f0f8ff; /* Very light blue for tiles */
-    border: 1px solid #e0f2f7;
-    border-radius: 8px;
-    padding: 20px;
-    text-decoration: none;
-    color: #333;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.tile:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.tile img {
-    width: 80px; /* Size of the icon */
-    height: 80px;
-    margin-bottom: 15px;
-    object-fit: contain; /* Ensure image fits without distortion */
-}
-
-.tile h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    color: #343a40; /* Darker text for title */
-}
-
-.tile p {
-    font-size: 0.9em;
-    color: #555;
-    flex-grow: 1; /* Allow description to take up available space */
-}
-
-/* Disable Backgrounds */
-body.no-background {
-	background-image: none !important;
-  }
-
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; /* Allow navigation items to wrap on smaller screens */
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: rgb(54, 54, 54);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2em;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(15, 115, 184, 0.12);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-    nav ul {
+
+    .hero h1,
+    .catalog-header h2,
+    .section-heading h2 {
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin: 18px 0 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      max-width: 11ch;
+    }
+
+    .hero p,
+    .panel p,
+    .section-heading p,
+    .pricing-card p,
+    .sample-card p,
+    .feature-card p,
+    .trust-card p,
+    .catalog-header p,
+    .catalog-category p {
+      color: var(--ink-soft);
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    .hero-actions,
+    .catalog-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      font-size: 16px;
+      color: #5f7a90;
+    }
+
+    .status-badge {
+      margin-top: 18px;
+      min-height: 24px;
+    }
+
+    .panel {
+      padding: 30px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(251, 246, 233, 0.92)),
+        #fff;
+    }
+
+    .metric-list,
+    .pilot-steps,
+    .catalog-subcategory {
+      display: grid;
+      gap: 14px;
+    }
+
+    .metric-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .metric {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(15, 115, 184, 0.08);
+      border: 1px solid rgba(15, 115, 184, 0.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1;
+    }
+
+    .metric span {
+      color: var(--ink-soft);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .section-card {
+      padding: 34px;
+      margin-top: 24px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .sample-grid,
+    .feature-grid,
+    .pricing-grid,
+    .trust-grid,
+    .catalog-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
+
+    .sample-card,
+    .feature-card,
+    .pricing-card,
+    .trust-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 36px rgba(21, 50, 75, 0.08);
+    }
+
+    .sample-card h3,
+    .feature-card h3,
+    .pricing-card h3,
+    .trust-card h3,
+    .catalog-category h3,
+    .catalog-subcategory h4 {
+      margin: 0 0 12px;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 30px;
+      line-height: 1.05;
+    }
+
+    .sample-card h3,
+    .feature-card h3,
+    .pricing-card h3,
+    .trust-card h3 {
+      font-size: 28px;
+    }
+
+    .sample-card .tag,
+    .feature-card .tag,
+    .pricing-card .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(31, 141, 98, 0.12);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .lesson-link,
+    .text-link {
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .pilot-steps {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .pilot-step {
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 251, 255, 0.96));
+      border: 1px solid var(--line);
+    }
+
+    .pilot-step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 20px;
+      font-family: "Baloo 2", sans-serif;
+    }
+
+    .price {
+      display: block;
+      margin: 10px 0 14px;
+      font-size: 34px;
+      font-family: "Baloo 2", sans-serif;
+      color: #e36d22;
+      line-height: 1;
+    }
+
+    .pricing-card ul,
+    .trust-card ul {
+      padding-left: 20px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .cta-band {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #0f73b8, #1f8d62);
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 24px 44px rgba(15, 115, 184, 0.26);
+    }
+
+    .cta-band h3 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.04;
+    }
+
+    .cta-band p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cta-band .ghost-button {
+      background: #fff;
+      color: var(--ink);
+      border: none;
+    }
+
+    .catalog-header,
+    .catalog-toolbar,
+    .catalog-category {
+      padding: 28px;
+      margin-top: 22px;
+    }
+
+    .catalog-toolbar input {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      font: inherit;
+      font-size: 17px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .catalog-category {
+      box-shadow: 0 18px 34px rgba(21, 50, 75, 0.08);
+    }
+
+    .catalog-category h3 {
+      font-size: 34px;
+    }
+
+    .catalog-subcategory h4 {
+      font-size: 24px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .catalog-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .catalog-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(244, 249, 255, 0.84);
+      border: 1px solid rgba(15, 115, 184, 0.12);
+      color: var(--ink);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .catalog-item strong {
+      font-size: 20px;
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.08;
+    }
+
+    .catalog-item span {
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+
+    .catalog-empty {
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+
+    .site-footer {
+      padding: 32px 0 40px;
+      color: #5e778b;
+      font-size: 15px;
+    }
+
+    .site-footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .site-header {
+        position: static;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+      }
+
+      .site-nav {
+        justify-content: flex-start;
+      }
+
+      .hero-card,
+      .panel,
+      .section-card,
+      .catalog-header,
+      .catalog-toolbar,
+      .catalog-category {
+        padding: 24px;
+      }
+
+      .hero h1 {
+        font-size: 46px;
+      }
+
+      .sample-card h3,
+      .feature-card h3,
+      .pricing-card h3,
+      .trust-card h3,
+      .catalog-category h3 {
+        font-size: 24px;
+      }
     }
-    nav ul li {
-        margin: 5px 0;
+
+    @media (max-width: 560px) {
+      .shell,
+      .catalog-shell,
+      .site-footer-inner {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .hero-card,
+      .panel,
+      .section-card,
+      .pricing-card,
+      .sample-card,
+      .feature-card,
+      .trust-card,
+      .catalog-header,
+      .catalog-toolbar,
+      .catalog-category {
+        border-radius: 22px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .metric-list {
+        grid-template-columns: 1fr;
+      }
     }
-    main {
-        padding: 15px;
-    }
-    .category-section {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 40px;
-    padding: 30px;
-}
-
-.category-section h2 {
-    color: #28a745; /* A slightly darker green for headings */
-    font-size: 2em;
-    margin-top: 0;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.category-description {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 30px;
-}
-
-.subcategory {
-    margin-bottom: 30px;
-}
-
-.subcategory h3 {
-    color: #007bff; /* A friendly blue for subcategory headings */
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    border-bottom: 1px dashed #e9ecef;
-    padding-bottom: 5px;
-}
-
-.tiles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between tiles */
-}
-    .tile img {
-        width: 60px;
-        height: 60px;
-    }
-}
-
-@media (max-width: 480px) {
-    .tiles-grid {
-        grid-template-columns: 1fr; /* Single column on very small screens */
-    }
-}
-
-nav ul li a:hover,
-nav ul li a:focus {
-    background-color: #dbdbdb; /* Slightly lighter green on hover */
-}
-  
-  /* Disable Animations */
-  body.no-animations * {
-	animation: none !important;
-	transition: none !important;
-  }
-
-  body.no-bg-animations{
-	animation: none !important;
-	transition: none !important;
-  }
-
-</style>
+  </style>
 </head>
-<body ng-app="newApp">
-  <header>
-        <h2 style="
-    margin: 10px;
-">Welcome to AForApple.Fun<br>
-          <i style="font-size: 15px;vertical-align: text-top;">Learning Through Fun and Play!</i>
-        </h2>
-        
-	  <center class="login">
-	 <div id="g_id_onload"
-       data-client_id="1064268900675-peshhtvvlhnhqlbcmf1vqk57a37h8elm.apps.googleusercontent.com"
-       data-callback="handleCredentialResponse">
-  </div>
-  <div class="g_id_signin" data-type="standard"></div>
-  <button id="android-sign-in" class="hidden" onclick="signInAndroid()">Sign in with Google</button>
-  
-  <img id="avatar" class="hidden" src="" alt="User Avatar">
-  <div></div><button id="signout-button" class="hidden" onclick="signOut()">Sign Out</button></div>
-	  </center>
-    <nav>
-            <ul>
-                <li><a href="#early-learning-essentials">Early Learning</a></li>
-                <li><a href="#exploring-the-world">Exploring the World</a></li>
-                <li><a href="#language-&-literacy">Language & Literacy</a></li>
-                <li><a href="#math-&-logic">Math & Logic</a></li>
-            </ul>
-        </nav>
-    <div id="settings-gear" onclick="toggleSettingsPopup()">
-      <img src="images/gear.png" alt="Settings" width="24" height="24">
-    </div>
-    </header>
-	<loader id="loader"></loader>
-    
-  <div ng-controller="appCtrl" class="ng-cloak" id="controller">
+<body ng-app="landingApp">
+  <header class="site-header">
+    <div class="brand">Aforapple.fun</div>
+    <nav class="site-nav">
+      <a href="#sample-lessons">Sample Lessons</a>
+      <a href="#how-it-works">How Pilot Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#library-overview">Library Overview</a>
+    </nav>
+    <div class="status-badge" data-access-badge-target></div>
+    <a class="mini-cta" href="contact.html">Request a 14-Day School Pilot</a>
+  </header>
 
-    <main style="padding-top: 40px;">
-        <section ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
-                 id="{{category.category_title | lowercase | spaceless}}"
-                 class="category-section">
-            <h2>{{category.category_title}}</h2>
-            <p class="category-description">{{category.category_description}}</p>
+  <main class="marketing">
+    <div class="shell">
+      <section class="hero">
+        <article class="hero-card">
+          <span class="eyebrow">India-first school pilot</span>
+          <h1>Interactive multilingual classroom learning for Preschool to Grade 2</h1>
+          <p>
+            Run engaging alphabet, phonics, tracing, and whiteboard lessons on smart TVs, projectors, tablets, and
+            laptops. Built for whole-class teaching, small-group practice, and multilingual early learning.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="contact.html">Book a Demo</a>
+            <a class="button secondary" href="contact.html">Request a 14-Day School Pilot</a>
+            <a class="ghost-button" href="#sample-lessons">Try Sample Lessons</a>
+          </div>
+          <p class="hero-note">
+            English, Hindi, and Telugu support. No ads. Pilot-friendly for smart classrooms and shared screens.
+          </p>
+        </article>
 
-            <div ng-repeat="subcategory in category.subcategories | filter: { subcategory_title: search, items: { t: search } }"
-                 class="subcategory">
-                <h3>{{subcategory.subcategory_title}}</h3>
-                <div class="tiles-grid">
-                    <a ng-repeat="item in subcategory.items | filter: { t: search }"
-                       ng-click="open(item)"
-                       ng-href="{{item.l}}" class="tile">
-                         <h4>{{item.t}}</h4>
-                        <p>{{item.d}}</p>
-                        </a>
-                </div>
+        <aside class="panel">
+          <span class="eyebrow">Built for school admins</span>
+          <p>
+            The public site now does one job clearly: explain the product, show the best lessons fast, and help a school
+            request a pilot without needing an activation key first.
+          </p>
+          <div class="metric-list">
+            <div class="metric">
+              <strong>3</strong>
+              <span>public sample lessons</span>
             </div>
-        </section>
+            <div class="metric">
+              <strong>14 days</strong>
+              <span>school pilot window</span>
+            </div>
+            <div class="metric">
+              <strong>3 languages</strong>
+              <span>English, Hindi, Telugu</span>
+            </div>
+            <div class="metric">
+              <strong>1 device view</strong>
+              <span>local pilot report export</span>
+            </div>
+          </div>
+          <p>
+            If your school already has a key, the full lesson library loads automatically on this home page after
+            validation.
+          </p>
+        </aside>
+      </section>
+
+      <section class="section-card" id="sample-lessons">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Open now</span>
+            <h2>Public sample lessons that do not need backend lesson data</h2>
+          </div>
+          <p>
+            These three lessons are self-contained so any school can feel the product immediately before requesting a pilot.
+          </p>
+        </div>
+        <div class="sample-grid">
+          <article class="sample-card">
+            <span class="tag">Sample lesson</span>
+            <h3>Alphabet Chart</h3>
+            <p>Whole-class letter recognition with autoplay and big classroom-friendly tiles.</p>
+            <a class="lesson-link" href="Alphabet.html">Try Alphabet Chart</a>
+          </article>
+          <article class="sample-card">
+            <span class="tag">Sample lesson</span>
+            <h3>Phonics</h3>
+            <p>Sound groups and example words that work well on a smart TV or projector.</p>
+            <a class="lesson-link" href="phonics.html">Try Phonics</a>
+          </article>
+          <article class="sample-card">
+            <span class="tag">Sample lesson</span>
+            <h3>Tracing</h3>
+            <p>Touch-friendly letter tracing in English, Hindi, and Telugu for shared tablets or touchscreen boards.</p>
+            <a class="lesson-link" href="trace.html">Try Tracing</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="library-overview">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Curated demo path</span>
+            <h2>Lead with the strongest classroom experiences</h2>
+          </div>
+          <p>
+            The pilot story is now tighter: show teachers what works best in a 15-minute walkthrough, then expand.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="tag">Hero lesson</span>
+            <h3>Alphabet</h3>
+            <p>Fast, visual, audio-led warm-up for preschool and early primary classrooms.</p>
+          </article>
+          <article class="feature-card">
+            <span class="tag">Hero lesson</span>
+            <h3>Phonics</h3>
+            <p>Teacher-led reading practice with grouped sounds and clear word examples.</p>
+          </article>
+          <article class="feature-card">
+            <span class="tag">Hero lesson</span>
+            <h3>Tracing</h3>
+            <p>Multilingual handwriting support across English, Hindi, and Telugu.</p>
+          </article>
+          <article class="feature-card">
+            <span class="tag">Pilot-only highlight</span>
+            <h3>Whiteboard</h3>
+            <p>Teacher-guided writing and drawing prompts for live classroom instruction after pilot activation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="how-it-works">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Pilot operations</span>
+            <h2>How the 14-day school pilot works</h2>
+          </div>
+          <p>
+            The funnel is designed for high-touch school sales, not a generic consumer signup.
+          </p>
+        </div>
+        <div class="pilot-steps">
+          <div class="pilot-step">
+            <strong>1. Book a short admin demo</strong>
+            We confirm grades served, languages needed, classroom count, and device setup before issuing access.
+          </div>
+          <div class="pilot-step">
+            <strong>2. Issue a school-specific pilot key</strong>
+            The current activation flow stays in place for gated content, but the pilot is framed as school access.
+          </div>
+          <div class="pilot-step">
+            <strong>3. Follow up on day 3, 7, and 12</strong>
+            The pilot report page can export device-level usage data for closer follow-up conversations.
+          </div>
+          <div class="pilot-step">
+            <strong>4. Convert to annual licensing</strong>
+            Move the school to a classroom or multi-classroom plan based on actual usage and curriculum fit.
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card" id="pricing">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Quote-led pricing</span>
+            <h2>Pricing bands for school pilots and annual licenses</h2>
+          </div>
+          <p>
+            These bands make the offer legible now while still leaving room for school-specific packaging.
+          </p>
+        </div>
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <span class="tag">Pilot</span>
+            <h3>14-Day School Pilot</h3>
+            <span class="price">Free</span>
+            <p>Admin walkthrough, school-specific key activation, and a guided lesson shortlist.</p>
+          </article>
+          <article class="pricing-card">
+            <span class="tag">Annual license</span>
+            <h3>Small School License</h3>
+            <span class="price">Starts at Rs 15,000/year</span>
+            <ul>
+              <li>Best for single-campus pilots or a few classrooms.</li>
+              <li>Works well for preschool and KG programs.</li>
+            </ul>
+          </article>
+          <article class="pricing-card">
+            <span class="tag">Annual license</span>
+            <h3>Multi-Classroom License</h3>
+            <span class="price">Starts at Rs 40,000/year</span>
+            <ul>
+              <li>For broader rollout across grades or multiple sections.</li>
+              <li>Includes a stronger onboarding and pilot review motion.</li>
+            </ul>
+          </article>
+          <article class="pricing-card">
+            <span class="tag">Custom rollout</span>
+            <h3>School Setup and Content Support</h3>
+            <span class="price">Contact sales</span>
+            <ul>
+              <li>Custom lesson packaging, onboarding, and curriculum alignment.</li>
+              <li>Useful for branded or multilingual school deployments.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Trust and readiness</span>
+            <h2>School-ready support pages and follow-up tools</h2>
+          </div>
+          <p>
+            The public funnel now points to specific school resources instead of generic consumer-style pages.
+          </p>
+        </div>
+        <div class="trust-grid">
+          <article class="trust-card">
+            <h3>Teacher Guide</h3>
+            <p>Printable onboarding guide for a week-one pilot rollout.</p>
+            <a class="lesson-link" href="teacher-guide.html">Open teacher guide</a>
+          </article>
+          <article class="trust-card">
+            <h3>Pilot Report</h3>
+            <p>Local usage export page for manual follow-up after a classroom pilot.</p>
+            <a class="lesson-link" href="pilot-report.html">Open pilot report</a>
+          </article>
+          <article class="trust-card">
+            <h3>School Privacy</h3>
+            <p>Updated child-data and pilot-form language for school credibility.</p>
+            <a class="lesson-link" href="privacy.html">Read privacy policy</a>
+          </article>
+          <article class="trust-card">
+            <h3>Pilot Terms</h3>
+            <p>Simple terms for school pilots, classroom use, and annual licensing discussions.</p>
+            <a class="lesson-link" href="terms.html">Read terms</a>
+          </article>
+        </div>
+
+        <div class="cta-band">
+          <div>
+            <h3>Want the full classroom experience instead of just the samples?</h3>
+            <p>Request a demo, confirm your classroom setup, and we will issue a school-specific pilot key.</p>
+          </div>
+          <a class="ghost-button" href="contact.html">Request a pilot</a>
+        </div>
+      </section>
     </div>
   </main>
-    
-   
-</div>
-	<button id="scrollToTopBtn" title="Go to top">Top</button>
-<!-- Popup -->
-<div id="settings-popup" class="hidden">
-  <h3>Settings</h3>
-  <label>
-    <input type="checkbox" id="toggle-background" onchange="toggleBackground()">
-    Enable Background Images
-  </label>
-  <br>
-  <label>
-    <input type="checkbox" id="toggle-animations" onchange="toggleAnimations()">
-    Enable Animations
-  </label><br>
-  <label>
-    <input type="checkbox" id="toggle-confetti" onchange="toggleConfetti()">
-    Enable Confetti
-  </label><br>
-  <label>
-    <input type="checkbox" id="toggle-bg-motion" onchange="toggleBgAnimations()">
-    Enable Background Animation
-  </label><br><br>
-  <button onclick="toggleSettingsPopup()">Close</button>
-</div>
-  <footer>
-        <p>&copy; 2024 AForApple.Fun. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="/privacy.html">Privacy Policy</a>
-            <a href="/terms.html">Terms of Service</a>
-            <a href="/contact.html">Contact Us</a>
+
+  <section class="catalog-shell" id="controller" ng-controller="landingCtrl">
+    <div id="lesson-library"></div>
+    <div class="catalog-header">
+      <div>
+        <span class="eyebrow">Activated school access</span>
+        <h2>Your full lesson library is active on this device</h2>
+        <p>
+          This section appears when a school key validates successfully. Browse by category, search for a lesson, or open
+          the pilot report for usage review.
+        </p>
+      </div>
+      <div class="catalog-actions">
+        <a class="button secondary" href="pilot-report.html">Pilot Report</a>
+        <a class="button secondary" href="teacher-guide.html">Teacher Guide</a>
+      </div>
+    </div>
+
+    <div class="catalog-toolbar">
+      <input
+        type="search"
+        ng-model="search"
+        placeholder="Search lessons, activities, or classroom topics"
+        aria-label="Search lessons"
+      >
+    </div>
+
+    <div class="catalog-category" ng-if="!categories.length">
+      <div class="catalog-empty">Validating your school access and loading the lesson library.</div>
+    </div>
+
+    <section
+      class="catalog-category"
+      ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
+      id="{{category.category_title | slugify}}"
+    >
+      <h3>{{category.category_title}}</h3>
+      <p>{{category.category_description}}</p>
+
+      <div
+        class="catalog-subcategory"
+        ng-repeat="subcategory in category.subcategories | filter: { subcategory_title: search, items: { t: search } }"
+      >
+        <h4>{{subcategory.subcategory_title}}</h4>
+        <div class="catalog-grid">
+          <a class="catalog-item" ng-repeat="item in subcategory.items | filter: { t: search }" ng-href="{{item.l}}">
+            <strong>{{item.t}}</strong>
+            <span>{{item.d}}</span>
+          </a>
         </div>
-    </footer>
-	<script src="script.js"></script> 
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
-<script>
+      </div>
+    </section>
+  </section>
 
-	var app = angular.module("newApp", []);
-	
-	app.directive('loader', function($http, $templateCache) {
-	  return {
-	    restrict: 'E',
-	    link: function(scope, element) {
-	      // Load the loader.html file and inject it
-	      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-	        element.html(response.data);
-	      });
-	    }
-	  };
-	});
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>Aforapple.fun for Preschool to Grade 2 classroom pilots.</div>
+      <div class="footer-links">
+        <a href="brochure.html">Brochure</a>
+        <a href="contact.html">Pilot Request</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
 
-  app.filter('spaceless', function() {
-    return function(input) {
-        if (input) {
-            return input.replace(/\s+/g, '-').toLowerCase(); // Replaces spaces with hyphens and converts to lowercase
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+  <script>
+    var app = angular.module("landingApp", []);
+
+    app.filter("slugify", function() {
+      return function(input) {
+        if (!input) {
+          return "";
         }
-        return '';
-    };
-});
+        return input.replace(/\s+/g, "-").toLowerCase();
+      };
+    });
 
-app.filter('replaceSpaces', function() { // <-- Renamed from 'spaceless' to 'replaceSpaces'
-    return function(input) {
-        if (input) {
-            // This will convert "Alphabet Chart" to "alphabet-chart"
-            return input.replace(/\s+/g, '-').toLowerCase();
-        }
-        return '';
-    };
-});
+    app.controller("landingCtrl", function($scope) {
+      $scope.search = "";
+      $scope.categories = [];
 
-app.controller('appCtrl', function($scope) {
-	$scope.search="";
-	$scope.categories = categories = [];
-	 $scope.open = function(card){
-		 window.location.href=card.l;
-	 }
-	 
-	 $scope.initiate = function(data){
-		 categories = data;
-		 $scope.categories = data;
-		 $('#loader').hide();
-	 }
-	 
-});
- 
-	
-	window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      $scope.initiate = function(data) {
+        $scope.categories = data || [];
+        document.body.classList.add("catalog-ready");
+      };
+    });
 
-  gtag('config', 'G-1ZCM5PW9N9');
-</script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-1ZCM5PW9N9");
+  </script>
 </body>
 </html>

@@ -1,201 +1,303 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-	<script src="validate.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	<link rel="stylesheet" href="styles.css">
-	
-	  <title>Letter Tracing</title>
-    <style>
-	    canvas {
-	  border: 1px solid black;
-	  background-color: #fff;
-	  margin-top: 10px;
-    cursor: crosshair;
-	}
-	    h1 {
-	  margin-bottom: 20px;
-	}
-	.game {
-	  margin: 20px;
-	  padding: 20px;
-	  border: 2px solid #000;
-	  border-radius: 10px;
-	  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
-	  width: 90%;
-	  max-width: 600px;
-	  text-align: center;
-	}
-	.game h2 {
-	  margin-bottom: 10px;
-	}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter Tracing</title>
+  <script>
+    window.AFORAPPLE_SAMPLE_DATA = {
+      hind: [
+        { c: "अ" },
+        { c: "आ" },
+        { c: "इ" },
+        { c: "ई" },
+        { c: "उ" },
+        { c: "ए" },
+        { c: "क" },
+        { c: "ग" },
+        { c: "च" },
+        { c: "ट" }
+      ],
+      telu: [
+        { c: "అ" },
+        { c: "ఆ" },
+        { c: "ఇ" },
+        { c: "ఈ" },
+        { c: "ఉ" },
+        { c: "ఎ" },
+        { c: "క" },
+        { c: "గ" },
+        { c: "చ" },
+        { c: "ట" }
+      ],
+      bg: ["flowersbg.jpeg", "rainbow1.jpeg", "straw.jpeg"]
+    };
+  </script>
+  <script src="pilot-utils.js"></script>
+  <script src="validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    canvas {
+      border: 1px solid black;
+      background-color: #fff;
+      margin-top: 10px;
+      cursor: crosshair;
+    }
 
-	    .container{
-		    display: flex;
-	  flex-direction: column;
-	  align-items: center;
-	    }
-		body {
-		    background-image: url(images/flowersbg.jpeg);
-		}
-    </style>
-  </head>
-  <body>
-    <body ng-app="newApp">
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .game {
+      margin: 20px;
+      padding: 20px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .game h2 {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sample-banner {
+      margin: 18px 20px 0;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 18px 36px rgba(21, 50, 75, 0.12);
+      color: #15324b;
+    }
+
+    .sample-banner p {
+      margin: 10px 0 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .sample-banner a {
+      color: #0f73b8;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .trace-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .trace-button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: #0f73b8;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    body {
+      background-image: url(images/flowersbg.jpeg);
+    }
+  </style>
+</head>
+<body ng-app="newApp">
   <div class="header">
     <h1>Letter Tracing</h1>
     <a href="index.html">Go to Home</a>
   </div>
-   <loader id="loader"></loader>
-  <div ng-controller="appCtrl" class="container"  id="controller">
-   
-  <div class="toggle-buttons">
-   <button class="toggle-button active" ng-class="{'active':ctrl.eng}" ng-click="setLang('eng')">English</button>
-    <button class="toggle-button" ng-class="{'active':ctrl.hin}" ng-click="setLang('hin')">Hindi</button>
-    <button class="toggle-button" ng-class="{'active':ctrl.tel}" ng-click="setLang('tel')">Telugu</button>
+
+  <div class="sample-banner" data-access-badge-target>
+    Public sample lesson. Test tracing on a shared tablet or touchscreen, then <a href="contact.html">request the full
+    school pilot</a>.
   </div>
+
+  <loader id="loader"></loader>
+  <div ng-controller="appCtrl" class="container" id="controller">
+    <div class="toggle-buttons">
+      <button class="toggle-button active" ng-class="{'active':ctrl.eng}" ng-click="setLang('eng')">English</button>
+      <button class="toggle-button" ng-class="{'active':ctrl.hin}" ng-click="setLang('hin')">Hindi</button>
+      <button class="toggle-button" ng-class="{'active':ctrl.tel}" ng-click="setLang('tel')">Telugu</button>
+    </div>
     <div class="game">
       <div id="english" ng-show="ctrl.eng">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.el)" ng-model="ctrl.el">
-      <option value="">Select a letter</option>
-      <option value="{{c}}" ng-repeat="c in chars">{{c}}</option>
-    </select>
+        <select id="letterSelectEnglish" ng-change="drawLetter(ctrl.el)" ng-model="ctrl.el">
+          <option value="">Select a letter</option>
+          <option value="{{c}}" ng-repeat="c in chars">{{c}}</option>
+        </select>
       </div>
       <div id="hindi" ng-show="ctrl.hin">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.hl)" ng-model="ctrl.hl">
-      <option value="">Select a letter</option>
-      <option value="{{c.c}}" ng-repeat="c in hind">{{c.c}}</option>
-    </select>
+        <select id="letterSelectHindi" ng-change="drawLetter(ctrl.hl)" ng-model="ctrl.hl">
+          <option value="">Select a letter</option>
+          <option value="{{c.c}}" ng-repeat="c in hind">{{c.c}}</option>
+        </select>
       </div>
       <div id="telugu" ng-show="ctrl.tel">
-    <select id="letterSelect" ng-change="drawLetter(ctrl.tl)" ng-model="ctrl.tl">
-      <option value="">Select a letter</option>
-      <option value="{{c.c}}" ng-repeat="c in telu">{{c.c}}</option>
-    </select>
+        <select id="letterSelectTelugu" ng-change="drawLetter(ctrl.tl)" ng-model="ctrl.tl">
+          <option value="">Select a letter</option>
+          <option value="{{c.c}}" ng-repeat="c in telu">{{c.c}}</option>
+        </select>
       </div>
       <canvas id="tracingCanvas" width="400" height="400"></canvas>
+      <div class="trace-actions">
+        <button class="trace-button" type="button" id="clear-trace">Clear trace</button>
+      </div>
     </div>
- 
-    <script>
-      var app = angular.module("newApp", []);
-	  
-  	app.directive('loader', function($http, $templateCache) {
-  	  return {
-  	    restrict: 'E',
-  	    link: function(scope, element) {
-  	      // Load the loader.html file and inject it
-  	      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-  	        element.html(response.data);
-  	      });
-  	    }
-  	  };
-  	});
+  </div>
 
-      app.controller('appCtrl', function($scope) {
-        $scope.ctrl = {eng:true, hin:false, tel:false, el:"", tl:"", hl:""};
-        $scope.hind= [];
-        $scope.telu= [];
+  <script>
+    var app = angular.module("newApp", []);
+
+    app.directive("loader", function($http, $templateCache) {
+      return {
+        restrict: "E",
+        link: function(scope, element) {
+          $http.get("loader.html", { cache: $templateCache }).then(function(response) {
+            element.html(response.data);
+          });
+        }
+      };
+    });
+
+    app.controller("appCtrl", function($scope) {
+      $scope.ctrl = { eng: true, hin: false, tel: false, el: "", tl: "", hl: "" };
+      $scope.hind = [];
+      $scope.telu = [];
+      $scope.chars = [];
+
+      $scope.populatePage = function() {
+        var i;
+        var C = "";
         $scope.chars = [];
-        $scope.populatePage = function(){
-          var i,c="",C="";
-          $scope.chars = [];
-        for(i=0;i<26;i++){
-          C = String.fromCharCode(65+i);
-          //c = String.fromCharCode(97+i);
+        for (i = 0; i < 26; i++) {
+          C = String.fromCharCode(65 + i);
           $scope.chars.push(C);
-          }
         }
-	  $scope.initiate = function(data){
-		  $scope.hind = data.hind;
-		  $scope.telu = data.telu;
-	 	 $('#loader').hide();
-	 	 $scope.populatePage();
-	  }
-        $scope.setLang = function(l){
-          $scope.ctrl.eng = false;
-          $scope.ctrl.hin = false;
-          $scope.ctrl.tel = false;
-          $scope.ctrl[l] = true;
-	  if(l=='eng')
-	  $scope.drawLetter($scope.ctrl.el)
-	  else if(l=='hin')
-	  $scope.drawLetter($scope.ctrl.hl)
-	  else if(l=='tel')
-	  $scope.drawLetter($scope.ctrl.tl)
+      };
+
+      $scope.initiate = function(data) {
+        $scope.hind = data.hind;
+        $scope.telu = data.telu;
+        $("#loader").hide();
+        $scope.populatePage();
+      };
+
+      $scope.setLang = function(l) {
+        $scope.ctrl.eng = false;
+        $scope.ctrl.hin = false;
+        $scope.ctrl.tel = false;
+        $scope.ctrl[l] = true;
+        if (l === "eng") {
+          $scope.drawLetter($scope.ctrl.el);
+        } else if (l === "hin") {
+          $scope.drawLetter($scope.ctrl.hl);
+        } else if (l === "tel") {
+          $scope.drawLetter($scope.ctrl.tl);
+        }
+      };
+
+      var tracingCanvas = document.getElementById("tracingCanvas");
+      var ctx = tracingCanvas.getContext("2d");
+      var clearButton = document.getElementById("clear-trace");
+      var drawing = false;
+
+      function resetCanvas() {
+        ctx.clearRect(0, 0, tracingCanvas.width, tracingCanvas.height);
+      }
+
+      function startDrawing(event) {
+        drawing = true;
+        draw(event);
+      }
+
+      function stopDrawing() {
+        drawing = false;
+        ctx.beginPath();
+      }
+
+      function draw(event) {
+        if (!drawing) {
+          return;
         }
 
-        const tracingCanvas = document.getElementById('tracingCanvas');
-  const ctx = tracingCanvas.getContext('2d');
-  let drawing = false;
+        ctx.lineWidth = 5;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000";
 
-  function startDrawing(event) {
-    drawing = true;
-    draw(event);
-  }
+        var x;
+        var y;
 
-  function stopDrawing() {
-    drawing = false;
-    ctx.beginPath();
-  }
+        if (event.type && event.type.indexOf("touch") !== -1) {
+          var touch = event.touches[0];
+          var rect = tracingCanvas.getBoundingClientRect();
+          x = touch.clientX - rect.left;
+          y = touch.clientY - rect.top;
+        } else {
+          var mouseRect = tracingCanvas.getBoundingClientRect();
+          x = event.clientX - mouseRect.left;
+          y = event.clientY - mouseRect.top;
+        }
 
-  function draw(event) {
-    if (!drawing) return;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
 
-    ctx.lineWidth = 5;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000';
+        event.preventDefault();
+      }
 
-    let x, y;
+      $scope.drawLetter = function(letter) {
+        resetCanvas();
+        ctx.font = "200px Arial";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(letter || "", tracingCanvas.width / 2, tracingCanvas.height / 2);
+      };
 
-    if (event.type.includes('touch')) {
-      const touch = event.touches[0];
-      const rect = tracingCanvas.getBoundingClientRect();
-      x = touch.clientX - rect.left;
-      y = touch.clientY - rect.top;
-    } else {
-      const rect = tracingCanvas.getBoundingClientRect();
-      x = event.clientX - rect.left;
-      y = event.clientY - rect.top;
-    }
+      tracingCanvas.addEventListener("mousedown", startDrawing);
+      tracingCanvas.addEventListener("mouseup", stopDrawing);
+      tracingCanvas.addEventListener("mouseout", stopDrawing);
+      tracingCanvas.addEventListener("mousemove", draw);
+      tracingCanvas.addEventListener("touchstart", startDrawing);
+      tracingCanvas.addEventListener("touchend", stopDrawing);
+      tracingCanvas.addEventListener("touchcancel", stopDrawing);
+      tracingCanvas.addEventListener("touchmove", draw);
 
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-
-    event.preventDefault();
-  }
-
-   $scope.drawLetter = function(letter) {
-    ctx.clearRect(0, 0, tracingCanvas.width, tracingCanvas.height);
-    ctx.font = '200px Arial';
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(letter, tracingCanvas.width / 2, tracingCanvas.height / 2);
-  }
-
-  tracingCanvas.addEventListener('mousedown', startDrawing);
-  tracingCanvas.addEventListener('mouseup', stopDrawing);
-  tracingCanvas.addEventListener('mouseout', stopDrawing);
-  tracingCanvas.addEventListener('mousemove', draw);
-
-  tracingCanvas.addEventListener('touchstart', startDrawing);
-  tracingCanvas.addEventListener('touchend', stopDrawing);
-  tracingCanvas.addEventListener('touchcancel', stopDrawing);
-  tracingCanvas.addEventListener('touchmove', draw);
-        
+      clearButton.addEventListener("click", function() {
+        if ($scope.ctrl.eng) {
+          $scope.drawLetter($scope.ctrl.el);
+        } else if ($scope.ctrl.hin) {
+          $scope.drawLetter($scope.ctrl.hl);
+        } else {
+          $scope.drawLetter($scope.ctrl.tl);
+        }
       });
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1ZCM5PW9N9');
-</script>
-   </body>
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-1ZCM5PW9N9");
+  </script>
+</body>
 </html>

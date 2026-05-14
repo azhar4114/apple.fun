@@ -1,54 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        ul {
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Aforapple.fun</title>
+  <meta
+    name="description"
+    content="Privacy policy for Aforapple.fun school pilots, classroom use, and contact form submissions."
+  >
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap");
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: #16324f;
+      background:
+        radial-gradient(circle at top left, rgba(255, 214, 150, 0.4), transparent 34%),
+        linear-gradient(180deg, #fff8ec 0%, #f4fbff 48%, #eef8f1 100%);
+    }
+
+    .shell {
+      width: min(940px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      margin-bottom: 18px;
+      font-weight: 800;
+      color: #0f73b8;
+      text-decoration: none;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 28px;
+      box-shadow: 0 24px 54px rgba(15, 35, 53, 0.12);
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(15, 115, 184, 0.12);
+      color: #0f73b8;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.06;
+      margin: 18px 0 12px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 54px);
+      margin-top: 18px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-top: 28px;
+    }
+
+    p,
+    li {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #48667f;
+    }
+
+    ul {
+      padding-left: 22px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Privacy Policy</h1>
-    <p>Your privacy is important to us. It is our policy to respect your privacy regarding any information we may collect from you across our website, AForApple.Fun, and other sites we own and operate.</p>
-    
-    <h2>Information we collect</h2>
-    <p>We only collect information about you if we have a reason to do so – for example, to provide our services, to communicate with you, or to make our services better.</p>
-    <ul>
-        <li>We collect information in three ways: if and when you provide information to us, automatically through operating our services, and from outside sources.</li>
-        <li>We collect this information from our users for the following purposes: to provide and operate the services, to respond to your requests or inquiries, to improve our services, and to provide you with newsletters, marketing or promotional materials.</li>
-    </ul>
+  <div class="shell">
+    <a class="back-link" href="index.html">Back to home</a>
 
-    <h2>How we store and use information</h2>
-    <p>Your information is securely stored in a database. We use your personal information for the purposes stated above and to communicate with you about our services.</p>
-    
-    <h2>Third-party access to information</h2>
-    <p>We do not share your personal information with third parties except as necessary to operate our website and provide our services.</p>
+    <article class="card">
+      <span class="eyebrow">School privacy policy</span>
+      <h1>Privacy policy for school pilots and classroom use</h1>
+      <p>
+        This policy explains how Aforapple.fun handles information collected from school admins, teachers, and devices
+        used during classroom pilots. It is written for the current pilot model on this site as of May 15, 2026.
+      </p>
 
-    <h2>Changes to this privacy policy</h2>
-    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+      <h2>What information we collect</h2>
+      <ul>
+        <li>School and contact details submitted through the pilot request form.</li>
+        <li>Activation and access details associated with school keys.</li>
+        <li>Device-level usage data stored locally in the browser for pilot reporting.</li>
+        <li>Basic analytics and troubleshooting details needed to operate the site.</li>
+      </ul>
 
-    <p>If you have any questions or concerns about our privacy policy, please contact us.</p>
+      <h2>How the pilot request form works</h2>
+      <p>
+        The school pilot request form collects information such as school name, city and state, contact name, work email,
+        phone or WhatsApp, grades served, number of classrooms, languages needed, main device type, preferred demo time,
+        and optional notes. This information is used to qualify, schedule, and support a school pilot.
+      </p>
 
-    <p>This privacy policy was last updated on January 1, 2024.</p>
+      <h2>How usage reporting works today</h2>
+      <p>
+        The pilot report page currently stores lesson activity on the device that was used during the pilot. This local
+        report can be exported manually as JSON or CSV. It is intended for pilot follow-up, not for child-level progress
+        tracking.
+      </p>
+
+      <h2>Children's data</h2>
+      <p>
+        Aforapple.fun is designed for classroom instruction. The current pilot experience is not intended to collect
+        student accounts or student profile data from children. Schools should avoid entering sensitive student personal
+        information into the pilot request form or lesson content.
+      </p>
+
+      <h2>How we use the information</h2>
+      <ul>
+        <li>To respond to school inquiries and schedule demos.</li>
+        <li>To activate and support school pilot keys.</li>
+        <li>To review lesson usage during a pilot and improve the product.</li>
+        <li>To discuss annual licensing or rollout options with the requesting school.</li>
+      </ul>
+
+      <h2>How to contact us</h2>
+      <p>
+        For privacy questions or requests related to a school pilot, please use the <a href="contact.html">pilot request
+        form</a> so the inquiry reaches the same team that manages school onboarding.
+      </p>
+
+      <p>Last updated: May 15, 2026.</p>
+    </article>
+  </div>
 </body>
 </html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilot Usage Report | Aforapple.fun</title>
+  <meta name="description" content="Export the local pilot usage report for Aforapple.fun classroom trials.">
+  <script src="pilot-utils.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #16324f;
+    }
+
+    .shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 48px rgba(15, 34, 57, 0.1);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    p {
+      color: #44627c;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .summary {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      margin-top: 24px;
+    }
+
+    .summary div {
+      border: 1px solid #d9e7f2;
+      border-radius: 16px;
+      padding: 16px;
+      background: #f9fcff;
+    }
+
+    .summary strong {
+      display: block;
+      font-size: 14px;
+      color: #5b7491;
+      margin-bottom: 6px;
+    }
+
+    .summary span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: #0f4c81;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid #e4edf5;
+      font-size: 15px;
+    }
+
+    th {
+      color: #56718c;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="card">
+      <h1>Device pilot usage report</h1>
+      <p>
+        This page shows the local usage report stored on this device during a classroom pilot. You can export JSON or CSV
+        for manual follow-up and review.
+      </p>
+      <div class="summary" id="summary"></div>
+      <div class="actions">
+        <button class="button" id="export-json">Export JSON</button>
+        <button class="button" id="export-csv">Export CSV</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Lesson activity</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Lesson</th>
+            <th>Access state</th>
+            <th>Sessions</th>
+            <th>First seen</th>
+            <th>Last seen</th>
+          </tr>
+        </thead>
+        <tbody id="report-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    var report = AFORAPPLE_UTILS.getReport();
+    var summary = document.getElementById("summary");
+    var body = document.getElementById("report-body");
+    var lessonKeys = Object.keys(report.lessonVisits);
+    var totalSessions = lessonKeys.reduce(function(sum, key) {
+      return sum + report.lessonVisits[key].sessionCount;
+    }, 0);
+
+    summary.innerHTML = [
+      "<div><strong>Access state</strong><span>" + (report.accessState || "sample") + "</span></div>",
+      "<div><strong>Device ID</strong><span>" + report.deviceId + "</span></div>",
+      "<div><strong>Lessons opened</strong><span>" + lessonKeys.length + "</span></div>",
+      "<div><strong>Total sessions</strong><span>" + totalSessions + "</span></div>"
+    ].join("");
+
+    if (!lessonKeys.length) {
+      body.innerHTML = "<tr><td colspan='5'>No lesson activity has been recorded on this device yet.</td></tr>";
+    } else {
+      lessonKeys.sort().forEach(function(key) {
+        var item = report.lessonVisits[key];
+        var row = document.createElement("tr");
+        row.innerHTML = [
+          "<td>" + item.title + "</td>",
+          "<td>" + item.accessState + "</td>",
+          "<td>" + item.sessionCount + "</td>",
+          "<td>" + item.firstSeen + "</td>",
+          "<td>" + item.lastSeen + "</td>"
+        ].join("");
+        body.appendChild(row);
+      });
+    }
+
+    document.getElementById("export-json").addEventListener("click", function() {
+      AFORAPPLE_UTILS.exportReportAsJson();
+    });
+
+    document.getElementById("export-csv").addEventListener("click", function() {
+      AFORAPPLE_UTILS.exportReportAsCsv();
+    });
+  </script>
+</body>
+</html>

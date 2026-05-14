@@ -1,407 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aforapple.fun - Interactive Learning for Schools</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>
-      body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aforapple.fun School Pilot Brochure</title>
+  <meta
+    name="description"
+    content="School pilot brochure for Aforapple.fun: multilingual classroom learning for Preschool to Grade 2."
+  >
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap");
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    max-width: 1200px;
-}
+    :root {
+      --ink: #16324f;
+      --ink-soft: #48667f;
+      --line: rgba(22, 50, 79, 0.12);
+      --orange: #ff7d34;
+      --orange-deep: #e45c2c;
+      --blue: #0f73b8;
+      --green: #1f8d62;
+      --shadow: 0 24px 54px rgba(15, 35, 53, 0.12);
+    }
 
-.header {
-    background-color: #007bff;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 214, 150, 0.5), transparent 34%),
+        linear-gradient(180deg, #fff8ec 0%, #f4fbff 48%, #eef8f1 100%);
+    }
 
-.header p {
-    margin: 10px 0 0;
-    font-size: 1.2em;
-}
+    .shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
 
-.intro, .features, .pricing, .cta {
-    padding: 40px 0;
-}
+    .back-link,
+    .button {
+      text-decoration: none;
+    }
 
-.intro h2, .features h2, .pricing h2, .cta h2 {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
-}
+    .back-link {
+      display: inline-flex;
+      margin-bottom: 18px;
+      font-weight: 800;
+      color: var(--blue);
+    }
 
-.intro p, .cta p {
-    text-align: center;
-    font-size: 1.2em;
-}
+    .hero,
+    .section,
+    .pricing-card,
+    .feature-card,
+    .faq-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
 
-.feature-cards, .pricing-table{
-    display: grid;
-    justify-content: space-around;
-    margin-top: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(25vh, 1fr));
-    gap: 5vh;
-}
+    .hero {
+      padding: 38px;
+    }
 
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-}
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(15, 115, 184, 0.12);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
 
-.card h3 {
-    margin-bottom: 15px;
-    color: #007bff;
-}
+    h1,
+    h2,
+    h3 {
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.06;
+      margin: 0 0 12px;
+    }
 
-.plan {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-}
+    h1 {
+      font-size: clamp(42px, 5vw, 64px);
+      margin-top: 18px;
+      max-width: 11ch;
+    }
 
-.plan h3 {
-    margin-bottom: 15px;
-    color: #007bff;
-}
+    h2 {
+      font-size: 38px;
+    }
 
-.cta{
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    align-items: center;
-}
+    h3 {
+      font-size: 28px;
+    }
 
-.cta button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-size: 1.2em;
-}
+    p,
+    li {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
 
-.cta button:hover {
-    background-color: #0056b3;
-}
+    .hero-actions,
+    .footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
 
-.footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 40px;
-}
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+    }
 
-.footer p {
-    margin: 0;
-}
-.intro p strong {
-    color: #007bff;
-    font-weight: bold;
-}
+    .button.primary {
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      color: #fff;
+      box-shadow: 0 18px 32px rgba(255, 107, 61, 0.28);
+    }
 
-/* Popup container */
-.popup {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
+    .button.secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 28px rgba(21, 50, 75, 0.08);
+    }
 
-/* Popup content */
-.popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    text-align: center;
-    position: relative;
-}
+    .button:hover {
+      transform: translateY(-2px);
+    }
 
-/* Close button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-}
+    .section {
+      margin-top: 22px;
+      padding: 32px;
+    }
 
-/* Input field */
-input[type="text"] {
-    width: 90%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-} 
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
 
-/* Submit button */
-button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-}
+    .feature-card,
+    .pricing-card,
+    .faq-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 34px rgba(21, 50, 75, 0.08);
+    }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(31, 141, 98, 0.12);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
 
-/* Subscription link */
-.popup-content p a {
-    color: #007BFF;
-    text-decoration: none;
-}
+    .price {
+      display: block;
+      margin: 10px 0 14px;
+      font-size: 34px;
+      font-family: "Baloo 2", sans-serif;
+      color: #e36d22;
+      line-height: 1;
+    }
 
-.popup-content p a:hover {
-    text-decoration: underline;
-}
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
 
-.promo-video {
-    text-align: center;
-    padding: 2rem 1rem;
-    background-color: #fff;
-}
+    .footer-band {
+      margin-top: 22px;
+      padding: 28px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #0f73b8, #1f8d62);
+      color: #fff;
+      box-shadow: 0 24px 44px rgba(15, 115, 184, 0.26);
+    }
 
-.promo-video h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
+    .footer-band p {
+      color: rgba(255, 255, 255, 0.9);
+    }
 
-.video-container {
-    margin: 0;
-}
+    .footer-band .button.secondary {
+      border: none;
+    }
 
-video {
-    width: 100%;
-    border-radius: 8px;
-}
-	    .hide{
-		    display:none;
-	    }
-		
-		body,a,button{
-			cursor: url('cursor.png'), auto;
-		}
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1100px);
+      }
 
+      .hero,
+      .section {
+        padding: 24px;
+      }
 
-
-    </style>
-    	<script src="validate.js"></script>
-
+      h2 {
+        font-size: 32px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="activationPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <h2>Activate Your Subscription</h2>
-            <p>To access this content, please enter your activation key.</p>
-            <form id="activationForm">
-                <label for="activationKey">Activation Key:</label>
-                <input type="text" id="activationKey" name="activationKey" required>
-                <button type="submit" id="activate">Activate</button>
-            </form>
-           
-        </div>
-    </div>
-    <header class="header">
-        <div class="container">
-            <h1>AForApple.Fun</h1>
-            <p>Learning Through Fun and Play!</p>
-        </div>
-    </header>
+  <div class="shell">
+    <a class="back-link" href="index.html">Back to home</a>
 
-    <section class="intro">
-    <div class="container">
-        <h2>Welcome to AForApple.Fun</h2>
-        <p>Engage your students with interactive stories, games, and activities designed to enhance learning in a fun and engaging way. Perfect for group learning in classrooms.</p>
-        <p><strong>Optimized for Smart TVs:</strong> Seamlessly integrate our content with your classroom’s Smart TV. Easily project interactive lessons and activities to keep students engaged.</p>
-    </div>
-</section>
-
-    <section class="promo-video">
-		<div class="video-container">
-		      <iframe width="660" height="415" style="width:50vh;height:35vh;"
-		        src="https://www.youtube.com/embed/3qsNsWN6-U0?rel=0" 
-		        frameborder="0" 
-		        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-		        allowfullscreen>
-		      </iframe>
-		    </div>
+    <section class="hero">
+      <span class="eyebrow">School pilot brochure</span>
+      <h1>Position Aforapple.fun as a classroom pilot, not a key-gated toybox</h1>
+      <p>
+        Aforapple.fun is strongest when it is framed as multilingual classroom learning for Preschool to Grade 2 on
+        smart TVs, projectors, tablets, and shared devices. This brochure is now aligned to that sales motion.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="contact.html">Book a Demo</a>
+        <a class="button secondary" href="index.html#sample-lessons">Try Sample Lessons</a>
+      </div>
     </section>
 
-
-    <section class="features">
-        <div class="container">
-            <h2>Why Choose Us?</h2>
-            <div class="feature-cards">
-                <div class="card">
-                    <h3>Interactive Content</h3>
-                    <p>Keep your students engaged with interactive stories and games that align with the curriculum.</p>
-                </div>
-                <div class="card">
-                    <h3>Customizable</h3>
-                    <p>We offer customization options to tailor the platform to your school's specific needs and curriculum.</p>
-                </div>
-                <div class="card">
-                    <h3>Affordable Plans</h3>
-                    <p>Choose from flexible pricing plans that fit your school's budget.</p>
-                </div>
-            </div>
-        </div>
+    <section class="section">
+      <h2>What schools are buying</h2>
+      <div class="grid">
+        <article class="feature-card">
+          <span class="tag">Use case</span>
+          <h3>Whole-class instruction</h3>
+          <p>Large, simple lesson tiles and autoplay-friendly lessons for smart TVs and projectors.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Use case</span>
+          <h3>Multilingual support</h3>
+          <p>English, Hindi, and Telugu activities that can support classroom teaching and family communication.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Use case</span>
+          <h3>Teacher-led follow-through</h3>
+          <p>Tracing, whiteboard work, and printable guidance for a stronger classroom adoption story.</p>
+        </article>
+      </div>
     </section>
 
-	<section class="features">
-	  <div class="container">
-	    <h2>Transform Your Classroom</h2>
-	    <div class="pricing-table">
-	      <div class="plan">
-	        <h3>Single Classroom Access</h3>
-	        <p>Engage students with interactive content designed for group learning in a single classroom setting.</p>
-	      </div>
-	      <div class="plan">
-	        <h3>Multiple Classroom Access</h3>
-	        <p>Unlock access for multiple classrooms, with the flexibility to customize content according to your school’s curriculum.</p>
-	      </div>
-	    </div>
-	  </div>
-	</section>
-    
-
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Contact us to schedule a free trial and see how Aforapple.fun can enhance learning at your school. <button><a href="contact.html" style="color:white">Contact Us</a></button></p>
-          
-          <p>Already subscribed ? <a href="#" onclick="showPopup()">Click here</a> to activate</p>
-		  <p>Already activated? <a href="/" style="top: 30%;left: 46%;background: white;padding: 10px;">Start using</a></p>
-        </div>
-		<div id="qrcode" class="hide">
-		</div>
+    <section class="section">
+      <h2>Recommended demo path</h2>
+      <div class="grid">
+        <article class="feature-card">
+          <span class="tag">Step 1</span>
+          <h3>Alphabet</h3>
+          <p>Fast shared-screen warm-up that shows the classroom fit immediately.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Step 2</span>
+          <h3>Phonics</h3>
+          <p>Grouped sounds and example words that feel more teacher-ready than a generic kids app.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Step 3</span>
+          <h3>Tracing and Whiteboard</h3>
+          <p>Touch-friendly follow-through that helps teachers imagine daily classroom use.</p>
+        </article>
+      </div>
     </section>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Aforapple.fun. All rights reserved.</p>
-        </div>
-    </footer>
+    <section class="section">
+      <h2>How the pilot works</h2>
+      <div class="grid">
+        <article class="feature-card">
+          <span class="tag">Before activation</span>
+          <h3>Short admin call</h3>
+          <p>Confirm grades served, classroom count, languages needed, and device type used in class.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Pilot window</span>
+          <h3>14-day trial</h3>
+          <p>Issue a school-specific key, share the teacher guide, and focus teachers on the strongest lessons first.</p>
+        </article>
+        <article class="feature-card">
+          <span class="tag">Follow-up</span>
+          <h3>Day 3, 7, and 12 check-ins</h3>
+          <p>Use exported local usage data and classroom feedback to support the close conversation.</p>
+        </article>
+      </div>
+    </section>
 
-    <script>
-      // Get the popup element
-var popup = document.getElementById("activationPopup");
+    <section class="section">
+      <h2>Pricing bands</h2>
+      <div class="grid">
+        <article class="pricing-card">
+          <span class="tag">Pilot</span>
+          <h3>14-Day School Pilot</h3>
+          <span class="price">Free</span>
+          <p>Includes admin demo, guided onboarding, and a school pilot key.</p>
+        </article>
+        <article class="pricing-card">
+          <span class="tag">Annual</span>
+          <h3>Small School License</h3>
+          <span class="price">Starts at Rs 15,000/year</span>
+          <ul>
+            <li>Single-campus or smaller preschool rollouts.</li>
+            <li>Good fit for a few classrooms.</li>
+          </ul>
+        </article>
+        <article class="pricing-card">
+          <span class="tag">Annual</span>
+          <h3>Multi-Classroom License</h3>
+          <span class="price">Starts at Rs 40,000/year</span>
+          <ul>
+            <li>More classrooms, more structured onboarding.</li>
+            <li>Better for broader KG to Grade 2 use.</li>
+          </ul>
+        </article>
+        <article class="pricing-card">
+          <span class="tag">Custom</span>
+          <h3>School Rollout Support</h3>
+          <span class="price">Contact sales</span>
+          <ul>
+            <li>Custom lesson packaging or school-specific setup.</li>
+            <li>Useful for branded or multilingual program rollouts.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
-// Get the close button element
-var closeBtn = document.querySelector(".close-btn");
+    <section class="section">
+      <h2>Frequently asked questions</h2>
+      <div class="grid">
+        <article class="faq-card">
+          <h3>Do schools need a key before they can see anything?</h3>
+          <p>No. The public site now opens three sample lessons without activation so schools can evaluate the feel first.</p>
+        </article>
+        <article class="faq-card">
+          <h3>What still depends on the backend?</h3>
+          <p>The full lesson library and protected lessons still use the current backend validation and content flow.</p>
+        </article>
+        <article class="faq-card">
+          <h3>How do we monitor pilot usage?</h3>
+          <p>The pilot report page exports local usage stored on the device used during the classroom trial.</p>
+        </article>
+      </div>
+    </section>
 
-// Show the popup when the page loads
-function showPopup() {
-    // Here you would typically check if the user has an active subscription or key
-    var hasValidKey = false; // Replace this with your actual key validation logic
-
-    if (!hasValidKey) {
-        popup.style.display = "flex"; // Show the popup
-		document.getElementById("activationKey").focus();
-    }
-};
-
-// Close the popup when the user clicks the close button
-closeBtn.onclick = function() {
-    popup.style.display = "none";
-};
-
-// Close the popup when the user clicks anywhere outside of it
-window.onclick = function(event) {
-    if (event.target == popup) {
-        popup.style.display = "none";
-    }
-};
-
-function activateKey(key, ip) {
-  var deviceId = getDeviceId(); // Function to get a unique device ID (e.g., localStorage or UUID)
-  var d = window.location.href.match(/device-\w+/);
-  $("#activate").prop('disabled', true);
-  if(d!=null && d[0]!=null)
-	deviceId =  d[0];
-  const data = new URLSearchParams();
-  data.append('key', key);
-  data.append('deviceId', deviceId);
-  data.append('action', "activate");
-  data.append('ip', ip); // Send IP address to the server
-  sendReq(data,function(response) {
-	  $("#activate").prop('disabled', false);;
-    console.log(response);
-    if (response.status==="success") {
-      document.cookie = "activationKey=" + key + ";path=/";
-      setCookie("keyvalidated","true", 1);
-      popup.style.display = "none";
-      alert("Key activated successfully.");
-      if(window.location.pathname === "/brochure.html")
-	   window.location.pathname = "/";
-    } else {
-      alert(response.message);
-    }
-  });
-}
-
-setTimeout(function(){
-	var key = getCookie('activationKey');
-	console.log("after 5", key, deviceType)
-   if (key==null && deviceType!=="Mobile Device") {
-	   var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: window.location.href+"?d="+getDeviceId(),
-            width: 128,
-            height: 128,
-        });
-	document.getElementById("qrcode").className = "show";
-    console.log("after 5 after", key, deviceType)
-   } 
-},1000);
-
-// Handle the form submission
-document.getElementById("activationForm").onsubmit = function(event) {
-    event.preventDefault();
-    var key = document.getElementById("activationKey").value;
-
-    getUserIP(function(ip) {
-	console.log(ip,key,"click");
-	    if (ip) {
-	        activateKey(key,ip);
-	    } else {
-	        console.log('Could not fetch IP address.');
-	    }
-	});
-};
-
-    </script>
+    <section class="footer-band">
+      <h2>Next step</h2>
+      <p>
+        Use the pilot request form to qualify a school, schedule a demo, and move them into a guided 14-day trial.
+      </p>
+      <div class="footer-actions">
+        <a class="button primary" href="contact.html">Request a pilot</a>
+        <a class="button secondary" href="teacher-guide.html">Open teacher guide</a>
+      </div>
+    </section>
+  </div>
 </body>
 </html>

@@ -1,106 +1,158 @@
 <!DOCTYPE html>
-<html>
-  <head>
-	  <script src="validate.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	
-	  <title>Alphabet Chart</title>
-    <style>
-		#alphabet{
-		    grid-template-columns: repeat(auto-fit, minmax(22vh, 1fr));
-		}
-		
-	    .button {
-  padding: 4vh 6vh;
-  font-size: 10vh;
-}
-
-body {
-    background-image: url(images/space3.jpeg);
-}
-    </style>
-  </head>
-<body ng-app="newApp">
-  
-  <div ng-controller="appCtrl" id="controller">
-   <div class="header">
-    <h1>Alphabet Chart</h1>
-    <a href="index.html">Go to Home</a>
-  </div>
-  <div class="toggle-buttons">
-   <button class="toggle-button play active">Play</button>
-    <button class="toggle-button" ng-disabled="!ctrl.showSmall" ng-click="ctrl.showCaps=!ctrl.showCaps" ng-class="{'active':ctrl.showCaps}">Show capital letters</button>
-    <button class="toggle-button"   ng-click="showSmallClck();" ng-class="{'active':ctrl.showSmall}">Show small letters</button>
-  </div>
-  <loader id="loader"></loader>
-    <div id="alphabet">
-      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}"><div ><span ng-show="ctrl.showCaps">{{l[0]}}</span><span ng-show="ctrl.showSmall">{{l[1]}}</span></div></div>
-    </div>
-      
-    </div>
-<button id="scrollToTopBtn" title="Go to top">Top</button>
-<script src="script.js"></script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alphabet Chart</title>
   <script>
-
-	  var aud;
-	  var audTime =[];
-gap = 1200;
-
-
-var app = angular.module("newApp", []);
-app.directive('loader', function($http, $templateCache) {
-  return {
-    restrict: 'E',
-    link: function(scope, element) {
-      // Load the loader.html file and inject it
-      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-        element.html(response.data);
-      });
-    }
-  };
-});
-
-app.controller('appCtrl', function($scope) {
-  $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
-  $scope.chars = [];
-  
-  $scope.showSmallClck = function(){
-    //$scope.aud.play();
-	  $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
-    if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
-      $scope.ctrl.showCaps = true;
-  };
-  
- $scope.initiate = function(data){
-	 aud = new Audio(data.aud);
-	 audTime = data.audTime;
-	 $('#loader').hide();
-	 $scope.populatePage();
- }
-  
-  $scope.populatePage = function(){
-    var i,c="",C="";
-    $scope.chars = [];
-  for(i=0;i<26;i++){
-    C = String.fromCharCode(65+i);
-    c = String.fromCharCode(97+i);
-    $scope.chars.push([C,c]);
-    }
-  }
-  
-}); 
-
+    window.AFORAPPLE_SAMPLE_DATA = (function() {
+      var timings = [];
+      var start = 0;
+      for (var i = 0; i < 26; i++) {
+        timings.push({
+          s: start,
+          e: start + 0.62
+        });
+        start += 0.78;
+      }
+      return {
+        aud: "alpha.m4a",
+        audTime: timings,
+        bg: ["space3.jpeg", "clouds2.jpeg", "play1.jpeg"]
+      };
+    })();
   </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script src="pilot-utils.js"></script>
+  <script src="validate.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <style>
+    #alphabet {
+      grid-template-columns: repeat(auto-fit, minmax(22vh, 1fr));
+    }
 
-  gtag('config', 'G-1ZCM5PW9N9');
-</script>
+    .button {
+      padding: 4vh 6vh;
+      font-size: 10vh;
+    }
+
+    .sample-banner {
+      margin: 18px 20px 0;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 18px 36px rgba(21, 50, 75, 0.12);
+      color: #15324b;
+    }
+
+    .sample-banner p {
+      margin: 10px 0 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .sample-banner a {
+      color: #0f73b8;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    body {
+      background-image: url(images/space3.jpeg);
+    }
+  </style>
+</head>
+<body ng-app="newApp">
+  <div ng-controller="appCtrl" id="controller">
+    <div class="header">
+      <h1>Alphabet Chart</h1>
+      <a href="index.html">Go to Home</a>
+    </div>
+
+    <div class="sample-banner" data-access-badge-target>
+      Public sample lesson. For the full classroom library and school pilot access, <a href="contact.html">request a
+      14-day school pilot</a>.
+    </div>
+
+    <div class="toggle-buttons">
+      <button class="toggle-button play active">Play</button>
+      <button class="toggle-button" ng-disabled="!ctrl.showSmall" ng-click="ctrl.showCaps=!ctrl.showCaps" ng-class="{'active':ctrl.showCaps}">
+        Show capital letters
+      </button>
+      <button class="toggle-button" ng-click="showSmallClck();" ng-class="{'active':ctrl.showSmall}">
+        Show small letters
+      </button>
+    </div>
+    <loader id="loader"></loader>
+    <div id="alphabet">
+      <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}">
+        <div>
+          <span ng-show="ctrl.showCaps">{{l[0]}}</span>
+          <span ng-show="ctrl.showSmall">{{l[1]}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+  <script src="script.js"></script>
+  <script>
+    var aud;
+    var audTime = [];
+    gap = 1200;
+
+    var app = angular.module("newApp", []);
+    app.directive("loader", function($http, $templateCache) {
+      return {
+        restrict: "E",
+        link: function(scope, element) {
+          $http.get("loader.html", { cache: $templateCache }).then(function(response) {
+            element.html(response.data);
+          });
+        }
+      };
+    });
+
+    app.controller("appCtrl", function($scope) {
+      $scope.ctrl = { showSmall: true, showCaps: true, busyPlay: false };
+      $scope.chars = [];
+
+      $scope.showSmallClck = function() {
+        $scope.ctrl.showSmall = !$scope.ctrl.showSmall;
+        if (!$scope.ctrl.showSmall && !$scope.ctrl.showCaps) {
+          $scope.ctrl.showCaps = true;
+        }
+      };
+
+      $scope.initiate = function(data) {
+        aud = new Audio(data.aud);
+        audTime = data.audTime;
+        $("#loader").hide();
+        $scope.populatePage();
+      };
+
+      $scope.populatePage = function() {
+        var i;
+        var c = "";
+        var C = "";
+        $scope.chars = [];
+        for (i = 0; i < 26; i++) {
+          C = String.fromCharCode(65 + i);
+          c = String.fromCharCode(97 + i);
+          $scope.chars.push([C, c]);
+        }
+      };
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-1ZCM5PW9N9");
+  </script>
 </body>
 </html>

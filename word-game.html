@@ -3,228 +3,371 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word or Sentence Builder Game</title>
+  <title>Word Builder Game</title>
   <script src="validate.js"></script>
-  <script src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
   <style>
+    .game-shell {
+      width: min(920px, calc(100% - 24px));
+      margin: 0 auto 40px;
+    }
 
-    .game-container {
+    .panel {
+      margin-top: 20px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 18px 34px rgba(21, 50, 75, 0.12);
+    }
+
+    .target-word {
+      font-size: 38px;
+      font-weight: 800;
+      color: #15324b;
+      letter-spacing: 0.1em;
       text-align: center;
+      margin: 8px 0 16px;
     }
 
-    .draggable {
-      margin: 5px;
-      padding: 10px 15px;
-      background-color: #4CAF50;
-      color: white;
+    .helper-copy {
+      text-align: center;
+      color: #4d6a82;
       font-size: 18px;
-      border-radius: 5px;
-      user-select: none;
-      display: inline-block;
-      transition: all 0.3s ease;
+      line-height: 1.6;
     }
 
-    .draggable:hover {
-      background-color: #388E3C;
+    .letter-bank,
+    .placed-letters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .letter-chip {
+      min-width: 58px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #46aef7, #268ed9);
+      color: #fff;
+      font-size: 26px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 22px rgba(38, 142, 217, 0.24);
     }
 
     .dropzone {
-      margin: 20px;
-      padding: 30px;
-      min-height: 50px;
-      border: 2px dashed #2196F3;
-      border-radius: 5px;
-      background-color: #e3f2fd;
+      margin-top: 20px;
+      padding: 24px;
+      min-height: 130px;
+      border: 2px dashed #2196f3;
+      border-radius: 24px;
+      background: #eaf5ff;
       text-align: center;
-      position: relative;
       transition: all 0.3s ease;
     }
 
     .dropzone.hover {
-      background-color: #bbdefb;
-      border-color: #1565C0;
-    }
-
-    #clear-word-btn {
-      background-color: #FF5722;
+      background-color: #d6ecff;
+      border-color: #1565c0;
     }
 
     .dropzone p {
-      color: #2196F3;
+      margin: 0;
+      color: #2196f3;
       font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 22px;
     }
 
     .btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #2196F3;
-      color: white;
+      padding: 12px 20px;
       border: none;
-      font-size: 18px;
-      border-radius: 5px;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #fff;
+      background: #2196f3;
     }
 
-    .dropzone span {
-        font-weight: bold;
-        font-size:30px;
+    #clear-word-btn {
+      background: #ff7043;
     }
 
-    .btn:hover {
-      background-color: #1976D2;
+    #next-word-btn {
+      background: #1f8d62;
     }
 
     .message {
-      font-size: 18px;
+      font-size: 20px;
       margin-top: 20px;
-      font-weight: bold;
+      font-weight: 800;
+      text-align: center;
     }
 
     .correct {
-      color: green;
+      color: #1f8d62;
     }
 
     .incorrect {
-      color: red;
+      color: #d84315;
+    }
+
+    .sample-note {
+      text-align: center;
+      color: #4d6a82;
+      margin-top: 16px;
     }
   </style>
 </head>
 <body ng-app="newApp">
-
-<div class="game-container" ng-controller="appCtrl" id="controller">
+  <div class="game-shell" ng-controller="appCtrl" id="controller">
     <div class="header">
-	    <h1>Word or Sentence Builder Game</h1>
-	    <a href="index.html">Go to Home</a>
-	  </div>
-      <loader id="loader"></loader>
-  
-  <!-- Draggable letters -->
-  <div id="draggable-letters" style="margin-bottom: 20px;">
-    <!-- Dynamically populated -->
+      <h1>Word Builder Game</h1>
+      <a href="index.html">Go to Home</a>
+    </div>
+    <loader id="loader"></loader>
+
+    <div class="panel">
+      <div class="helper-copy">Build the target word by tapping letters or dragging them into the answer box.</div>
+      <div class="target-word" id="target-word">APPLE</div>
+
+      <div id="draggable-letters" class="letter-bank"></div>
+
+      <div class="dropzone" id="word-dropzone">
+        <p>Tap a letter or drag it here to build the word.</p>
+        <div class="placed-letters" id="placed-letters"></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="check-word-btn" type="button">Check Word</button>
+        <button class="btn" id="clear-word-btn" type="button">Reset</button>
+        <button class="btn" id="next-word-btn" type="button">Next Word</button>
+      </div>
+
+      <div id="feedback-message" class="message"></div>
+      <div class="sample-note">Starter vocabulary is expanded locally so the activity is stronger even before backend updates.</div>
+    </div>
   </div>
 
-  <!-- Drop zone for forming the word -->
-  <div class="dropzone" id="word-dropzone">
-    <p>Drag the letters here to form the word.</p>
-  </div>
+  <script>
+    var draggableContainer = document.getElementById("draggable-letters");
+    var dropzone = document.getElementById("word-dropzone");
+    var placedLetters = document.getElementById("placed-letters");
+    var targetWordEl = document.getElementById("target-word");
+    var checkWordButton = document.getElementById("check-word-btn");
+    var clearWordButton = document.getElementById("clear-word-btn");
+    var nextWordButton = document.getElementById("next-word-btn");
+    var feedbackMessage = document.getElementById("feedback-message");
 
-  <!-- Validation button -->
-  <button class="btn" id="check-word-btn">Check Word</button>
-  <button class="btn" id="clear-word-btn">Reset</button>
+    var starterWords = [
+      "apple",
+      "book",
+      "cat",
+      "dog",
+      "fish",
+      "leaf",
+      "milk",
+      "moon",
+      "pen",
+      "rain",
+      "star",
+      "sun",
+      "tree",
+      "bus",
+      "nest",
+      "frog"
+    ];
+    var correctWords = [];
+    var currentWordIndex = 0;
 
-  <!-- Feedback message -->
-  <div id="feedback-message" class="message"></div>
-</div>
-
-<script>
-  const draggableContainer = document.getElementById('draggable-letters');
-  const dropzone = document.getElementById('word-dropzone');
-  const checkWordButton = document.getElementById('check-word-btn');
-  const clearWordButton = document.getElementById('clear-word-btn');
-  const feedbackMessage = document.getElementById('feedback-message');
-
-  let correctWords = [];
-
-  var app = angular.module("newApp", []);
-app.directive('loader', function($http, $templateCache) {
-  return {
-    restrict: 'E',
-    link: function(scope, element) {
-      // Load the loader.html file and inject it
-      $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-        element.html(response.data);
-      });
-    }
-  };
-});
-app.controller('appCtrl', function($scope) {
-    $scope.initiate = function(data){
-        correctWords = data.words;
-        $('#loader').hide();
-        populateLetters(correctWords);
-    }
-});
-
-  const populateLetters = (words) => {
-    const letters = [...new Set(words.join('').split(''))].sort(() => 0.5 - Math.random());
-    draggableContainer.innerHTML = '';
-    letters.forEach((letter, index) => {
-      const span = document.createElement('span');
-      span.classList.add('draggable');
-      span.setAttribute('draggable', 'true');
-      span.textContent = letter.toUpperCase();
-      span.dataset.letter = letter.toLowerCase();
-      draggableContainer.appendChild(span);
-
-      // Drag events
-      span.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text', e.target.dataset.letter);
-        setTimeout(() => {
-          e.target.style.display = 'none';
-        }, 0);
-      });
-
-      span.addEventListener('dragend', (e) => {
-        setTimeout(() => {
-          e.target.style.display = 'inline-block';
-        }, 0);
-      });
+    var app = angular.module("newApp", []);
+    app.directive("loader", function($http, $templateCache) {
+      return {
+        restrict: "E",
+        link: function(scope, element) {
+          $http.get("loader.html", { cache: $templateCache }).then(function(response) {
+            element.html(response.data);
+          });
+        }
+      };
     });
-  };
 
+    app.controller("appCtrl", function($scope) {
+      $scope.initiate = function(data) {
+        var incomingWords = (data && data.words ? data.words : []).map(function(word) {
+          return String(word || "").toLowerCase().replace(/[^a-z]/g, "");
+        });
 
-  // Handle drop events
-  dropzone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropzone.classList.add('hover');
-  });
+        correctWords = starterWords.concat(incomingWords).filter(function(word, index, arr) {
+          return word && arr.indexOf(word) === index;
+        });
 
-  dropzone.addEventListener('dragleave', () => {
-    dropzone.classList.remove('hover');
-  });
+        currentWordIndex = 0;
+        $("#loader").hide();
+        renderCurrentWord();
+      };
+    });
 
-  dropzone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropzone.classList.remove('hover');
-    if(document.querySelector('#word-dropzone p'))
-        document.querySelector('#word-dropzone p').remove()
-    const letter = e.dataTransfer.getData('text');
-    const span = document.createElement('span');
-    span.textContent = letter.toUpperCase();
-    dropzone.appendChild(span);
-  });
-
-  // Check word
-  checkWordButton.addEventListener('click', () => {
-    const formedWord = Array.from(dropzone.children)
-      .map(child => child.textContent.toLowerCase())
-      .join('');
-    if (correctWords.includes(formedWord)) {
-      feedbackMessage.textContent = `Correct! You formed the word "${formedWord.toUpperCase()}".`;
-      feedbackMessage.classList.remove('incorrect');
-      feedbackMessage.classList.add('correct'); 
-    } else {
-      feedbackMessage.textContent = 'Incorrect! Try again.';
-      feedbackMessage.classList.remove('correct');
-      feedbackMessage.classList.add('incorrect');
+    function shuffle(list) {
+      for (var i = list.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
+      }
+      return list;
     }
-  });
 
-  clearWordButton.addEventListener('click', () => {
-    dropzone.innerHTML = '<p>Drag the letters here to form the word.</p>';
-    feedbackMessage.textContent = '';
-  });
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    function currentWord() {
+      return correctWords[currentWordIndex] || "apple";
+    }
 
-  gtag('config', 'G-1ZCM5PW9N9');
-</script>
+    function renderCurrentWord() {
+      var word = currentWord();
+      targetWordEl.textContent = word.toUpperCase();
+      clearPlacedLetters();
+      populateLetters(word);
+      feedbackMessage.textContent = "";
+      feedbackMessage.className = "message";
+    }
+
+    function distractorLetters(word) {
+      var pool = correctWords.join("").split("").filter(function(letter) {
+        return word.indexOf(letter) === -1;
+      });
+
+      if (!pool.length) {
+        pool = ["a", "e", "i", "o", "u"];
+      }
+
+      shuffle(pool);
+      return pool.slice(0, 2);
+    }
+
+    function populateLetters(word) {
+      var letters = word.split("").concat(distractorLetters(word));
+      shuffle(letters);
+      draggableContainer.innerHTML = "";
+
+      letters.forEach(function(letter) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "letter-chip";
+        button.setAttribute("draggable", "true");
+        button.textContent = letter.toUpperCase();
+        button.dataset.letter = letter;
+
+        button.addEventListener("click", function() {
+          placeLetter(letter);
+        });
+
+        button.addEventListener("dragstart", function(event) {
+          event.dataTransfer.setData("text/plain", letter);
+        });
+
+        draggableContainer.appendChild(button);
+      });
+    }
+
+    function updateDropzoneMessage() {
+      var helper = dropzone.querySelector("p");
+      helper.style.display = placedLetters.children.length ? "none" : "block";
+    }
+
+    function placeLetter(letter) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "letter-chip";
+      chip.textContent = letter.toUpperCase();
+      chip.dataset.letter = letter;
+      chip.addEventListener("click", function() {
+        chip.remove();
+        updateDropzoneMessage();
+      });
+      placedLetters.appendChild(chip);
+      updateDropzoneMessage();
+    }
+
+    function clearPlacedLetters() {
+      placedLetters.innerHTML = "";
+      updateDropzoneMessage();
+    }
+
+    function celebrate() {
+      if (window.confetti) {
+        confetti({
+          particleCount: 40,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    dropzone.addEventListener("dragover", function(event) {
+      event.preventDefault();
+      dropzone.classList.add("hover");
+    });
+
+    dropzone.addEventListener("dragleave", function() {
+      dropzone.classList.remove("hover");
+    });
+
+    dropzone.addEventListener("drop", function(event) {
+      event.preventDefault();
+      dropzone.classList.remove("hover");
+      placeLetter(event.dataTransfer.getData("text/plain"));
+    });
+
+    checkWordButton.addEventListener("click", function() {
+      var formedWord = Array.from(placedLetters.children)
+        .map(function(child) {
+          return child.dataset.letter;
+        })
+        .join("");
+
+      if (formedWord === currentWord()) {
+        feedbackMessage.textContent = 'Correct! You built "' + formedWord.toUpperCase() + '".';
+        feedbackMessage.className = "message correct";
+        celebrate();
+      } else {
+        feedbackMessage.textContent = "Not quite yet. Try again or tap Reset.";
+        feedbackMessage.className = "message incorrect";
+      }
+    });
+
+    clearWordButton.addEventListener("click", function() {
+      clearPlacedLetters();
+      feedbackMessage.textContent = "";
+      feedbackMessage.className = "message";
+    });
+
+    nextWordButton.addEventListener("click", function() {
+      currentWordIndex = (currentWordIndex + 1) % correctWords.length;
+      renderCurrentWord();
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-1ZCM5PW9N9");
+  </script>
 </body>
 </html>
