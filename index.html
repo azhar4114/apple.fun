@@ -507,6 +507,161 @@
       font-weight: 700;
     }
 
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .workspace-panel {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 36px rgba(21, 50, 75, 0.08);
+    }
+
+    .workspace-panel h3 {
+      margin: 10px 0 8px;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .workspace-tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 115, 184, 0.12);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .workspace-empty {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(244, 249, 255, 0.72);
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+
+    .workspace-next,
+    .playlist-row,
+    .favorite-card {
+      border: 1px solid rgba(15, 115, 184, 0.12);
+      border-radius: 18px;
+      background: rgba(244, 249, 255, 0.82);
+    }
+
+    .workspace-next {
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .workspace-next strong,
+    .favorite-card strong,
+    .playlist-row strong {
+      display: block;
+      color: var(--ink);
+      font-size: 20px;
+      font-family: "Baloo 2", sans-serif;
+      line-height: 1.08;
+    }
+
+    .workspace-next span,
+    .favorite-card span,
+    .playlist-row span {
+      display: block;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-size: 15px;
+      margin-top: 6px;
+    }
+
+    .workspace-actions,
+    .playlist-actions,
+    .catalog-item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .workspace-button,
+    .catalog-chip,
+    .catalog-open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 800;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .workspace-button:hover,
+    .catalog-chip:hover,
+    .catalog-open:hover {
+      transform: translateY(-1px);
+    }
+
+    .workspace-button.primary,
+    .catalog-open {
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      color: #fff;
+      box-shadow: 0 14px 24px rgba(255, 107, 61, 0.18);
+    }
+
+    .workspace-button.secondary,
+    .catalog-chip {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 20px rgba(21, 50, 75, 0.06);
+    }
+
+    .workspace-button.subtle {
+      background: rgba(244, 249, 255, 0.92);
+      color: var(--blue);
+      border: 1px solid rgba(15, 115, 184, 0.12);
+    }
+
+    .workspace-button:disabled,
+    .catalog-chip:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .playlist-list,
+    .favorite-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .playlist-row,
+    .favorite-card {
+      padding: 16px;
+    }
+
+    .favorite-grid {
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    }
+
+    .favorite-card {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .site-footer {
       padding: 32px 0 40px;
       color: #5e778b;
@@ -875,6 +1030,62 @@
       >
     </div>
 
+    <div class="workspace-grid" ng-if="categories.length">
+      <article class="workspace-panel">
+        <span class="workspace-tag">Teacher playlist</span>
+        <h3>Today&apos;s classroom playlist</h3>
+        <p>Build a simple run-of-show for this device and launch the next lesson in one tap.</p>
+
+        <div class="workspace-empty" ng-if="!workspace.playlist.length">
+          Add lessons from the library below to create a classroom playlist.
+        </div>
+
+        <div class="workspace-next" ng-if="workspace.playlist.length">
+          <strong>{{workspace.playlist[0].title}}</strong>
+          <span>{{workspace.playlist[0].category}} / {{workspace.playlist[0].subcategory}}</span>
+          <span>{{workspace.playlist[0].description}}</span>
+          <div class="workspace-actions">
+            <a class="workspace-button primary" ng-href="{{workspace.playlist[0].url}}">Start next lesson</a>
+            <button class="workspace-button subtle" type="button" ng-click="cyclePlaylist()">Move to end</button>
+            <button class="workspace-button secondary" type="button" ng-click="markNextLessonDone()">Mark done</button>
+          </div>
+        </div>
+
+        <div class="playlist-list" ng-if="workspace.playlist.length">
+          <div class="playlist-row" ng-repeat="lesson in workspace.playlist track by lesson.slug">
+            <strong>{{lesson.title}}</strong>
+            <span>{{lesson.category}} / {{lesson.subcategory}}</span>
+            <div class="playlist-actions">
+              <button class="catalog-chip" type="button" ng-click="movePlaylistItem(lesson.slug, -1)" ng-disabled="$first">Up</button>
+              <button class="catalog-chip" type="button" ng-click="movePlaylistItem(lesson.slug, 1)" ng-disabled="$last">Down</button>
+              <button class="catalog-chip" type="button" ng-click="removePlaylistItem(lesson.slug)">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-actions" ng-if="workspace.playlist.length">
+          <button class="workspace-button secondary" type="button" ng-click="clearPlaylist()">Clear playlist</button>
+        </div>
+      </article>
+
+      <article class="workspace-panel">
+        <span class="workspace-tag">Favorites</span>
+        <h3>Favorite lessons</h3>
+        <p>Keep your most-used lessons ready for repeated classroom use.</p>
+
+        <div class="workspace-empty" ng-if="!workspace.favorites.length">
+          Mark lessons as favorites from the library to create a quick-start shelf.
+        </div>
+
+        <div class="favorite-grid" ng-if="workspace.favorites.length">
+          <a class="favorite-card" ng-repeat="lesson in workspace.favorites track by lesson.slug" ng-href="{{lesson.url}}">
+            <strong>{{lesson.title}}</strong>
+            <span>{{lesson.category}} / {{lesson.subcategory}}</span>
+          </a>
+        </div>
+      </article>
+    </div>
+
     <div class="catalog-category" ng-if="!categories.length">
       <div class="catalog-empty">Validating your school access and loading the lesson library.</div>
     </div>
@@ -893,10 +1104,28 @@
       >
         <h4>{{subcategory.subcategory_title}}</h4>
         <div class="catalog-grid">
-          <a class="catalog-item" ng-repeat="item in subcategory.items | filter: { t: search }" ng-href="{{item.l}}">
+          <article class="catalog-item" ng-repeat="item in subcategory.items | filter: { t: search }">
             <strong>{{item.t}}</strong>
             <span>{{item.d}}</span>
-          </a>
+            <div class="catalog-item-actions">
+              <button
+                class="catalog-chip"
+                type="button"
+                ng-click="toggleFavoriteFromCatalog(item, category.category_title, subcategory.subcategory_title)"
+              >
+                {{isFavoriteItem(item) ? 'Unfavorite' : 'Favorite'}}
+              </button>
+              <button
+                class="catalog-chip"
+                type="button"
+                ng-click="addPlaylistFromCatalog(item, category.category_title, subcategory.subcategory_title)"
+                ng-disabled="isInPlaylist(item)"
+              >
+                {{isInPlaylist(item) ? 'In playlist' : 'Add to playlist'}}
+              </button>
+            </div>
+            <a class="catalog-open" ng-href="{{item.l}}">Open lesson</a>
+          </article>
         </div>
       </div>
     </section>
@@ -928,11 +1157,115 @@
     });
 
     app.controller("landingCtrl", function($scope) {
+      var utils = window.AFORAPPLE_UTILS || {};
+
       $scope.search = "";
       $scope.categories = [];
+      $scope.workspace = {
+        favorites: [],
+        playlist: []
+      };
+
+      $scope.makeWorkspaceLesson = function(item, categoryTitle, subcategoryTitle) {
+        if (utils.normalizeLessonItem) {
+          return utils.normalizeLessonItem({
+            title: item.t,
+            url: item.l,
+            description: item.d,
+            category: categoryTitle,
+            subcategory: subcategoryTitle
+          });
+        }
+
+        return {
+          slug: (item.l || item.t || "").replace(/^\//, "").replace(/\.html$/, "").toLowerCase(),
+          title: item.t,
+          url: item.l,
+          description: item.d,
+          category: categoryTitle,
+          subcategory: subcategoryTitle
+        };
+      };
+
+      $scope.syncWorkspace = function() {
+        if (utils.getTeacherWorkspace) {
+          var workspace = utils.getTeacherWorkspace();
+          $scope.workspace = {
+            favorites: workspace.favorites || [],
+            playlist: workspace.playlist || []
+          };
+        }
+      };
+
+      $scope.isFavoriteItem = function(item) {
+        var lesson = $scope.makeWorkspaceLesson(item, "", "");
+        if (!lesson) {
+          return false;
+        }
+        return utils.isFavoriteLesson ? utils.isFavoriteLesson(lesson.slug) : false;
+      };
+
+      $scope.isInPlaylist = function(item) {
+        var lesson = $scope.makeWorkspaceLesson(item, "", "");
+        if (!lesson) {
+          return false;
+        }
+        return $scope.workspace.playlist.some(function(entry) {
+          return entry.slug === lesson.slug;
+        });
+      };
+
+      $scope.toggleFavoriteFromCatalog = function(item, categoryTitle, subcategoryTitle) {
+        if (utils.toggleFavoriteLesson) {
+          utils.toggleFavoriteLesson($scope.makeWorkspaceLesson(item, categoryTitle, subcategoryTitle));
+          $scope.syncWorkspace();
+        }
+      };
+
+      $scope.addPlaylistFromCatalog = function(item, categoryTitle, subcategoryTitle) {
+        if (utils.addPlaylistLesson) {
+          utils.addPlaylistLesson($scope.makeWorkspaceLesson(item, categoryTitle, subcategoryTitle));
+          $scope.syncWorkspace();
+        }
+      };
+
+      $scope.removePlaylistItem = function(slug) {
+        if (utils.removePlaylistLesson) {
+          utils.removePlaylistLesson(slug);
+          $scope.syncWorkspace();
+        }
+      };
+
+      $scope.movePlaylistItem = function(slug, direction) {
+        if (utils.movePlaylistLesson) {
+          utils.movePlaylistLesson(slug, direction);
+          $scope.syncWorkspace();
+        }
+      };
+
+      $scope.cyclePlaylist = function() {
+        if (utils.cyclePlaylist) {
+          utils.cyclePlaylist();
+          $scope.syncWorkspace();
+        }
+      };
+
+      $scope.markNextLessonDone = function() {
+        if ($scope.workspace.playlist.length) {
+          $scope.removePlaylistItem($scope.workspace.playlist[0].slug);
+        }
+      };
+
+      $scope.clearPlaylist = function() {
+        if (utils.clearPlaylist) {
+          utils.clearPlaylist();
+          $scope.syncWorkspace();
+        }
+      };
 
       $scope.initiate = function(data) {
         $scope.categories = data || [];
+        $scope.syncWorkspace();
         document.body.classList.add("catalog-ready");
       };
     });

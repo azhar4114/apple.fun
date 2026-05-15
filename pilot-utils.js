@@ -3,6 +3,7 @@
   var TRACKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzCva51LDrstiplGk68iIy-ETx4OCoBo2bzqrRyGzndH4V3ypZz8av46bT5pxlXEHz7/exec";
   var REPORT_STORAGE_KEY = "aforapple-pilot-report";
   var ACCESS_STORAGE_KEY = "aforapple-access-state";
+  var TEACHER_WORKSPACE_KEY = "aforapple-teacher-workspace";
 
   function getDeviceId() {
     var deviceId = localStorage.getItem("deviceId");
@@ -43,6 +44,139 @@
       deviceId: getDeviceId(),
       updatedAt: nowIso()
     });
+  }
+
+  function normalizeLessonItem(item) {
+    if (!item) {
+      return null;
+    }
+
+    var url = item.url || item.l || "";
+    var title = item.title || item.t || "";
+    var description = item.description || item.d || "";
+    var category = item.category || "";
+    var subcategory = item.subcategory || "";
+    var slug = item.slug || getLessonSlug(url || title);
+
+    if (!slug || !title || !url) {
+      return null;
+    }
+
+    return {
+      slug: slug,
+      title: title,
+      url: url,
+      description: description,
+      category: category,
+      subcategory: subcategory
+    };
+  }
+
+  function getTeacherWorkspace() {
+    var workspace = parseJson(localStorage.getItem(TEACHER_WORKSPACE_KEY), null);
+    if (workspace) {
+      workspace.favorites = Array.isArray(workspace.favorites) ? workspace.favorites : [];
+      workspace.playlist = Array.isArray(workspace.playlist) ? workspace.playlist : [];
+      return workspace;
+    }
+
+    return {
+      favorites: [],
+      playlist: [],
+      updatedAt: nowIso()
+    };
+  }
+
+  function saveTeacherWorkspace(workspace) {
+    workspace.updatedAt = nowIso();
+    localStorage.setItem(TEACHER_WORKSPACE_KEY, JSON.stringify(workspace));
+    return workspace;
+  }
+
+  function hasLesson(list, slug) {
+    return list.some(function(item) {
+      return item && item.slug === slug;
+    });
+  }
+
+  function toggleFavoriteLesson(item) {
+    var normalized = normalizeLessonItem(item);
+    var workspace = getTeacherWorkspace();
+    if (!normalized) {
+      return workspace;
+    }
+
+    if (hasLesson(workspace.favorites, normalized.slug)) {
+      workspace.favorites = workspace.favorites.filter(function(entry) {
+        return entry.slug !== normalized.slug;
+      });
+    } else {
+      workspace.favorites.unshift(normalized);
+    }
+
+    return saveTeacherWorkspace(workspace);
+  }
+
+  function addPlaylistLesson(item) {
+    var normalized = normalizeLessonItem(item);
+    var workspace = getTeacherWorkspace();
+    if (!normalized) {
+      return workspace;
+    }
+
+    if (!hasLesson(workspace.playlist, normalized.slug)) {
+      workspace.playlist.push(normalized);
+    }
+
+    return saveTeacherWorkspace(workspace);
+  }
+
+  function removePlaylistLesson(slug) {
+    var workspace = getTeacherWorkspace();
+    workspace.playlist = workspace.playlist.filter(function(item) {
+      return item.slug !== slug;
+    });
+    return saveTeacherWorkspace(workspace);
+  }
+
+  function movePlaylistLesson(slug, direction) {
+    var workspace = getTeacherWorkspace();
+    var index = workspace.playlist.findIndex(function(item) {
+      return item.slug === slug;
+    });
+
+    if (index === -1) {
+      return workspace;
+    }
+
+    var targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= workspace.playlist.length) {
+      return workspace;
+    }
+
+    var temp = workspace.playlist[targetIndex];
+    workspace.playlist[targetIndex] = workspace.playlist[index];
+    workspace.playlist[index] = temp;
+    return saveTeacherWorkspace(workspace);
+  }
+
+  function cyclePlaylist() {
+    var workspace = getTeacherWorkspace();
+    if (workspace.playlist.length > 1) {
+      workspace.playlist.push(workspace.playlist.shift());
+      return saveTeacherWorkspace(workspace);
+    }
+    return workspace;
+  }
+
+  function clearPlaylist() {
+    var workspace = getTeacherWorkspace();
+    workspace.playlist = [];
+    return saveTeacherWorkspace(workspace);
+  }
+
+  function isFavoriteLesson(slug) {
+    return hasLesson(getTeacherWorkspace().favorites, slug);
   }
 
   function setAccessState(nextState) {
@@ -304,10 +438,20 @@
   window.AFORAPPLE_UTILS = {
     getDeviceId: getDeviceId,
     getLessonSlug: getLessonSlug,
+    normalizeLessonItem: normalizeLessonItem,
     getAccessState: getAccessState,
     setAccessState: setAccessState,
     getReport: getReport,
     saveReport: saveReport,
+    getTeacherWorkspace: getTeacherWorkspace,
+    saveTeacherWorkspace: saveTeacherWorkspace,
+    toggleFavoriteLesson: toggleFavoriteLesson,
+    addPlaylistLesson: addPlaylistLesson,
+    removePlaylistLesson: removePlaylistLesson,
+    movePlaylistLesson: movePlaylistLesson,
+    cyclePlaylist: cyclePlaylist,
+    clearPlaylist: clearPlaylist,
+    isFavoriteLesson: isFavoriteLesson,
     renderAccessBadge: renderAccessBadge,
     recordLessonUsage: recordLessonUsage,
     exportReportAsJson: exportReportAsJson,
