@@ -1,6 +1,6 @@
 (function() {
   var FORM_RESPONSE_URL = "https://docs.google.com/forms/d/e/1FAIpQLScxYEEL2W9dsYkTU1KmQ9h8mmRQB-az03m8Yo-XeKN6wd06fA/formResponse";
-  var TRACKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzCva51LDrstiplGk68iIy-ETx4OCoBo2bzqrRyGzndH4V3ypZz8av46bT5pxlXEHz7/exec";
+  var TRACKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbyMa7q95YC4y3A6dZgTSG90YUWJMCKebImZqZnk3FxcrtDkltif2KNDQFKbpFVWnSQp/exec";
   var REPORT_STORAGE_KEY = "aforapple-pilot-report";
   var ACCESS_STORAGE_KEY = "aforapple-access-state";
   var TEACHER_WORKSPACE_KEY = "aforapple-teacher-workspace";

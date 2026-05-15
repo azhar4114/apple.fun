@@ -18,6 +18,7 @@ const AFORAPPLE_SAMPLE_PATHS = [
 
 const AFORAPPLE_ACCESS_STORAGE_KEY = "aforapple-access-state";
 const AFORAPPLE_REPORT_STORAGE_KEY = "aforapple-pilot-report";
+const AFORAPPLE_WORKSPACE_STORAGE_KEY = "aforapple-teacher-workspace";
 const AFORAPPLE_CACHE_TTL = 19 * 60 * 60 * 1000;
 
 function setCookie(name, value, days) {
@@ -40,6 +41,10 @@ function getCookie(name) {
     }
   }
   return null;
+}
+
+function clearCookie(name) {
+  document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
 }
 
 function getNormalizedPath() {
@@ -345,15 +350,16 @@ function passData(resp) {
   }
 }
 
-function getCacheKeyFromUrl(url) {
+function getCacheKeyFromUrl(url, scopeKey) {
   const match = url.match(/\/([\w-]+)(?:\.html)?(?:[#?].*)?$/);
+  const scope = scopeKey ? String(scopeKey).trim().toLowerCase() : "public";
   if (!match || !match[1]) {
-    return "index";
+    return "aforapple-cache:index:" + scope;
   }
   if (match[1] === "aforapple.fun" || match[1] === "www") {
-    return "index";
+    return "aforapple-cache:index:" + scope;
   }
-  return match[1];
+  return "aforapple-cache:" + match[1] + ":" + scope;
 }
 
 function validateKeyWithRateLimit(key, ipAddress) {
@@ -364,7 +370,7 @@ function validateKeyWithRateLimit(key, ipAddress) {
   data.append("ip", ipAddress);
   data.append("url", window.location.href);
 
-  const cacheKey = getCacheKeyFromUrl(window.location.href);
+  const cacheKey = getCacheKeyFromUrl(window.location.href, key);
   const cachedData = localStorage.getItem(cacheKey);
   const parsedCache = parseJson(cachedData, null);
   const now = new Date().getTime();
@@ -436,8 +442,129 @@ function checkKeyValidation() {
   });
 }
 
+function clearAforappleSessionStorage() {
+  localStorage.removeItem(AFORAPPLE_ACCESS_STORAGE_KEY);
+  localStorage.removeItem(AFORAPPLE_REPORT_STORAGE_KEY);
+  localStorage.removeItem(AFORAPPLE_WORKSPACE_STORAGE_KEY);
+
+  const cacheKeys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.indexOf("aforapple-cache:") === 0) {
+      cacheKeys.push(key);
+    }
+  }
+
+  cacheKeys.forEach(function(key) {
+    localStorage.removeItem(key);
+  });
+}
+
+function setActivationMessage(message, tone) {
+  const host = document.getElementById("activation-message");
+  if (!host) {
+    return;
+  }
+
+  host.textContent = message || "";
+  if (tone) {
+    host.setAttribute("data-tone", tone);
+  } else {
+    host.removeAttribute("data-tone");
+  }
+}
+
+function syncActivationUi() {
+  const resetButton = document.getElementById("activation-reset-button");
+  const input = document.getElementById("activation-key-input");
+  const hasKey = !!getCookie("activationKey");
+
+  if (resetButton) {
+    resetButton.style.display = hasKey ? "inline-flex" : "none";
+  }
+
+  if (input && hasKey) {
+    input.placeholder = "Replace saved school key";
+  }
+}
+
+function activateSchoolKey(event) {
+  if (event && typeof event.preventDefault === "function") {
+    event.preventDefault();
+  }
+
+  const input = document.getElementById("activation-key-input");
+  const button = document.getElementById("activation-submit-button");
+  const key = input ? String(input.value || "").trim() : "";
+
+  if (!key) {
+    setActivationMessage("Enter a school key to activate this device.", "error");
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Activating...";
+  }
+  setActivationMessage("Checking your school key...", "");
+
+  getUserIP(function(ip) {
+    const request = new URLSearchParams();
+    request.append("key", key);
+    request.append("action", "activate");
+    request.append("deviceId", getDeviceId());
+    request.append("ip", ip || "");
+    request.append("url", window.location.href);
+
+    sendReq(request, function(resp) {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Activate";
+      }
+
+      if (resp && resp.status === "success") {
+        clearAforappleSessionStorage();
+        setCookie("activationKey", key, 30);
+        setActivationMessage("School key accepted. Activating this device and opening the full lesson library...", "success");
+        window.setTimeout(function() {
+          window.location.reload();
+        }, 300);
+        return;
+      }
+
+      setActivationMessage("That key could not be validated. Check the key and try again.", "error");
+    });
+  });
+}
+
+function resetActivation() {
+  clearCookie("activationKey");
+  clearAforappleSessionStorage();
+  setActivationMessage("This device is back in public sample mode.", "success");
+  syncActivationUi();
+
+  if (document.body.classList.contains("catalog-ready")) {
+    window.location.href = "/index.html";
+    return;
+  }
+
+  const input = document.getElementById("activation-key-input");
+  if (input) {
+    input.value = "";
+    input.placeholder = "Enter school key";
+  }
+}
+
+function initializeActivationForm() {
+  const form = document.getElementById("activation-form");
+  if (form) {
+    form.addEventListener("submit", activateSchoolKey);
+  }
+  syncActivationUi();
+}
+
 function sendReq(req, callback) {
-  const url = "https://script.google.com/macros/s/AKfycbzCva51LDrstiplGk68iIy-ETx4OCoBo2bzqrRyGzndH4V3ypZz8av46bT5pxlXEHz7/exec";
+  const url = "https://script.google.com/macros/s/AKfycbyMa7q95YC4y3A6dZgTSG90YUWJMCKebImZqZnk3FxcrtDkltif2KNDQFKbpFVWnSQp/exec";
   const date = new Date();
   req.append(
     "TS",
@@ -521,6 +648,7 @@ window.onload = function() {
   } else {
     checkKeyValidation();
   }
+  initializeActivationForm();
   initializeSettings();
 };
 

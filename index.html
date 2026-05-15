@@ -619,6 +619,76 @@
       box-shadow: 0 14px 24px rgba(255, 107, 61, 0.18);
     }
 
+    .activation-card {
+      margin-top: 10px;
+      padding: 20px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 251, 255, 0.96));
+      border: 1px solid rgba(15, 115, 184, 0.14);
+    }
+
+    .activation-card h3 {
+      margin: 10px 0 8px;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .activation-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .activation-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .activation-input {
+      flex: 1 1 220px;
+      border-radius: 16px;
+      border: 1px solid rgba(21, 50, 75, 0.16);
+      padding: 15px 16px;
+      font: inherit;
+      font-size: 17px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .activation-submit {
+      min-width: 150px;
+    }
+
+    .activation-message {
+      min-height: 24px;
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .activation-message[data-tone="success"] {
+      color: var(--green);
+    }
+
+    .activation-message[data-tone="error"] {
+      color: #b33b18;
+    }
+
+    .activation-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
     .workspace-button.secondary,
     .catalog-chip {
       background: #fff;
@@ -757,6 +827,7 @@
   <header class="site-header">
     <div class="brand">Aforapple.fun</div>
     <nav class="site-nav">
+      <a href="#activate-device">Activate Key</a>
       <a href="#sample-lessons">Sample Lessons</a>
       <a href="#how-it-works">How Pilot Works</a>
       <a href="#pricing">Pricing</a>
@@ -786,7 +857,7 @@
           </p>
         </article>
 
-        <aside class="panel">
+        <aside class="panel" id="activate-device">
           <span class="eyebrow">Built for school admins</span>
           <p>
             The public site now does one job clearly: explain the product, show the best lessons fast, and help a school
@@ -814,6 +885,34 @@
             If your school already has a key, the full lesson library loads automatically on this home page after
             validation.
           </p>
+
+          <div class="activation-card">
+            <span class="workspace-tag">Already have a school key?</span>
+            <h3>Activate this device</h3>
+            <p>Enter your school pilot or licensed key to unlock the full lesson library on this device now.</p>
+            <form id="activation-form">
+              <label class="activation-label" for="activation-key-input">School key</label>
+              <div class="activation-row">
+                <input
+                  class="activation-input"
+                  id="activation-key-input"
+                  name="activation_key"
+                  type="text"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  placeholder="Enter school key"
+                >
+                <button class="button primary activation-submit" type="submit" id="activation-submit-button">Activate</button>
+              </div>
+            </form>
+            <div class="activation-message" id="activation-message" aria-live="polite"></div>
+            <div class="activation-actions">
+              <button class="workspace-button secondary" type="button" id="activation-reset-button" onclick="resetActivation()">
+                Reset this device
+              </button>
+            </div>
+          </div>
         </aside>
       </section>
 
@@ -1018,6 +1117,7 @@
       <div class="catalog-actions">
         <a class="button secondary" href="pilot-report.html">Pilot Report</a>
         <a class="button secondary" href="teacher-guide.html">Teacher Guide</a>
+        <button class="button secondary" type="button" onclick="resetActivation()">Reset device key</button>
       </div>
     </div>
 
