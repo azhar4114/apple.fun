@@ -483,6 +483,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      height: 100%;
       padding: 18px;
       border-radius: 18px;
       background: rgba(244, 249, 255, 0.84);
@@ -500,6 +501,7 @@
     .catalog-item span {
       color: var(--ink-soft);
       line-height: 1.6;
+      flex: 1 1 auto;
     }
 
     .catalog-empty {
@@ -591,6 +593,10 @@
       margin-top: 14px;
     }
 
+    .catalog-item-actions {
+      margin-top: auto;
+    }
+
     .workspace-button,
     .catalog-chip,
     .catalog-open {
@@ -617,6 +623,15 @@
       background: linear-gradient(135deg, var(--orange), var(--orange-deep));
       color: #fff;
       box-shadow: 0 14px 24px rgba(255, 107, 61, 0.18);
+    }
+
+    .catalog-chip {
+      flex: 1 1 150px;
+    }
+
+    .catalog-open {
+      width: 100%;
+      margin-top: 14px;
     }
 
     .activation-card {
@@ -827,14 +842,21 @@
   <header class="site-header">
     <div class="brand">Aforapple.fun</div>
     <nav class="site-nav">
-      <a href="#activate-device">Activate Key</a>
-      <a href="#sample-lessons">Sample Lessons</a>
-      <a href="#how-it-works">How Pilot Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#library-overview">Library Overview</a>
+      <a href="#activate-device" data-public-label="Activate Key" data-public-href="#activate-device" data-catalog-label="Lesson Library" data-catalog-href="#catalog-home">Activate Key</a>
+      <a href="#sample-lessons" data-public-label="Sample Lessons" data-public-href="#sample-lessons" data-catalog-label="Search" data-catalog-href="#catalog-search">Sample Lessons</a>
+      <a href="#how-it-works" data-public-label="How Pilot Works" data-public-href="#how-it-works" data-catalog-label="Teacher Tools" data-catalog-href="#catalog-workspace">How Pilot Works</a>
+      <a href="#pricing" data-public-label="Pricing" data-public-href="#pricing" data-catalog-label="Playlist" data-catalog-href="#playlist-panel">Pricing</a>
+      <a href="#library-overview" data-public-label="Library Overview" data-public-href="#library-overview" data-catalog-label="All Lessons" data-catalog-href="#lesson-catalog">Library Overview</a>
     </nav>
     <div class="status-badge" data-access-badge-target></div>
-    <a class="mini-cta" href="contact.html">Request a 14-Day School Pilot</a>
+    <a
+      class="mini-cta"
+      href="contact.html"
+      data-public-label="Request a 14-Day School Pilot"
+      data-public-href="contact.html"
+      data-catalog-label="Open Pilot Report"
+      data-catalog-href="pilot-report.html"
+    >Request a 14-Day School Pilot</a>
   </header>
 
   <main class="marketing">
@@ -1105,7 +1127,7 @@
 
   <section class="catalog-shell" id="controller" ng-controller="landingCtrl">
     <div id="lesson-library"></div>
-    <div class="catalog-header">
+    <div class="catalog-header" id="catalog-home">
       <div>
         <span class="eyebrow">Activated school access</span>
         <h2>Your full lesson library is active on this device</h2>
@@ -1121,7 +1143,7 @@
       </div>
     </div>
 
-    <div class="catalog-toolbar">
+    <div class="catalog-toolbar" id="catalog-search">
       <input
         type="search"
         ng-model="search"
@@ -1130,8 +1152,8 @@
       >
     </div>
 
-    <div class="workspace-grid" ng-if="categories.length">
-      <article class="workspace-panel">
+    <div class="workspace-grid" id="catalog-workspace" ng-if="categories.length">
+      <article class="workspace-panel" id="playlist-panel">
         <span class="workspace-tag">Teacher playlist</span>
         <h3>Today&apos;s classroom playlist</h3>
         <p>Build a simple run-of-show for this device and launch the next lesson in one tap.</p>
@@ -1168,7 +1190,7 @@
         </div>
       </article>
 
-      <article class="workspace-panel">
+      <article class="workspace-panel" id="favorites-panel">
         <span class="workspace-tag">Favorites</span>
         <h3>Favorite lessons</h3>
         <p>Keep your most-used lessons ready for repeated classroom use.</p>
@@ -1198,7 +1220,7 @@
       class="catalog-category"
       ng-repeat="category in categories track by category.category_title"
       ng-if="matchesCategory(category)"
-      id="{{category.category_title | slugify}}"
+      ng-attr-id="{{$first ? 'lesson-catalog' : (category.category_title | slugify)}}"
     >
       <h3>{{category.category_title}}</h3>
       <p>{{category.category_description}}</p>
@@ -1261,6 +1283,24 @@
         return input.replace(/\s+/g, "-").toLowerCase();
       };
     });
+
+    function updateHeaderLinksForCatalog(isCatalogReady) {
+      document.querySelectorAll(".site-nav a, .mini-cta").forEach(function(link) {
+        var labelAttr = isCatalogReady ? "data-catalog-label" : "data-public-label";
+        var hrefAttr = isCatalogReady ? "data-catalog-href" : "data-public-href";
+        var nextLabel = link.getAttribute(labelAttr);
+        var nextHref = link.getAttribute(hrefAttr);
+
+        if (nextLabel) {
+          link.textContent = nextLabel;
+        }
+        if (nextHref) {
+          link.setAttribute("href", nextHref);
+        }
+      });
+    }
+
+    updateHeaderLinksForCatalog(false);
 
     app.controller("landingCtrl", function($scope) {
       var utils = window.AFORAPPLE_UTILS || {};
@@ -1447,6 +1487,7 @@
         $scope.categories = data || [];
         $scope.syncWorkspace();
         document.body.classList.add("catalog-ready");
+        updateHeaderLinksForCatalog(true);
       };
     });
 

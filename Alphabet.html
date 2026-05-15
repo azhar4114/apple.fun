@@ -30,14 +30,15 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
   <style>
     #alphabet {
-      grid-template-columns: repeat(auto-fit, minmax(24vh, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(22vh, 1fr));
       gap: 3vh;
       align-items: stretch;
     }
 
     .button {
-      min-height: 34vh;
-      padding: 3vh;
+      min-height: 28vh;
+      aspect-ratio: 1 / 1.08;
+      padding: 2.6vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,11 +91,11 @@
 
     @media (max-width: 900px) {
       #alphabet {
-        grid-template-columns: repeat(auto-fit, minmax(20vh, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
       }
 
       .button {
-        min-height: 26vh;
+        min-height: 22vh;
       }
     }
   </style>
