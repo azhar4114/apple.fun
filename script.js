@@ -7,11 +7,9 @@ var an = 0,
 	function attachListeners(){
     cards = document.querySelectorAll('.button');
     $(cards).attr("tabindex", "0");
-    console.log($(".buttons"), cards)
     $(".button").click(function() {
         if (!aud.paused)
             return;
-        console.log(anim[an], an, this);
         $(this).addClass(anim[an]);
         var ind = $(this).attr('data');
         aud.currentTime = audTime[ind].s;

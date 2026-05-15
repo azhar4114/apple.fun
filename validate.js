@@ -525,17 +525,20 @@ window.onload = function() {
 };
 
 const settings = {
-  backgroundEnabled: false,
-  animationsEnabled: false
+  backgroundEnabled: true,
+  animationsEnabled: true,
+  confettiEnabled: true,
+  bgAnimationEnabled: true
 };
 
 function initializeSettings() {
   const storedSettings = parseJson(localStorage.getItem("siteSettings"), null);
   if (storedSettings) {
-    settings.backgroundEnabled = !!storedSettings.backgroundEnabled;
-    settings.animationsEnabled = !!storedSettings.animationsEnabled;
-    settings.confettiEnabled = !!storedSettings.confettiEnabled;
-    settings.bgAnimationEnabled = !!storedSettings.bgAnimationEnabled;
+    ["backgroundEnabled", "animationsEnabled", "confettiEnabled", "bgAnimationEnabled"].forEach(function(key) {
+      if (typeof storedSettings[key] === "boolean") {
+        settings[key] = storedSettings[key];
+      }
+    });
   }
 
   const backgroundToggle = document.getElementById("toggle-background");

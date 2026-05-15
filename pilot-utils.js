@@ -289,7 +289,7 @@
         body: body
       }).catch(function() {});
     } catch (error) {
-      console.log("Tracking skipped", error);
+      return;
     }
   }
 
