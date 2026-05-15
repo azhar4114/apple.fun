@@ -1190,9 +1190,14 @@
       <div class="catalog-empty">Validating your school access and loading the lesson library.</div>
     </div>
 
+    <div class="catalog-category" ng-if="categories.length && !hasSearchResults()">
+      <div class="catalog-empty">No lessons matched that search yet. Try a lesson title, topic, or category name.</div>
+    </div>
+
     <section
       class="catalog-category"
-      ng-repeat="category in categories | filter: { category_title: search, subcategories: { items: { t: search } } }"
+      ng-repeat="category in categories track by category.category_title"
+      ng-if="matchesCategory(category)"
       id="{{category.category_title | slugify}}"
     >
       <h3>{{category.category_title}}</h3>
@@ -1200,11 +1205,12 @@
 
       <div
         class="catalog-subcategory"
-        ng-repeat="subcategory in category.subcategories | filter: { subcategory_title: search, items: { t: search } }"
+        ng-repeat="subcategory in category.subcategories track by subcategory.subcategory_title"
+        ng-if="matchesSubcategory(category, subcategory)"
       >
         <h4>{{subcategory.subcategory_title}}</h4>
         <div class="catalog-grid">
-          <article class="catalog-item" ng-repeat="item in subcategory.items | filter: { t: search }">
+          <article class="catalog-item" ng-repeat="item in visibleItems(category, subcategory) track by item.l">
             <strong>{{item.t}}</strong>
             <span>{{item.d}}</span>
             <div class="catalog-item-actions">
@@ -1264,6 +1270,23 @@
       $scope.workspace = {
         favorites: [],
         playlist: []
+      };
+
+      $scope.getSearchQuery = function() {
+        return String($scope.search || "").trim().toLowerCase();
+      };
+
+      $scope.matchesSearchText = function() {
+        var query = $scope.getSearchQuery();
+        var parts = Array.prototype.slice.call(arguments);
+
+        if (!query) {
+          return true;
+        }
+
+        return parts.some(function(part) {
+          return String(part || "").toLowerCase().indexOf(query) !== -1;
+        });
       };
 
       $scope.makeWorkspaceLesson = function(item, categoryTitle, subcategoryTitle) {
@@ -1361,6 +1384,63 @@
           utils.clearPlaylist();
           $scope.syncWorkspace();
         }
+      };
+
+      $scope.matchesItem = function(category, subcategory, item) {
+        return $scope.matchesSearchText(
+          item && item.t,
+          item && item.d,
+          item && item.l,
+          category && category.category_title,
+          subcategory && subcategory.subcategory_title
+        );
+      };
+
+      $scope.visibleItems = function(category, subcategory) {
+        var items = subcategory && Array.isArray(subcategory.items) ? subcategory.items : [];
+        var query = $scope.getSearchQuery();
+
+        if (!query) {
+          return items;
+        }
+
+        if (
+          $scope.matchesSearchText(
+            category && category.category_title,
+            category && category.category_description,
+            subcategory && subcategory.subcategory_title
+          )
+        ) {
+          return items;
+        }
+
+        return items.filter(function(item) {
+          return $scope.matchesItem(category, subcategory, item);
+        });
+      };
+
+      $scope.matchesSubcategory = function(category, subcategory) {
+        if (!$scope.getSearchQuery()) {
+          return true;
+        }
+
+        return $scope.visibleItems(category, subcategory).length > 0;
+      };
+
+      $scope.matchesCategory = function(category) {
+        if (!$scope.getSearchQuery()) {
+          return true;
+        }
+
+        return (category.subcategories || []).some(function(subcategory) {
+          return $scope.matchesSubcategory(category, subcategory);
+        });
+      };
+
+      $scope.hasSearchResults = function() {
+        return ($scope.categories || []).some(function(category) {
+          return $scope.matchesCategory(category);
+        });
       };
 
       $scope.initiate = function(data) {
