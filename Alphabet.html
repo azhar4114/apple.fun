@@ -30,12 +30,37 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
   <style>
     #alphabet {
-      grid-template-columns: repeat(auto-fit, minmax(22vh, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(24vh, 1fr));
+      gap: 3vh;
+      align-items: stretch;
     }
 
     .button {
-      padding: 4vh 6vh;
-      font-size: 10vh;
+      min-height: 34vh;
+      padding: 3vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alphabet-pair {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 0.2em;
+      width: 100%;
+      min-height: 1em;
+      white-space: nowrap;
+      font-size: clamp(8vh, 9vw, 10vh);
+      line-height: 1;
+    }
+
+    .alphabet-glyph {
+      display: block;
+      flex: 0 0 auto;
+      min-width: 0.55em;
+      text-align: center;
     }
 
     .sample-banner {
@@ -61,6 +86,16 @@
 
     body {
       background-image: url(images/space3.jpeg);
+    }
+
+    @media (max-width: 900px) {
+      #alphabet {
+        grid-template-columns: repeat(auto-fit, minmax(20vh, 1fr));
+      }
+
+      .button {
+        min-height: 26vh;
+      }
     }
   </style>
 </head>
@@ -88,9 +123,9 @@
     <loader id="loader"></loader>
     <div id="alphabet">
       <div class="button ng-cloak" ng-repeat="l in chars" data="{{$index}}">
-        <div>
-          <span ng-show="ctrl.showCaps">{{l[0]}}</span>
-          <span ng-show="ctrl.showSmall">{{l[1]}}</span>
+        <div class="alphabet-pair">
+          <span class="alphabet-glyph" ng-show="ctrl.showCaps">{{l[0]}}</span>
+          <span class="alphabet-glyph" ng-show="ctrl.showSmall">{{l[1]}}</span>
         </div>
       </div>
     </div>
