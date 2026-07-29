@@ -18,9 +18,9 @@ body, a, button {
 }
 
 .header, header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 15, 30, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 3vh;
@@ -28,7 +28,7 @@ body, a, button {
     margin: 4vh auto;
     width: 90%;
     max-width: 650px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
 .header h1, header h1, h1 {
@@ -95,10 +95,10 @@ nav a:hover {
 }
 
 .button {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(10, 15, 30, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
     padding: 3vh;
     font-size: 5vh;
@@ -109,8 +109,8 @@ nav a:hover {
     align-items: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     min-width: 10vh;
     position: relative;
     text-align: center;
@@ -140,9 +140,9 @@ nav a:hover {
 }
 
 .toggle-button {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(10, 15, 30, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 12px 24px;
     border-radius: 30px;
@@ -150,7 +150,7 @@ nav a:hover {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .toggle-button:hover {
@@ -174,10 +174,10 @@ nav a:hover {
     align-content: center;
     justify-content: center;
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(10, 15, 30, 0.55);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
 }
 
@@ -237,4 +237,21 @@ nav a:hover {
 
 .cursor-hide {
     cursor: none;
+}
+
+/* Category overrides for fruits/vegetables */
+.category {
+    padding: 20px;
+}
+.category h1 {
+    color: #fff;
+    background: linear-gradient(40deg, rgba(255,255,255,0.2), transparent);
+    padding: 10px 40px;
+    font-size: 3.5vh;
+    text-align: left;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+.category h1:hover, .category h1:focus, .category h1.autoplay {
+    transform: scale(1.02);
 }

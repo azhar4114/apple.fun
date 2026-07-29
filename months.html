@@ -5,28 +5,37 @@
 	<link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	  <title>Learn Months of Year</title>
-	  
-    <style>
-		#alphabet{
-		    grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
-		}
-		
-	    .button  {
-    padding: 2vh 3vh;
-    font-size: 4vh;
-    width: 22vh;
-    height: 22vh;
-    text-align: center;
-    align-items: center;
-    place-content: center;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Learn Months of Year</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/space2.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
 
-body {
-	background-image: url(images/space2.jpeg);
-}
-    </style>
+    #alphabet {
+      grid-template-columns: repeat(auto-fit, minmax(28vh, 1fr));
+      gap: 3vh;
+      padding: 0 4vh;
+    }
+    
+    .button {
+      padding: 3vh;
+      font-size: 3.5vh;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      text-transform: capitalize;
+      height: 18vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
   </head>
 <body ng-app="newApp">
   
@@ -65,7 +74,7 @@ app.directive('loader', function($http, $templateCache) {
   };
 });
 
-app.controller('appCtrl', function($scope) {
+app.controller('appCtrl', function($scope, $timeout) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
   $scope.chars = [];
   
@@ -78,9 +87,14 @@ app.controller('appCtrl', function($scope) {
   
   $scope.initiate = function(data){
  	 aud = new Audio(data.aud);
+     aud.load();
  	 audTime = data.audTime;
- 	 $('#loader').hide();
-	 $scope.chars = data.chars;
+  	 $('#loader').hide();
+ 	 $scope.chars = data.chars;
+
+     $timeout(function() {
+         if (typeof attachListeners === 'function') attachListeners();
+     }, 500);
   }
 
   

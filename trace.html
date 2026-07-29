@@ -38,13 +38,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/flowersbg.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
     canvas {
-      border: 1px solid black;
-      background-color: #fff;
-      margin-top: 10px;
+      border: none;
+      border-radius: 16px;
+      background-color: rgba(255, 255, 255, 0.95);
+      margin-top: 20px;
       cursor: crosshair;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
 
     h1 {
@@ -52,18 +62,25 @@
     }
 
     .game {
-      margin: 20px;
-      padding: 20px;
-      border: 2px solid #000;
-      border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.8);
+      margin: 4vh auto;
+      padding: 4vh;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      background: rgba(10, 15, 30, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
       width: 90%;
       max-width: 600px;
       text-align: center;
+      color: #fff;
     }
 
     .game h2 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 3vh;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
     .container {
@@ -73,46 +90,72 @@
     }
 
     .sample-banner {
-      margin: 18px 20px 0;
-      padding: 18px 20px;
+      margin: 2vh 4vh 4vh;
+      padding: 3vh;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 18px 36px rgba(21, 50, 75, 0.12);
-      color: #15324b;
-    }
-
-    .sample-banner p {
-      margin: 10px 0 0;
-      font-size: 18px;
-      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      color: #fff;
+      text-align: center;
+      font-size: 2.2vh;
+      font-weight: 600;
     }
 
     .sample-banner a {
-      color: #0f73b8;
+      color: #ff9a9e;
       font-weight: 800;
-      text-decoration: none;
+      text-decoration: underline;
     }
 
     .trace-actions {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 15px;
       flex-wrap: wrap;
-      margin-top: 16px;
+      margin-top: 24px;
+    }
+
+    select {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 2.5vh;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    select option {
+      background: #1a2238;
+      color: white;
     }
 
     .trace-button {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 18px;
-      background: #0f73b8;
-      color: #fff;
-      font-weight: 800;
+      background: rgba(10, 15, 30, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 2.2vh;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-
-    body {
-      background-image: url(images/flowersbg.jpeg);
+    
+    .trace-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      background: rgba(20, 25, 45, 0.7);
     }
   </style>
 </head>

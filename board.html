@@ -4,49 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="validate.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-  <title>Interactive Whiteboard</title>
-  <script src="script.js"></script>
-</head>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+<script src="script.js"></script>
+<title>Interactive Whiteboard</title>
 <style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background-image: url('images/rainbow1.jpeg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+  }
+
+  .game {
+    margin: 2vh auto;
+    padding: 3vh;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    background: rgba(10, 15, 30, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+    width: 95%;
+    max-width: 900px;
+    text-align: center;
+    color: #fff;
+  }
+
   .toolbar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
-  align-items: center;
-}
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px;
+    border-radius: 20px;
+  }
 
-.tool {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: #5b98f5;
+  .tool {
+    background: rgba(10, 15, 30, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    font-weight: bold;
-    border: 1px solid;
-}
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 2vh;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: 'Inter', sans-serif;
+  }
 
-.tool:hover {
-  background-color: #0056b3;
-}
+  .tool:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    background: rgba(20, 25, 45, 0.7);
+  }
 
-canvas {
-  background: white;
-  display: block;
-  width: 90%;
-  aspect-ratio: 16 / 9;
-  touch-action: none;
-  margin: 0 auto;
-  cursor: cell;
-  border: 5px solid #ccc; /* A thin base border */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 0 0 5px #4285f4, /* A blue inner shadow */
-            0 0 0 10px #0f9d58; /* A green outer shadow */
-}
+  #colorPicker {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: 2px solid white;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  #colorPicker::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  #colorPicker::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+  }
+
+  canvas {
+    background: rgba(255, 255, 255, 0.95);
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    touch-action: none;
+    margin: 0 auto;
+    cursor: crosshair;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
 </style>
 <body ng-app="newApp">
   
@@ -56,14 +111,16 @@ canvas {
       <a href="index.html">Go to Home</a>
     </div>
     <loader id="loader"></loader>
-  <div class="toolbar">
-    <button id="draw" class="tool">✏️ Draw</button>
-    <button id="erase" class="tool">🧽 Erase</button>
-    <input type="color" id="colorPicker" value="#000000">
-    <input type="range" id="thickness" class="tool" min="1" max="20" value="5">
-    <button id="clear" class="tool">🗑️ Clear</button>
+  <div class="game">
+    <div class="toolbar">
+      <button id="draw" class="tool">✏️ Draw</button>
+      <button id="erase" class="tool">🧽 Erase</button>
+      <input type="color" id="colorPicker" value="#000000">
+      <input type="range" id="thickness" class="tool" min="1" max="20" value="5">
+      <button id="clear" class="tool">🗑️ Clear</button>
+    </div>
+    <canvas id="whiteboard"></canvas>
   </div>
-  <canvas id="whiteboard"></canvas>
   </div>
   <script>
 
@@ -107,35 +164,26 @@ let startY = 0;
 $scope.initiate = function(data){
  // Initialize SVG
  $('#loader').hide();
- resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-// Start drawing
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('touchstart', (e) => startDrawing(e.touches[0]));
-
-// Stop drawing
-canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('mouseout', stopDrawing);
-canvas.addEventListener('touchend', stopDrawing);
-
-// Drawing on canvas
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', (e) => draw(e.touches[0]));
+ setTimeout(resizeCanvas, 100);
 }
 
 
 // Resize canvas to fit screen
 function resizeCanvas() {
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+  if (canvas.offsetWidth > 0 && canvas.offsetHeight > 0) {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+  }
 }
-resizeCanvas();
+setTimeout(resizeCanvas, 100);
 window.addEventListener('resize', resizeCanvas);
 
 // Start drawing
 canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('touchstart', (e) => startDrawing(e.touches[0]));
+canvas.addEventListener('touchstart', (e) => {
+    if(e.cancelable) e.preventDefault();
+    startDrawing(e.touches[0]);
+}, {passive: false});
 
 // Stop drawing
 canvas.addEventListener('mouseup', stopDrawing);
@@ -144,31 +192,47 @@ canvas.addEventListener('touchend', stopDrawing);
 
 // Drawing on canvas
 canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', (e) => draw(e.touches[0]));
+canvas.addEventListener('touchmove', (e) => {
+    if(e.cancelable) e.preventDefault();
+    draw(e.touches[0]);
+}, {passive: false});
 
 function startDrawing(e) {
   isDrawing = true;
-  startX = e.offsetX || e.clientX - canvas.offsetLeft;
-  startY = e.offsetY || e.clientY - canvas.offsetTop;
+  ctx.beginPath();
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
+  const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches.length > 0 ? e.touches[0].clientY : 0);
+  startX = clientX - rect.left;
+  startY = clientY - rect.top;
+  ctx.moveTo(startX, startY);
 }
 
 function stopDrawing() {
   isDrawing = false;
-  ctx.beginPath(); // Reset the path
+  ctx.beginPath();
 }
 
 function draw(e) {
   if (!isDrawing) return;
+  if (typeof e.preventDefault === 'function') {
+      e.preventDefault();
+  }
 
-  const x = e.offsetX || e.clientX - canvas.offsetLeft;
-  const y = e.offsetY || e.clientY - canvas.offsetTop;
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
+  const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches.length > 0 ? e.touches[0].clientY : 0);
+  
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
 
   ctx.lineWidth = thickness.value;
   ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
 
   if (isErasing) {
     ctx.globalCompositeOperation = 'destination-out';
-    ctx.lineWidth = 20; // Eraser thickness
+    ctx.lineWidth = 20;
   } else {
     ctx.globalCompositeOperation = 'source-over';
     ctx.strokeStyle = colorPicker.value;

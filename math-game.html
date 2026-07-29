@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="validate.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -9,113 +10,206 @@
     <script src="script.js"></script>
     <title>Math Fun</title>
     <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-image: url('images/space1.jpeg');
+        background-size: cover;
+        background-attachment: fixed;
+        color: #fff;
+      }
+
       .container {
-        width: 80%;
+        width: 90%;
+        max-width: 700px;
         margin: 40px auto;
         text-align: center;
       }
 
       .game-container {
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: white;
+        background: rgba(10, 15, 30, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       #question {
-        font-size: 24px;
-        margin-bottom: 20px;
+        font-size: 6vh;
+        font-weight: 800;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        color: #ff9a9e;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        width: 100%;
+        justify-content: center;
       }
 
       #answer {
-        width: 50%;
-        height: 30px;
-        font-size: 18px;
-        padding: 10px;
+        width: 40%;
+        font-size: 3vh;
+        padding: 15px;
+        border-radius: 15px;
+        border: 2px solid rgba(255,255,255,0.3);
+        background: rgba(0,0,0,0.3);
+        color: white;
+        text-align: center;
+        outline: none;
+        transition: all 0.3s ease;
       }
 
-      #submit {
-        background-color: #4caf50;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      #answer:focus {
+        border-color: #ff9a9e;
+        box-shadow: 0 0 15px rgba(255, 154, 158, 0.5);
       }
 
-      #next {
-        background-color: #4caf50;
+      .btn {
+        background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
         color: #fff;
-        padding: 10px 20px;
+        font-size: 2.5vh;
+        font-weight: 700;
+        padding: 15px 30px;
         border: none;
-        border-radius: 5px;
+        border-radius: 15px;
         cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(251, 194, 235, 0.6);
+      }
+
+      .btn-secondary {
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255,255,255,0.25);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        width: 100%;
         margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      select {
+        background: rgba(0,0,0,0.4);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        outline: none;
+      }
+
+      select option {
+        background: #1e3c72;
+        color: white;
+      }
+
+      .timer-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        background: rgba(0,0,0,0.4);
+        padding: 10px 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.3);
       }
 
       #result {
-        font-size: 18px;
-        color: #666;
-        margin-bottom: 20px;
+        font-size: 3vh;
+        font-weight: 700;
+        min-height: 4vh;
+        margin: 15px 0;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
       }
 
-      #operation {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 18px;
-      }
+      .correct-text { color: #a8ff78; }
+      .wrong-text { color: #ff9a9e; }
 
-      #difficulty {
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
         margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 18px;
-      }
-
-      #score {
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 20px;
+        font-size: 2.2vh;
+        font-weight: 600;
       }
 
       #time-remaining {
-        font-size: 18px;
-        color: #666;
-        margin-top: 20px;
+        color: #fbc2eb;
       }
     </style>
   </head>
   <body ng-app="myApp">
     <div class="container" ng-controller="MyController" id="controller">
       <div class="header">
-        <h1>Math Game</h1>
+        <h1>Math Fun</h1>
         <a href="index.html">Go to Home</a>
       </div>
       <loader id="loader"></loader>
       <div class="game-container">
-        <p id="question"></p>
-        <input type="number" id="answer" />
-        <button id="submit">Submit</button>
+        <div class="stats">
+          <div id="score">Score: 0</div>
+          <div id="time-remaining"></div>
+        </div>
+        
+        <p id="question">Loading...</p>
+        
+        <div class="input-group">
+          <input type="number" id="answer" placeholder="Your answer" autocomplete="off" />
+          <button id="submit" class="btn">Submit</button>
+        </div>
+        
         <p id="result"></p>
-        <button id="next">Next Question</button>
-        <select id="operation">
-          <option value="addition">Addition</option>
-          <option value="subtraction">Subtraction</option>
-          <option value="multiplication">Multiplication</option>
-          <option value="division">Division</option>
-        </select>
-        <select id="difficulty">
-          <option value="easy">Easy (1-10)</option>
-          <option value="medium">Medium (1-20)</option>
-          <option value="hard">Hard (1-50)</option>
-        </select>
-        <label
-          ><input type="checkbox" id="timer-checkbox" /> Enable Timer</label
-        >
-        <p id="score">Score: 0</p>
-        <p id="time-remaining"></p>
+        
+        <button id="next" class="btn btn-secondary">Next Question</button>
+        
+        <div class="controls">
+          <select id="operation">
+            <option value="addition">Addition (+)</option>
+            <option value="subtraction">Subtraction (-)</option>
+            <option value="multiplication">Multiplication (×)</option>
+            <option value="division">Division (÷)</option>
+          </select>
+          <select id="difficulty">
+            <option value="easy">Easy (1-10)</option>
+            <option value="medium">Medium (1-20)</option>
+            <option value="hard">Hard (1-50)</option>
+          </select>
+          <label class="timer-toggle">
+            <input type="checkbox" id="timer-checkbox" />
+            Enable 60s Timer
+          </label>
+        </div>
       </div>
     </div>
+    
+    <button id="scrollToTopBtn" title="Go to top">Top</button>
 
     <script>
       let num1, num2, correctAnswer;
@@ -147,6 +241,13 @@
           }
         });
 
+      // Submit on Enter key
+      document.getElementById("answer").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          document.getElementById("submit").click();
+        }
+      });
+
       function generateQuestion() {
         let maxNum;
         switch (difficulty) {
@@ -167,71 +268,91 @@
         switch (operation) {
           case "addition":
             correctAnswer = num1 + num2;
-            document.getElementById(
-              "question"
-            ).innerText = `What is ${num1} + ${num2}?`;
+            document.getElementById("question").innerText = `What is ${num1} + ${num2}?`;
             break;
           case "subtraction":
             if (num1 < num2) {
-              [num1, num2] = [num2, num1]; // Ensure num1 is greater than num2
+              [num1, num2] = [num2, num1]; // Ensure positive result
             }
             correctAnswer = num1 - num2;
-            document.getElementById(
-              "question"
-            ).innerText = `What is ${num1} - ${num2}?`;
+            document.getElementById("question").innerText = `What is ${num1} - ${num2}?`;
             break;
           case "multiplication":
             correctAnswer = num1 * num2;
-            document.getElementById(
-              "question"
-            ).innerText = `What is ${num1} × ${num2}?`;
+            document.getElementById("question").innerText = `What is ${num1} × ${num2}?`;
             break;
           case "division":
-            correctAnswer = num1 / num2;
-            document.getElementById(
-              "question"
-            ).innerText = `What is ${num1} ÷ ${num2}?`;
+            // To ensure clean division for kids, we calculate a product first
+            correctAnswer = num1; 
+            let product = num1 * num2;
+            document.getElementById("question").innerText = `What is ${product} ÷ ${num2}?`;
             break;
         }
+        
+        // Reset result text when a new question is generated
+        document.getElementById("result").innerText = "";
+        document.getElementById("result").className = "";
       }
 
       document.getElementById("submit").addEventListener("click", () => {
-        let userAnswer = parseFloat(document.getElementById("answer").value);
+        let answerInput = document.getElementById("answer").value;
+        if (answerInput === "") return;
+        
+        let userAnswer = parseFloat(answerInput);
+        let resultEl = document.getElementById("result");
+        
         if (userAnswer === correctAnswer) {
           score++;
           document.getElementById("score").innerText = `Score: ${score}`;
-          document.getElementById("result").innerText = "Correct!";
+          resultEl.innerText = "Awesome! Correct! 🌟";
+          resultEl.className = "correct-text";
+          
+          if (typeof explodeConfetti === 'function') {
+            explodeConfetti();
+          }
+          
+          // Auto-generate next question after a short delay
+          setTimeout(() => {
+            document.getElementById("answer").value = "";
+            generateQuestion();
+            document.getElementById("answer").focus();
+          }, 1500);
+          
         } else {
-          document.getElementById(
-            "result"
-          ).innerText = `Sorry, the correct answer is ${correctAnswer}.`;
+          resultEl.innerText = `Oops! The correct answer was ${correctAnswer}.`;
+          resultEl.className = "wrong-text";
         }
-        document.getElementById("answer").value = "";
-        generateQuestion();
       });
 
       document.getElementById("next").addEventListener("click", () => {
         generateQuestion();
         document.getElementById("answer").value = "";
-        document.getElementById("result").innerText = "";
+        document.getElementById("answer").focus();
       });
 
       function startTimer() {
+        // Reset timer if already running
+        if (intervalId) clearInterval(intervalId);
+        timeRemaining = 60;
+        document.getElementById("time-remaining").innerText = `Time: ${timeRemaining}s`;
+        
         intervalId = setInterval(() => {
           timeRemaining--;
-          document.getElementById(
-            "time-remaining"
-          ).innerText = `Time remaining: ${timeRemaining} seconds`;
-          if (timeRemaining === 0) {
+          document.getElementById("time-remaining").innerText = `Time: ${timeRemaining}s`;
+          if (timeRemaining <= 0) {
             stopTimer();
-            alert("Time's up!");
+            alert(`Time's up! Final Score: ${score}`);
+            score = 0;
+            document.getElementById("score").innerText = `Score: ${score}`;
+            document.getElementById("timer-checkbox").checked = false;
+            timerEnabled = false;
           }
         }, 1000);
       }
 
       function stopTimer() {
         clearInterval(intervalId);
-        timeRemaining = 60;
+        intervalId = null;
         document.getElementById("time-remaining").innerText = "";
       }
 

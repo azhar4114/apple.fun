@@ -2,6 +2,7 @@
 <html>
   <head>
 	  <script src="validate.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -11,61 +12,125 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js"></script>
     <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-image: url('images/space1.jpeg'); /* space theme */
+        background-size: cover;
+        background-attachment: fixed;
+        color: #fff;
+      }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Center content horizontally */
-      gap: 2em; /* Larger gaps */
-      padding: 2em;
-      box-sizing: border-box;
-    }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        padding: 2em;
+        box-sizing: border-box;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
 
+      .controls-panel {
+        background: rgba(10, 15, 30, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        width: 100%;
+        color: #fff;
+      }
 
-    #graph {
-      width: 900px;
-      height: 600px; /* Increased graph height */
-      border: 2px solid #000;
-      background: #fff;
-      margin: 0 auto; /* Center the graph vertically */
-    }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+      }
 
-    .input-group {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-      width: 100%; /* Make input groups fill container width */
-      justify-content: center;
-    }
+      .equation-group {
+        grid-column: 1 / -1;
+      }
 
-    label {
-      text-align: right;
-      font-weight: bold;
-      display: inline-block; /* Single line for labels */
-      margin-right: 0.5em;
-    }
+      label {
+        font-weight: 600;
+        font-size: 1.1em;
+        color: #fbc2eb;
+      }
 
-    input[type="text"],
-    input[type="number"] {
-      padding: 0.5em;
-      font-size: 1em;
-      width: 30%; /* Adjust input width */
-      box-sizing: border-box;
-    }
+      input[type="text"],
+      input[type="number"] {
+        padding: 12px 15px;
+        font-size: 1.1em;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(0,0,0,0.3);
+        color: white;
+        outline: none;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+      }
 
-    .btn {
-      background: #2196F3;
-      color: #fff;
-      padding: 0.5em 1.6em;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 5px;
-      margin-top: 1em;
-    }
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        border-color: #ff9a9e;
+        box-shadow: 0 0 15px rgba(255, 154, 158, 0.5);
+        background: rgba(0,0,0,0.5);
+      }
 
-    .btn:hover {
-      background: #1976D2;
-    }
+      .btn {
+        background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
+        color: #fff;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        font-weight: 700;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        grid-column: 1 / -1;
+        justify-self: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(251, 194, 235, 0.6);
+      }
+
+      #graph-wrapper {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        width: 100%;
+        max-width: 940px;
+        display: flex;
+        justify-content: center;
+      }
+
+      #graph {
+        width: 900px;
+        height: 600px; 
+      }
+      
+      /* Fix for D3 Axes text inheriting white color */
+      #graph text {
+        fill: #333;
+        font-weight: 600;
+      }
+      #graph path.domain, #graph .tick line {
+        stroke: #333;
+      }
     </style>
 </head>
 <body ng-app="newApp">
@@ -77,107 +142,134 @@
   </div>
 
   <loader id="loader"></loader>
-<div class="container">
+  <div class="container">
 
-    <div style="display: grid;grid-template-columns: repeat(2, 1fr);gap: 10px;background: rgba(255, 255, 255, 0.8);padding: 10px;border-radius: 5px;color: darkorange;">
-      <div class="input-group" style="
-    grid-column: 1 / -1;
-    justify-self: center;">
-        <label for="equation">Equation:</label>
-        <input type="text" id="equation" value="sin(x)">
-    </div><div class="input-group">
-        <label for="xMin">X Minimum:</label>
-        <input type="number" id="xMin" value="-10">
-    </div><div class="input-group">
-        <label for="xMax">X Maximum:</label>
-        <input type="number" id="xMax" value="10">
-    </div><div class="input-group">
-        <label for="yMin">Y Minimum:</label>
-        <input type="number" id="yMin" value="-10">
-    </div><div class="input-group">
-        <label for="yMax">Y Maximum:</label>
-        <input type="number" id="yMax" value="10">
-    </div><btn class="btn" id="plot-graph-btn" style="grid-column: 1 / -1; justify-self: center;">Plot Graph</btn></div>
+    <div class="controls-panel">
+      <div class="input-group equation-group">
+          <label for="equation">Equation: y = </label>
+          <input type="text" id="equation" value="sin(x)">
+      </div>
+      <div class="input-group">
+          <label for="xMin">X Minimum:</label>
+          <input type="number" id="xMin" value="-10">
+      </div>
+      <div class="input-group">
+          <label for="xMax">X Maximum:</label>
+          <input type="number" id="xMax" value="10">
+      </div>
+      <div class="input-group">
+          <label for="yMin">Y Minimum:</label>
+          <input type="number" id="yMin" value="-10">
+      </div>
+      <div class="input-group">
+          <label for="yMax">Y Maximum:</label>
+          <input type="number" id="yMax" value="10">
+      </div>
+      <button class="btn" id="plot-graph-btn">Plot Graph</button>
+    </div>
 
-    <div id="graph"></div>
-</div>
+    <div id="graph-wrapper">
+      <div id="graph"></div>
+    </div>
+  </div>
+  
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+
 <script>
   const width = 900;
   const height = 600;
 
   var app = angular.module("newApp", []);
-app.directive('loader', function($http, $templateCache) {
-return {
-  restrict: 'E',
-  link: function(scope, element) {
-    // Load the loader.html file and inject it
-    $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-      element.html(response.data);
-    });
-  }
-};
-});
+  app.directive('loader', function($http, $templateCache) {
+    return {
+      restrict: 'E',
+      link: function(scope, element) {
+        $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+          element.html(response.data);
+        });
+      }
+    };
+  });
 
-app.controller('appCtrl', function($scope) {
+  app.controller('appCtrl', function($scope) {
 
     const svg = d3.select('#graph')
                 .append('svg')
                 .attr('width', width)
                 .attr('height', height);
 
-  function plotGraph() {
-    const equation = document.getElementById('equation').value;
-    const xMin = parseFloat(document.getElementById('xMin').value);
-    const xMax = parseFloat(document.getElementById('xMax').value);
-    const yMin = parseFloat(document.getElementById('yMin').value);
-    const yMax = parseFloat(document.getElementById('yMax').value);
+    function plotGraph() {
+      const equation = document.getElementById('equation').value;
+      const xMin = parseFloat(document.getElementById('xMin').value);
+      const xMax = parseFloat(document.getElementById('xMax').value);
+      const yMin = parseFloat(document.getElementById('yMin').value);
+      const yMax = parseFloat(document.getElementById('yMax').value);
 
-    const xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, width]);
-    const yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, height]); // Invert y-axis
+      const xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, width]);
+      const yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, height]); // Invert y-axis
 
-    try {
-        const compiledFunction = math.compile(equation);
-        const data = [];
-        const step = (xMax - xMin) / 200; // Increase for smoother curves
-        for (let x = xMin; x <= xMax; x += step) {
-            const y = compiledFunction.evaluate({ x: x });
-            data.push({ x: x, y: y });
-        }
+      try {
+          const compiledFunction = math.compile(equation);
+          const data = [];
+          const step = (xMax - xMin) / 400; // Smoother curves
+          for (let x = xMin; x <= xMax; x += step) {
+              const y = compiledFunction.evaluate({ x: x });
+              data.push({ x: x, y: y });
+          }
 
-        svg.selectAll('*').remove();
+          svg.selectAll('*').remove();
 
-        svg.append('g')
-        .attr("transform", `translate(0, ${height/2})`)
-        .call(d3.axisBottom(xScale));
+          // Add grid lines
+          const xAxisGrid = d3.axisBottom(xScale).tickSize(-height).tickFormat('').ticks(10);
+          const yAxisGrid = d3.axisLeft(yScale).tickSize(-width).tickFormat('').ticks(10);
 
-        svg.append('g')
-        .attr("transform", `translate(${width/2}, 0)`)
-        .call(d3.axisLeft(yScale));
+          svg.append('g')
+            .attr('class', 'grid')
+            .attr('transform', `translate(0, ${height})`)
+            .call(xAxisGrid)
+            .selectAll('line').style('stroke', '#e0e0e0');
 
-        svg.append('path')
-            .data([data])
-            .attr('d', d3.line()
-                .x(d => xScale(d.x))
-                .y(d => yScale(d.y)))
-            .attr('fill', 'none')
-            .attr('stroke', 'red')
-            .attr('stroke-width', 2);
-    } catch (error) {
-        alert("Invalid equation: " + error.message);
+          svg.append('g')
+            .attr('class', 'grid')
+            .call(yAxisGrid)
+            .selectAll('line').style('stroke', '#e0e0e0');
+
+          // Add Axes
+          svg.append('g')
+            .attr("transform", `translate(0, ${yScale(0)})`) // Place X axis at Y=0
+            .call(d3.axisBottom(xScale));
+
+          svg.append('g')
+            .attr("transform", `translate(${xScale(0)}, 0)`) // Place Y axis at X=0
+            .call(d3.axisLeft(yScale));
+
+          // Plot line
+          svg.append('path')
+              .data([data.filter(d => !isNaN(d.y) && isFinite(d.y))])
+              .attr('d', d3.line()
+                  .x(d => xScale(d.x))
+                  .y(d => yScale(d.y))
+                  .curve(d3.curveMonotoneX)) // Smooth curve interpolation
+              .attr('fill', 'none')
+              .attr('stroke', '#ff6b6b') // Vibrant red/pink line
+              .attr('stroke-width', 3)
+              .style("filter", "drop-shadow(0px 3px 3px rgba(255, 107, 107, 0.4))");
+      } catch (error) {
+          alert("Invalid equation: " + error.message);
+      }
     }
-  }
 
+    // Submit on Enter key
+    document.getElementById("equation").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") plotGraph();
+    });
 
-$scope.initiate = function(data){
-    console.log("initiated...")
-    $('#loader').hide();
-  document.getElementById('plot-graph-btn').addEventListener('click', plotGraph);
-  plotGraph();
-}
-
-});
-  
+    $scope.initiate = function(data){
+      $('#loader').hide();
+      document.getElementById('plot-graph-btn').addEventListener('click', plotGraph);
+      plotGraph();
+    }
+  });
 </script>
-
 </body>
 </html>

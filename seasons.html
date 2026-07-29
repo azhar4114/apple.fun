@@ -5,51 +5,58 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	<link rel="stylesheet" href="styles.css">
-	
-	  <title>Learn Seasons</title>
-    <style>
-	    .button {
-    padding: 0;
-    font-size: 2.3vh;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/clouds2.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
 
-      .shapes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
-  gap: 3vh;
-  width: 100%;
-}
+    .button {
+      padding: 0;
+      font-size: 2.3vh;
+      flex-direction: column;
+    }
 
-.shape-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-    padding: 20px 40px;
-    transition: transform 0.2s;
-}
+    .shapes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(30vh, 1fr));
+      gap: 3vh;
+      width: 100%;
+      padding: 0 4vh;
+    }
 
-.shape-card:hover {
-  transform: scale(1.05);
-}
+    .shape-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
 
-.shape-box {
-  width: 25vh;
-  height: 25vh;
-  margin-bottom: 1vh;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+    .shape-card h2 {
+      margin: 0 0 15px 0;
+      font-size: 4vh;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    }
 
-     #alphabet{
-    grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
-}
+    .shape-box {
+      width: 25vh;
+      height: 25vh;
+      margin-bottom: 1vh;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
-body{
-	background-image:url(images/clouds2.jpeg);
-}
-    </style>
+    #alphabet {
+      grid-template-columns: repeat(auto-fit, minmax(32vh, 1fr));
+    }
+  </style>
   </head>
 <body ng-app="newApp">
   
@@ -95,7 +102,7 @@ app.directive('loader', function($http, $templateCache) {
   };
 });
 
-app.controller('appCtrl', function($scope) {
+app.controller('appCtrl', function($scope, $timeout) {
   $scope.shapes = [];
   $scope.showSmallClck = function(){
     //$scope.aud.play();
@@ -106,9 +113,14 @@ app.controller('appCtrl', function($scope) {
   
   $scope.initiate = function(data){
  	 aud = new Audio(data.aud);
+     aud.load();
  	 audTime = data.audTime;
- 	 $('#loader').hide();
-	 $scope.shapes = data.chars;
+  	 $('#loader').hide();
+ 	 $scope.shapes = data.chars;
+
+     $timeout(function() {
+         if (typeof attachListeners === 'function') attachListeners();
+     }, 500);
   }
   
 }); 

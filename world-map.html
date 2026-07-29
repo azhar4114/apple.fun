@@ -2,46 +2,103 @@
 <html>
   <head>
 	  <script src="validate.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
 	
-    <title>World Map</title>
+    <title>Interactive World Map</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-image: url('images/space1.jpeg'); /* Fallback to a space background from styles */
+        background-size: cover;
+        background-attachment: fixed;
+      }
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 10px;
-}
+      .container {
+        display: flex;
+        justify-content: center;
+        padding: 2vh;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
 
-.timeline, .map {
-  margin: 10px;
-  padding: 10px;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
+      .map-wrapper {
+        background: rgba(10, 15, 30, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        width: 100%;
+        overflow: hidden;
+      }
 
-#timeline {
-  width: 100%;
-  height: 200px;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
+      #map {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        cursor: grab;
+      }
 
-#map {
-  width: 1200px;
-  height: 800px;
-  background-color: #eef;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+      #map:active {
+        cursor: grabbing;
+      }
 
+      .country {
+        fill: rgba(255, 255, 255, 0.15);
+        stroke: rgba(255, 255, 255, 0.4);
+        stroke-width: 0.5px;
+        transition: fill 0.2s ease, stroke-width 0.2s ease;
+      }
 
+      .country:hover {
+        fill: #ff9a9e;
+        stroke: #fff;
+        stroke-width: 1.5px;
+        filter: drop-shadow(0 0 8px rgba(255, 154, 158, 0.8));
+      }
+
+      .country-label {
+        font-family: 'Inter', sans-serif;
+        fill: rgba(255, 255, 255, 0.9);
+        pointer-events: none;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      }
+
+      #map-tooltip {
+        position: absolute;
+        background: rgba(10, 15, 30, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-family: 'Inter', sans-serif;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        pointer-events: none;
+        display: none;
+        transform: translate(-50%, -120%);
+        white-space: nowrap;
+        z-index: 100;
+      }
+
+      /* Simple HUD for selected country */
+      #hud {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 3.5vh;
+        font-weight: 700;
+        color: #fecfef;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        min-height: 5vh;
+      }
 
     </style>
   </head>
@@ -54,132 +111,104 @@
   </div>
   <loader id="loader"></loader>
   <div class="container">
-    
-    <div class="map">
-      <svg id="map"></svg>
+    <div class="map-wrapper">
+      <svg id="map" viewBox="0 0 1200 800"></svg>
+      <div id="hud">Explore the world!</div>
     </div>
   </div>
+  <div id="map-tooltip"></div>
   <button id="scrollToTopBtn" title="Go to top">Top</button>
+
 <script src="script.js"></script>
 <script>
-
   var aud;
-  var audTime =[];
-gap = 1200;
+  var audTime = [];
+  gap = 1200;
 
-
-var app = angular.module("newApp", []);
-app.directive('loader', function($http, $templateCache) {
-return {
-  restrict: 'E',
-  link: function(scope, element) {
-    // Load the loader.html file and inject it
-    $http.get('loader.html', { cache: $templateCache }).then(function(response) {
-      element.html(response.data);
-    });
-  }
-};
-});
-
-app.controller('appCtrl', function($scope) {
-$scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
-$scope.chars = [];
-
-$scope.initiate = function(data){
- // Initialize SVG
- $('#loader').hide();
-const svg = d3.select('#map')
-  .attr('width', 1200)
-  .attr('height', 800);
-
-const g = svg.append('g'); // Group to hold the map for zooming and panning
-
-const width = 1200;
-const height = 800;
-
-// Create a div for tooltips
-const tooltip = d3.select('body')
-  .append('div')
-  .style('position', 'absolute')
-  .style('background', '#fff')
-  .style('border', '1px solid #004085')
-  .style('border-radius', '4px')
-  .style('padding', '8px 12px') // Increased padding for larger text
-  .style('font-size', '16px') // Increased font size
-  .style('box-shadow', '0px 2px 5px rgba(0,0,0,0.3)')
-  .style('pointer-events', 'none')
-  .style('display', 'none');
-
-// Add zoom behavior
-const zoom = d3.zoom()
-  .scaleExtent([1, 8]) // Set zoom scale limits
-  .on('zoom', (event) => {
-    g.attr('transform', event.transform); // Apply zoom transform to the group
+  var app = angular.module("newApp", []);
+  app.directive('loader', function($http, $templateCache) {
+    return {
+      restrict: 'E',
+      link: function(scope, element) {
+        $http.get('loader.html', { cache: $templateCache }).then(function(response) {
+          element.html(response.data);
+        });
+      }
+    };
   });
 
-svg.call(zoom); // Attach zoom behavior to the SVG
+  app.controller('appCtrl', function($scope, $timeout) {
+    $scope.initiate = function(data){
+      $('#loader').hide();
+      
+      const width = 1200;
+      const height = 800;
 
-// Add a world map background
-d3.json(data.json)
-  .then((data) => {
-    const projection = d3.geoMercator().scale(150).translate([width / 2, height / 1.5]);
-    const path = d3.geoPath().projection(projection);
+      const svg = d3.select('#map');
+      const g = svg.append('g'); 
 
-    // Draw the map
-    g.selectAll('path')
-      .data(data.features)
-      .enter()
-      .append('path')
-      .attr('d', path)
-      .attr('fill', '#cce5ff')
-      .attr('stroke', '#004085')
-      .on('mouseover', function (event, d) {
-        d3.select(this).attr('fill', '#0056b3');
-        tooltip.style('display', 'block').text(d.properties.name);
-      })
-      .on('mousemove', (event) => {
-        tooltip
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 20}px`);
-      })
-      .on('mouseout', function () {
-        d3.select(this).attr('fill', '#cce5ff');
-        tooltip.style('display', 'none');
-      })
-      .on('click', (event, d) => {
-        alert(`You clicked on ${d.properties.name}`);
-      });
+      const tooltip = d3.select('#map-tooltip');
+      const hud = d3.select('#hud');
 
-    // Add country labels with filtering
-    g.selectAll('text')
-      .data(data.features.filter(d => {
-        // Filter out small countries by area (approximation)
-        return d3.geoArea(d) > 0.01;
-      }))
-      .enter()
-      .append('text')
-      .attr('x', d => projection(d3.geoCentroid(d))[0])
-      .attr('y', d => projection(d3.geoCentroid(d))[1])
-      .attr('text-anchor', 'middle')
-      .attr('font-size', d => `${Math.sqrt(d3.geoArea(d)) * 20}px`) // Scale font size dynamically
-      .attr('fill', '#000')
-      .text(d => d.properties.name)
-      .style('pointer-events', 'none') // Prevent interfering with mouse events on paths
-      .style('opacity', 0.8); // Reduce opacity for better blending
-  })
-  .catch((error) => console.error('Error loading the map:', error));
+      const zoom = d3.zoom()
+        .scaleExtent([1, 8]) 
+        .on('zoom', (event) => {
+          g.attr('transform', event.transform);
+        });
 
-}
+      svg.call(zoom);
 
-}); 
+      if (data && data.json) {
+        d3.json(data.json)
+          .then((mapData) => {
+            const projection = d3.geoMercator().scale(150).translate([width / 2, height / 1.5]);
+            const path = d3.geoPath().projection(projection);
 
+            // Draw the map
+            g.selectAll('path')
+              .data(mapData.features)
+              .enter()
+              .append('path')
+              .attr('d', path)
+              .attr('class', 'country')
+              .on('mouseover', function (event, d) {
+                tooltip.style('display', 'block').text(d.properties.name);
+              })
+              .on('mousemove', (event) => {
+                tooltip
+                  .style('left', `${event.pageX}px`)
+                  .style('top', `${event.pageY}px`);
+              })
+              .on('mouseout', function () {
+                tooltip.style('display', 'none');
+              })
+              .on('click', (event, d) => {
+                hud.text(`Selected: ${d.properties.name}`);
+                if (typeof explodeConfetti === 'function') explodeConfetti();
+              });
+
+            // Add country labels with filtering
+            g.selectAll('text')
+              .data(mapData.features.filter(d => d3.geoArea(d) > 0.01))
+              .enter()
+              .append('text')
+              .attr('x', d => projection(d3.geoCentroid(d))[0])
+              .attr('y', d => projection(d3.geoCentroid(d))[1])
+              .attr('text-anchor', 'middle')
+              .attr('class', 'country-label')
+              .attr('font-size', d => `${Math.sqrt(d3.geoArea(d)) * 20}px`)
+              .text(d => d.properties.name);
+          })
+          .catch((error) => console.error('Error loading the map:', error));
+      }
+    }
+  }); 
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'G-1ZCM5PW9N9');
 </script>
 </body>

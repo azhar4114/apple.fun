@@ -5,49 +5,53 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
 	<script src="validate.js"></script>
-	<link rel="stylesheet" href="styles.css">
-	  <title>Learn Colors</title>
-    <style>
-	    .button {
-    padding: 2vh 5.3vh;
-    font-size: 2.3vh;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Learn Colors</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/rainbow1.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
 
-      .colors-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  width: 100%;
-  max-width: 600px;
-}
+    .button {
+      padding: 0;
+      flex-direction: column;
+    }
 
-.color-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.2s;
-}
+    .color-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
 
-.color-card:hover {
-  transform: scale(1.05);
-}
+    .color-card h2 {
+      margin: 0 0 15px 0;
+      font-size: 3.5vh;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      text-transform: capitalize;
+    }
 
-.color-box {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-  border: 1px solid #000;
-}
+    .color-box {
+      width: 15vh;
+      height: 15vh;
+      margin-bottom: 1vh;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
 
-body {
-    background-image: url(images/rainbow1.jpeg);
-}
-
-#alphabet{
-	grid-template-columns: repeat(auto-fit, minmax(25vh, 1fr));
-}
-
-    </style>
+    #alphabet {
+      grid-template-columns: repeat(auto-fit, minmax(28vh, 1fr));
+      gap: 3vh;
+      padding: 0 4vh;
+    }
+  </style>
   </head>
 <body ng-app="newApp">
   
@@ -91,7 +95,7 @@ app.directive('loader', function($http, $templateCache) {
 });
 
 
-app.controller('appCtrl', function($scope) {
+app.controller('appCtrl', function($scope, $timeout) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
   $scope.chars = [];
   
@@ -104,9 +108,14 @@ app.controller('appCtrl', function($scope) {
   
   $scope.initiate = function(data){
  	 aud = new Audio(data.aud);
+     aud.load();
  	 audTime = data.audTime;
- 	 $('#loader').hide();
-	 $scope.chars = data.chars;
+  	 $('#loader').hide();
+ 	 $scope.chars = data.chars;
+
+     $timeout(function() {
+         if (typeof attachListeners === 'function') attachListeners();
+     }, 500);
   }
   
 }); 

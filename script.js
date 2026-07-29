@@ -7,16 +7,45 @@ var an = 0,
 	function attachListeners(){
     cards = document.querySelectorAll('.button');
     $(cards).attr("tabindex", "0");
-    $(".button").click(function() {
-        if (!aud.paused)
-            return;
+    var pauseTimeout;
+    
+    $(".button").off("click").on("click", function() {
+        if (pauseTimeout) {
+            clearTimeout(pauseTimeout);
+            pauseTimeout = null;
+        }
+        
         $(this).addClass(anim[an]);
-        var ind = $(this).attr('data');
-        aud.currentTime = audTime[ind].s;
+        var ind = parseInt($(this).attr('data'), 10);
+        var item = audTime[ind];
+        if (item === undefined) return;
+
+        var start, end;
+        if (typeof item === 'number') {
+            start = item;
+            end = audTime[ind + 1] !== undefined ? audTime[ind + 1] : start + (gap / 1000);
+        } else {
+            start = item.s !== undefined ? item.s : item.start;
+            end = item.e !== undefined ? item.e : item.end;
+        }
+
+        if (start !== undefined && !isNaN(start)) {
+            aud.pause();
+            aud.currentTime = start;
+        }
+        
         aud.play();
-        setTimeout(function() {
-            aud.pause()
-        }, (audTime[ind].e - audTime[ind].s) * 1000);
+        
+        if (end !== undefined && !isNaN(end)) {
+            pauseTimeout = setTimeout(function() {
+                aud.pause();
+            }, Math.max(0, (end - start) * 1000));
+        } else {
+            pauseTimeout = setTimeout(function() {
+                aud.pause();
+            }, gap);
+        }
+
         $(this).addClass("clicked");
         this.scrollIntoView({
             behavior: 'smooth',
@@ -26,22 +55,34 @@ var an = 0,
             explodeConfetti();
             expl = !0
         }
-    })
+    });
 }
 
 $(document).ready(function() {
+
+    $(".toggle-button").click(function() {
+        if (!$(this).hasClass("play"))
+            $(".toggle-button").removeClass("active");
+        $(this).addClass("active")
+    });
+    
     var intv;
+    var i = 0;
+    
     $(".toggle-button.play").click(function(e) {
-        if (!$("body").hasClass("cursor-hide")) {
-            $("body").addClass("cursor-hide")
-        }
-        var i = 0;
+        if (!aud.paused)
+            return;
+        $(this).addClass("active");
+        $(".button").removeClass(anim.join(" ")).removeClass("clicked");
+        an = 0;
+        i = 0;
+        expl = !1;
         var bt = $(".button");
-        if (intv != null) {
-            $(this).html("Play");
+        if ($(this).hasClass("active") && $(this).html() == "Stop") {
             clearInterval(intv);
             $(".autoplay").removeClass("autoplay");
-            $(this).addClass("active");
+            $(this).removeClass("active");
+            $(this).html("Play");
             intv = null;
             return
         }
@@ -78,20 +119,26 @@ function explodeConfetti() {
 }
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 window.onscroll = function() {
-    scrollFunction()
+    if (scrollToTopBtn) {
+        scrollFunction();
+    }
 };
 
 function scrollFunction() {
+    if (!scrollToTopBtn) return;
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         scrollToTopBtn.style.display = "block"
     } else {
         scrollToTopBtn.style.display = "none"
     }
 }
-scrollToTopBtn.addEventListener("click", function() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0
-});
+
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener("click", function() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0
+    });
+}
 document.addEventListener('mousemove', function(e) {
     $("body").removeClass("cursor-hide")
 });

@@ -255,6 +255,10 @@
     var detail = state.schoolName ? " - " + state.schoolName : "";
     badge.textContent = (state.label || "Sample lesson") + detail;
 
+    if (state.state !== "sample" && host.hasAttribute("data-access-badge-target")) {
+      host.innerHTML = ""; // Clear the "Public sample lesson" hardcoded text
+    }
+
     if (!badge.parentNode) {
       host.appendChild(badge);
     }
