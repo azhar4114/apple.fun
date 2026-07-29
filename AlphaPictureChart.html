@@ -19,9 +19,14 @@
 		    font-style: normal;
 		}
 
+        #alphabet {
+            grid-template-columns: repeat(auto-fit, minmax(28vh, 1fr));
+            gap: 4vh;
+        }
+
         .button {
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
             padding: 20px 10px;
         }
         
@@ -31,10 +36,11 @@
         }
         
         .description {
-            font-size: 2.2vh;
+            font-size: 2.5vh;
             font-weight: 700;
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            margin-top: -3vh; /* Pull description slightly up */
         }
 
 		.emoji {
@@ -43,8 +49,9 @@
             height: 25vh;
             background: url('images/sprite.png') no-repeat;
             background-size: 220vh auto;
-            transform: scale(0.6);
-            margin: -4vh 0; /* Adjust for the scaling */
+            transform: scale(0.65);
+            transform-origin: center top;
+            margin-bottom: -6vh; /* Compensate for transform scale layout space */
         }
 
 /* Define positions for each emoji */
