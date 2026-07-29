@@ -14,18 +14,38 @@
 	<title>Alphabet Picture Chart</title>
 	<style>
 		body {
-		    font-family: "Noto Color Emoji", sans-serif;
-		     font-weight: 400;
-		     font-style: normal;
+		    font-family: "Noto Color Emoji", 'Inter', sans-serif;
+		    font-weight: 400;
+		    font-style: normal;
 		}
 
+        .button {
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px 10px;
+        }
+        
+        .letter {
+            font-size: 4.5vh;
+            font-weight: 700;
+        }
+        
+        .description {
+            font-size: 2.2vh;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+
 		.emoji {
-    display: inline-block;
-    width: 25vh;
-    height: 25vh;
-    background: url(https://aforapple.fun/images/sprite.png) no-repeat;
-    background-size: 220vh auto;
-}
+            display: inline-block;
+            width: 25vh;
+            height: 25vh;
+            background: url('images/sprite.png') no-repeat;
+            background-size: 220vh auto;
+            transform: scale(0.6);
+            margin: -4vh 0; /* Adjust for the scaling */
+        }
 
 /* Define positions for each emoji */
 
@@ -103,7 +123,7 @@
 			  };
 			});
             
-            app.controller('appCtrl', function($scope) {
+            app.controller('appCtrl', function($scope, $timeout) {
               $scope.ctrl = {showSmall:true, showCaps:true};
               $scope.chars = [];
               
@@ -117,11 +137,15 @@
               $scope.populatePage = function(){
                 var i,c="",C="";
                 $scope.chars = [];
-              for(i=0;i<26;i++){
-                C = String.fromCharCode(65+i);
-                c = String.fromCharCode(97+i);
-                $scope.chars.push([C,c,audTime[i].c,audTime[i].d]);
+                for(i=0;i<26;i++){
+                  C = String.fromCharCode(65+i);
+                  c = String.fromCharCode(97+i);
+                  $scope.chars.push([C,c,audTime[i].c,audTime[i].d]);
                 }
+                
+                $timeout(function() {
+                  if (typeof attachListeners === 'function') attachListeners();
+                }, 500);
               }
 			  
 			  $scope.initiate = function(data){
