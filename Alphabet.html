@@ -36,7 +36,7 @@ gap = 1200;
 
 var app = angular.module("newApp", []);
 
-app.controller('appCtrl', function($scope) {
+app.controller('appCtrl', function($scope, $timeout) {
   $scope.ctrl = {showSmall:true, showCaps:true, busyPlay:false};
   $scope.chars = [];
   
@@ -50,11 +50,18 @@ app.controller('appCtrl', function($scope) {
   $scope.populatePage = function(){
     var i,c="",C="";
     $scope.chars = [];
-  for(i=0;i<26;i++){
-    C = String.fromCharCode(65+i);
-    c = String.fromCharCode(97+i);
-    $scope.chars.push([C,c]);
+    for(i=0;i<26;i++){
+      C = String.fromCharCode(65+i);
+      c = String.fromCharCode(97+i);
+      $scope.chars.push([C,c]);
     }
+    
+    // Ensure the event listeners are attached after Angular renders the elements
+    $timeout(function() {
+      if (typeof attachListeners === 'function') {
+        attachListeners();
+      }
+    }, 500);
   }
   $scope.populatePage();
 }); 
