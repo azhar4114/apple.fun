@@ -151,34 +151,43 @@ function getAccessHelpers() {
     const state = accessState || getAccessState();
     let badge = document.getElementById("aforapple-access-badge");
 
+    // Check URL query parameters for custom school branding
+    const urlParams = new URLSearchParams(window.location.search);
+    const customSchool = urlParams.get("school") || state.schoolName || "";
+
     if (!badge) {
       badge = document.createElement("div");
       badge.id = "aforapple-access-badge";
       badge.style.display = "inline-flex";
       badge.style.alignItems = "center";
-      badge.style.padding = "8px 14px";
+      badge.style.padding = "8px 16px";
       badge.style.borderRadius = "999px";
-      badge.style.fontFamily = "Arial, sans-serif";
+      badge.style.fontFamily = "'Inter', sans-serif";
       badge.style.fontWeight = "700";
       badge.style.fontSize = "14px";
       badge.style.marginTop = "12px";
-      badge.style.boxShadow = "0 10px 24px rgba(11, 31, 53, 0.08)";
-      badge.style.border = "1px solid rgba(27, 94, 32, 0.12)";
+      badge.style.boxShadow = "0 6px 20px rgba(0,0,0,0.3)";
     }
 
-    if (state.state === "pilot") {
+    if (customSchool) {
+      badge.style.background = "linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%)";
+      badge.style.color = "#10172e";
+      badge.style.border = "1px solid rgba(255, 255, 255, 0.6)";
+      badge.textContent = "✨ Exclusive 14-Day Pilot for " + customSchool;
+    } else if (state.state === "pilot") {
       badge.style.background = "#fff4d6";
       badge.style.color = "#7a4f01";
+      badge.textContent = (state.label || "School pilot active") + (state.schoolName ? " - " + state.schoolName : "");
     } else if (state.state === "licensed") {
       badge.style.background = "#e7f1ff";
       badge.style.color = "#0f4c81";
+      badge.textContent = (state.label || "Licensed school access") + (state.schoolName ? " - " + state.schoolName : "");
     } else {
-      badge.style.background = "#edf7ed";
-      badge.style.color = "#1b5e20";
+      badge.style.background = "rgba(255, 255, 255, 0.15)";
+      badge.style.color = "#fff";
+      badge.style.border = "1px solid rgba(255, 255, 255, 0.3)";
+      badge.textContent = state.label || "Sample classroom lesson";
     }
-
-    const detail = state.schoolName ? " - " + state.schoolName : "";
-    badge.textContent = (state.label || "Sample lesson") + detail;
 
     if (!badge.parentNode) {
       host.appendChild(badge);

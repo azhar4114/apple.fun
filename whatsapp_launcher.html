@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aforapple.fun | 1-Click WhatsApp DM Launcher & School Pipeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/space1.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .metric-card {
+      background: rgba(10, 15, 30, 0.65);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .metric-card h3 {
+      margin: 0;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-card p {
+      margin: 10px 0 0;
+      font-size: 36px;
+      font-weight: 800;
+      color: #ff9a9e;
+    }
+
+    .toolbar-panel {
+      background: rgba(10, 15, 30, 0.65);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-input, .select-input {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-input {
+      flex: 1 1 250px;
+    }
+
+    .select-input option {
+      background: #10172e;
+      color: #fff;
+    }
+
+    .btn-add {
+      background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-add:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(251, 194, 235, 0.5);
+    }
+
+    .leads-table-container {
+      background: rgba(10, 15, 30, 0.65);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      color: #ff9a9e;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 15px;
+      vertical-align: middle;
+    }
+
+    .school-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .school-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-New { background: rgba(33, 150, 243, 0.2); color: #64b5f6; border: 1px solid rgba(33, 150, 243, 0.4); }
+    .status-Contacted { background: rgba(255, 152, 0, 0.2); color: #ffb74d; border: 1px solid rgba(255, 152, 0, 0.4); }
+    .status-Trial { background: rgba(156, 39, 176, 0.2); color: #ba68c8; border: 1px solid rgba(156, 39, 176, 0.4); }
+    .status-Closed { background: rgba(76, 175, 80, 0.2); color: #81c784; border: 1px solid rgba(76, 175, 80, 0.4); }
+
+    .action-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-wa {
+      background: linear-gradient(45deg, #25d366, #128c7e);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.5);
+      color: #fff;
+    }
+
+    .btn-mail {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fbc2eb;
+      border: 1px solid rgba(251, 194, 235, 0.3);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-card {
+      background: #10172e;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 30px;
+      width: min(500px, 90%);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+    .modal-card h2 {
+      margin-top: 0;
+      color: #ff9a9e;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+    <div class="header">
+      <h1>WhatsApp DM Launcher & Pipeline</h1>
+      <a href="index.html">Go to Home</a>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Total Leads</h3>
+        <p id="metric-total">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>DMs Sent</h3>
+        <p id="metric-contacted">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Pilots Active</h3>
+        <p id="metric-trial">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Closed Schools</h3>
+        <p id="metric-closed">0</p>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar-panel">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search school name, city, or contact..." oninput="renderTable()">
+      
+      <select id="statusFilter" class="select-input" onchange="renderTable()">
+        <option value="ALL">All Statuses</option>
+        <option value="New">New</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Trial Active">Trial Active</option>
+        <option value="Closed">Closed</option>
+      </select>
+
+      <select id="cityFilter" class="select-input" onchange="renderTable()">
+        <option value="ALL">All Cities</option>
+      </select>
+
+      <button class="btn-add" onclick="openAddModal()">+ Add New School Lead</button>
+    </div>
+
+    <!-- Table -->
+    <div class="leads-table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>School Details</th>
+            <th>Contact Person</th>
+            <th>City</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Lead Modal -->
+  <div class="modal-overlay" id="addModal">
+    <div class="modal-card">
+      <h2>Add School Lead</h2>
+      <div class="form-group">
+        <label>School Name</label>
+        <input type="text" id="newSchoolName" class="search-input" placeholder="e.g. Bright Beginnings Preschool">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number (10 digits)</label>
+        <input type="text" id="newPhone" class="search-input" placeholder="e.g. 9849012345">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="newEmail" class="search-input" placeholder="e.g. principal@school.com">
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" id="newCity" class="search-input" placeholder="e.g. Hyderabad">
+      </div>
+      <div class="form-group">
+        <label>Contact Person Title</label>
+        <input type="text" id="newContactPerson" class="search-input" placeholder="e.g. Principal / Director">
+      </div>
+      <div style="display:flex; gap:10px; margin-top:20px; justify-content:flex-end;">
+        <button class="btn-mail" onclick="closeAddModal()">Cancel</button>
+        <button class="btn-add" onclick="saveNewLead()">Save Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Composer Modal -->
+  <div class="modal-overlay" id="emailModal">
+    <div class="modal-card" style="width: min(650px, 95%);">
+      <h2 id="emailModalTitle">Send Cold Email</h2>
+      <div class="form-group">
+        <label>Recipient Email Address</label>
+        <input type="email" id="emailModalTo" class="search-input" placeholder="e.g. principal@school.com">
+      </div>
+      <div class="form-group">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label>Subject Line</label>
+          <button class="btn-copy" style="padding: 2px 10px; font-size:12px;" onclick="copyTextFromInput('emailModalSubject')">📋 Copy Subject</button>
+        </div>
+        <input type="text" id="emailModalSubject" class="search-input" readonly>
+      </div>
+      <div class="form-group">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label>Email Body</label>
+          <button class="btn-copy" style="padding: 2px 10px; font-size:12px;" onclick="copyTextFromArea('emailModalBody')">📋 Copy Body</button>
+        </div>
+        <textarea id="emailModalBody" class="search-input" rows="8" style="resize:vertical; font-family:inherit; font-size:14px; line-height:1.5; color:#fff;" readonly></textarea>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:20px; justify-content:flex-end; flex-wrap:wrap;">
+        <button class="btn-mail" onclick="closeEmailModal()">Close</button>
+        <button class="btn-add" style="background: linear-gradient(45deg, #4285f4, #34a853);" onclick="launchGmailWeb()">🟢 Open in Gmail Web</button>
+        <a id="emailModalMailtoLink" class="btn-wa" style="background: linear-gradient(45deg, #ff9a9e, #fecfef); color: #333;" onclick="markModalContacted()">📬 Open Mail App</a>
+      </div>
+    </div>
+  </div>
+
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+  <script src="script.js"></script>
+
+  <script>
+    let leadsData = [];
+
+    // Load initial JSON leads & merge with localStorage state
+    async function init() {
+      try {
+        const res = await fetch('school_leads.json');
+        const initialJson = await res.json();
+
+        const storedLeads = localStorage.getItem('aforapple_school_leads_v1');
+        if (storedLeads) {
+          leadsData = JSON.parse(storedLeads);
+        } else {
+          leadsData = initialJson;
+          saveLeads();
+        }
+      } catch (err) {
+        console.warn('Could not load school_leads.json, using local state', err);
+        leadsData = JSON.parse(localStorage.getItem('aforapple_school_leads_v1') || '[]');
+      }
+
+      populateCityFilter();
+      renderTable();
+    }
+
+    function saveLeads() {
+      localStorage.setItem('aforapple_school_leads_v1', JSON.stringify(leadsData));
+      renderTable();
+    }
+
+    function populateCityFilter() {
+      const cities = [...new Set(leadsData.map(l => l.city).filter(Boolean))];
+      const citySelect = document.getElementById('cityFilter');
+      citySelect.innerHTML = '<option value="ALL">All Cities</option>';
+      cities.forEach(c => {
+        citySelect.innerHTML += `<option value="${c}">${c}</option>`;
+      });
+    }
+
+    function generateWaLink(schoolName, phone) {
+      const cleanPhone = phone.replace(/\D/g, '');
+      const num = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+      const demoUrl = `https://aforapple.fun/Alphabet.html?school=${encodeURIComponent(schoolName)}`;
+      const msg = `Namaste! Quick question regarding interactive Smart TV learning at ${schoolName}?\n\nWe built Aforapple.fun — an interactive classroom tool for Nursery to Grade 2 (Alphabet, Phonics, Tracing, Math, Hindi & Telugu) designed specifically for classroom Smart TVs and tablets.\n\n🖥️ No download needed — runs in any browser.\n📺 Try Demo Link for ${schoolName}:\n${demoUrl}\n\nWe are offering a 14-day free pilot for your classrooms. Would you like a trial code for your teachers?`;
+      return `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function generateMailtoLink(schoolName, email) {
+      const demoUrl = `https://aforapple.fun/Alphabet.html?school=${encodeURIComponent(schoolName)}`;
+      const subject = `Interactive Smart TV learning trial for ${schoolName} (Nursery - Grade 2)`;
+      const body = `Respected Principal / Director,\n\nEarly childhood teachers often struggle to keep Nursery to Grade 2 students engaged during foundational phonics, tracing, and number lessons.\n\nAforapple.fun transforms any existing Smart TV or projector into a multilingual interactive learning board without requiring any downloads.\n\nKey features for your classrooms:\n• Multilingual: English, Hindi, and Telugu phonics & charts\n• Interactive Tools: Letter tracing, whiteboard, word builder & math games\n• Zero Setup: Works on any Smart TV or laptop in 1 click\n\nYou can preview a custom demo link prepared for your school here:\n${demoUrl}\n\nWe would love to set up a free 14-day classroom trial for ${schoolName}. Reply to this email and we will activate your trial code instantly.\n\nWarm regards,\nFounding Team, Aforapple.fun`;
+      return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function updateStatus(index, newStatus) {
+      leadsData[index].status = newStatus;
+      saveLeads();
+    }
+
+    function markContacted(index) {
+      if (leadsData[index].status === 'New') {
+        leadsData[index].status = 'Contacted';
+        saveLeads();
+      }
+    }
+
+    function copyDemoUrl(schoolName) {
+      const url = `https://aforapple.fun/Alphabet.html?school=${encodeURIComponent(schoolName)}`;
+      navigator.clipboard.writeText(url);
+      alert(`Copied custom demo link for ${schoolName}:\n${url}`);
+    }
+
+    function renderTable() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const statusF = document.getElementById('statusFilter').value;
+      const cityF = document.getElementById('cityFilter').value;
+
+      const filtered = leadsData.filter(l => {
+        const matchSearch = l.school_name.toLowerCase().includes(search) || 
+                            l.city.toLowerCase().includes(search) ||
+                            (l.phone && l.phone.includes(search));
+        const matchStatus = statusF === 'ALL' || l.status === statusF;
+        const matchCity = cityF === 'ALL' || l.city === cityF;
+        return matchSearch && matchStatus && matchCity;
+      });
+
+      // Update metrics
+      document.getElementById('metric-total').textContent = leadsData.length;
+      document.getElementById('metric-contacted').textContent = leadsData.filter(l => l.status === 'Contacted').length;
+      document.getElementById('metric-trial').textContent = leadsData.filter(l => l.status === 'Trial Active').length;
+      document.getElementById('metric-closed').textContent = leadsData.filter(l => l.status === 'Closed').length;
+
+      const tbody = document.getElementById('leadsTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:rgba(255,255,255,0.6);">No leads match your search criteria. Click "+ Add New School Lead" to add one!</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((l, i) => {
+        const originalIndex = leadsData.indexOf(l);
+        const waUrl = generateWaLink(l.school_name, l.phone);
+        const mailUrl = generateMailtoLink(l.school_name, l.email || '');
+
+        return `
+          <tr>
+            <td>
+              <div class="school-title">${l.school_name}</div>
+              <div class="school-sub">${l.category || 'School'} • 📞 +${l.phone}</div>
+            </td>
+            <td>${l.contact_person || 'Principal / Owner'}</td>
+            <td>${l.city}</td>
+            <td>
+              <select class="select-input" onchange="updateStatus(${originalIndex}, this.value)">
+                <option value="New" ${l.status === 'New' ? 'selected' : ''}>New</option>
+                <option value="Contacted" ${l.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                <option value="Trial Active" ${l.status === 'Trial Active' ? 'selected' : ''}>Trial Active</option>
+                <option value="Closed" ${l.status === 'Closed' ? 'selected' : ''}>Closed</option>
+              </select>
+            </td>
+            <td>
+              <div class="action-group">
+                <a href="${waUrl}" target="_blank" class="btn-wa" onclick="markContacted(${originalIndex})">
+                  📱 Send WhatsApp
+                </a>
+                <button class="btn-mail" onclick="openEmailModal(${originalIndex})">📧 Email</button>
+                <button class="btn-copy" onclick="copyDemoUrl('${l.school_name.replace(/'/g, "\\'")}')">🔗 Copy Demo Link</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    let activeModalIndex = null;
+
+    function openEmailModal(index) {
+      activeModalIndex = index;
+      const lead = leadsData[index];
+      const schoolName = lead.school_name;
+      const email = lead.email || '';
+
+      const demoUrl = `https://aforapple.fun/Alphabet.html?school=${encodeURIComponent(schoolName)}`;
+      const subject = `Interactive Smart TV learning trial for ${schoolName} (Nursery - Grade 2)`;
+      const body = `Respected Principal / Director,\n\nEarly childhood teachers often struggle to keep Nursery to Grade 2 students engaged during foundational phonics, tracing, and number lessons.\n\nAforapple.fun transforms any existing Smart TV or projector into a multilingual interactive learning board without requiring any downloads.\n\nKey features for your classrooms:\n• Multilingual: English, Hindi, and Telugu phonics & charts\n• Interactive Tools: Letter tracing, whiteboard, word builder & math games\n• Zero Setup: Works on any Smart TV or laptop in 1 click\n\nYou can preview a custom demo link prepared for your school here:\n${demoUrl}\n\nWe would love to set up a free 14-day classroom trial for ${schoolName}. Reply to this email and we will activate your trial code instantly.\n\nWarm regards,\nFounding Team, Aforapple.fun`;
+
+      document.getElementById('emailModalTitle').textContent = `Send Cold Email to ${schoolName}`;
+      document.getElementById('emailModalTo').value = email;
+      document.getElementById('emailModalSubject').value = subject;
+      document.getElementById('emailModalBody').value = body;
+
+      const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('emailModalMailtoLink').href = mailtoUrl;
+
+      document.getElementById('emailModal').style.display = 'flex';
+    }
+
+    function closeEmailModal() {
+      document.getElementById('emailModal').style.display = 'none';
+      activeModalIndex = null;
+    }
+
+    function launchGmailWeb() {
+      const to = encodeURIComponent(document.getElementById('emailModalTo').value);
+      const su = encodeURIComponent(document.getElementById('emailModalSubject').value);
+      const body = encodeURIComponent(document.getElementById('emailModalBody').value);
+
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${su}&body=${body}`;
+      window.open(gmailUrl, '_blank');
+
+      markModalContacted();
+    }
+
+    function markModalContacted() {
+      if (activeModalIndex !== null) {
+        markContacted(activeModalIndex);
+      }
+    }
+
+    function copyTextFromInput(id) {
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.value);
+      alert('Copied to clipboard!');
+    }
+
+    function copyTextFromArea(id) {
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.value);
+      alert('Copied email body text to clipboard!');
+    }
+
+    function openAddModal() {
+      document.getElementById('addModal').style.display = 'flex';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').style.display = 'none';
+    }
+
+    function saveNewLead() {
+      const name = document.getElementById('newSchoolName').value.trim();
+      const phone = document.getElementById('newPhone').value.trim();
+      const email = document.getElementById('newEmail').value.trim();
+      const city = document.getElementById('newCity').value.trim();
+      const person = document.getElementById('newContactPerson').value.trim();
+
+      if (!name || !phone) {
+        alert('Please enter at least the School Name and WhatsApp Number.');
+        return;
+      }
+
+      leadsData.unshift({
+        school_name: name,
+        phone: phone,
+        email: email,
+        city: city || 'Local',
+        contact_person: person || 'Principal',
+        category: 'Preschool',
+        status: 'New'
+      });
+
+      saveLeads();
+      populateCityFilter();
+      closeAddModal();
+      
+      // Clear inputs
+      document.getElementById('newSchoolName').value = '';
+      document.getElementById('newPhone').value = '';
+      document.getElementById('newEmail').value = '';
+      document.getElementById('newCity').value = '';
+      document.getElementById('newContactPerson').value = '';
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
