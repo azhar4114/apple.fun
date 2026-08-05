@@ -9,7 +9,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/space1.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+    }
+
     .game-shell {
       width: min(920px, calc(100% - 24px));
       margin: 0 auto 40px;
@@ -17,24 +26,29 @@
 
     .panel {
       margin-top: 20px;
-      padding: 22px;
+      padding: 30px;
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 18px 34px rgba(21, 50, 75, 0.12);
+      background: rgba(10, 15, 30, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+      color: #fff;
     }
 
     .target-word {
-      font-size: 38px;
+      font-size: 42px;
       font-weight: 800;
-      color: #15324b;
+      color: #ff9a9e;
       letter-spacing: 0.1em;
       text-align: center;
-      margin: 8px 0 16px;
+      margin: 12px 0 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     }
 
     .helper-copy {
       text-align: center;
-      color: #4d6a82;
+      color: rgba(255, 255, 255, 0.85);
       font-size: 18px;
       line-height: 1.6;
     }
@@ -51,35 +65,44 @@
     .letter-chip {
       min-width: 58px;
       padding: 14px 18px;
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 18px;
-      background: linear-gradient(135deg, #46aef7, #268ed9);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
       color: #fff;
       font-size: 26px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 12px 22px rgba(38, 142, 217, 0.24);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .letter-chip:hover {
+      transform: scale(1.1) translateY(-3px);
+      background: rgba(255, 255, 255, 0.3);
+      border-color: #ff9a9e;
+      box-shadow: 0 8px 25px rgba(255, 154, 158, 0.5);
     }
 
     .dropzone {
       margin-top: 20px;
       padding: 24px;
       min-height: 130px;
-      border: 2px dashed #2196f3;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
       border-radius: 24px;
-      background: #eaf5ff;
+      background: rgba(0, 0, 0, 0.3);
       text-align: center;
       transition: all 0.3s ease;
     }
 
     .dropzone.hover {
-      background-color: #d6ecff;
-      border-color: #1565c0;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #ff9a9e;
     }
 
     .dropzone p {
       margin: 0;
-      color: #2196f3;
+      color: rgba(255, 255, 255, 0.7);
       font-size: 20px;
       line-height: 1.6;
     }
@@ -88,47 +111,61 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
-      margin-top: 22px;
+      gap: 15px;
+      margin-top: 25px;
     }
 
     .btn {
-      padding: 12px 20px;
+      padding: 12px 25px;
       border: none;
-      border-radius: 999px;
-      font-size: 17px;
+      border-radius: 15px;
+      font-size: 18px;
       font-weight: 800;
       cursor: pointer;
       color: #fff;
-      background: #2196f3;
+      background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(251, 194, 235, 0.6);
     }
 
     #clear-word-btn {
-      background: #ff7043;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    #clear-word-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
     }
 
     #next-word-btn {
-      background: #1f8d62;
+      background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+      color: #333;
     }
 
     .message {
-      font-size: 20px;
+      font-size: 22px;
       margin-top: 20px;
       font-weight: 800;
       text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
     .correct {
-      color: #1f8d62;
+      color: #a8ff78;
     }
 
     .incorrect {
-      color: #d84315;
+      color: #ff9a9e;
     }
 
     .sample-note {
       text-align: center;
-      color: #4d6a82;
+      color: rgba(255, 255, 255, 0.7);
       margin-top: 16px;
     }
   </style>
@@ -158,10 +195,12 @@
         <button class="btn" id="next-word-btn" type="button">Next Word</button>
       </div>
 
-      <div id="feedback-message" class="message"></div>
-      <div class="sample-note">Starter vocabulary is expanded locally so the activity is stronger even before backend updates.</div>
+      <div class="message" id="game-message"></div>
+      <div class="sample-note" id="sample-note" style="display: none;">Sample lesson preview mode enabled.</div>
     </div>
   </div>
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+  <script src="script.js"></script>
 
   <script>
     var draggableContainer = document.getElementById("draggable-letters");

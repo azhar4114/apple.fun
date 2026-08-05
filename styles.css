@@ -255,3 +255,47 @@ nav a:hover {
 .category h1:hover, .category h1:focus, .category h1.autoplay {
     transform: scale(1.02);
 }
+
+/* Content Card Utility for Document/Report/Info pages */
+.content-card {
+    background: rgba(10, 15, 30, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px 50px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+.content-card h2 {
+    color: #ff9a9e;
+    font-size: 2.5vh;
+    margin-top: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px;
+}
+.content-card h3 {
+    color: #fbc2eb;
+}
+.content-card a {
+    color: #fbc2eb;
+    text-decoration: underline;
+}
+.content-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.content-card th {
+    color: #ff9a9e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px;
+    text-align: left;
+}
+.content-card td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}

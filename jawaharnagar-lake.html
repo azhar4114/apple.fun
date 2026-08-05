@@ -16,73 +16,98 @@
 	<meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <title>Jawaharnagar Lake</title>
     
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
+                body {
+                  font-family: 'Inter', sans-serif;
+                  background-image: url('images/space1.jpeg');
+                  background-size: cover;
+                  background-attachment: fixed;
+                  color: #fff;
+                }
                 #map_10b69c8877d66feef41282329d26243b {
                     position: relative;
                     width: 100.0%;
-                    height: 97.0%;
+                    height: 600px;
                     left: 0.0%;
                     top: 0.0%;
+                    border-radius: 20px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+                    margin: 20px 0;
+                    overflow: hidden;
                 }
 				
 				.section {
-				            padding: 20px;
-				            margin: 20px 0;
-				            text-align: center;
-				        }
-				        .cta {
-				            display: inline-block;
-				            margin: 10px;
-				            padding: 15px 25px;
-				            background-color: #007bff;
-				            color: white;
-				            text-decoration: none;
-				            border-radius: 5px;
-				        }
-				        .cta:hover {
-				            background-color: #0056b3;
-							color:white;
-				        }
+				    padding: 20px;
+				    margin: 20px 0;
+				    text-align: center;
+				}
+				.cta {
+				    display: inline-block;
+				    margin: 10px;
+				    padding: 12px 24px;
+				    background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+				    color: white;
+				    text-decoration: none;
+				    border-radius: 15px;
+				    font-weight: 700;
+				    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+				    transition: all 0.3s ease;
+				}
+				.cta:hover {
+				    transform: translateY(-2px);
+				    box-shadow: 0 8px 25px rgba(251, 194, 235, 0.5);
+					color: white;
+					text-decoration: none;
+				}
             </style>
         
 </head>
 <body>
+	<div class="header">
+	  <h1>Jawaharnagar Lake Data</h1>
+	  <a href="index.html">Go to Home</a>
+	</div>
 	
-	<header class="section">
-	        <h1>Interactive Learning Tools for Schools and Parents</h1>
+	<div class="content-card">
+	    <header class="section">
+	        <h2>Interactive Learning Tools for Schools and Parents</h2>
 	        <p>Our platform offers engaging and customizable learning solutions for schools, while parents can enjoy educational games and activities for kids on our Android app.</p>
 	    </header>
 
 	    <!-- Section for Schools -->
-	    <section class="section" style="background-color: #f9f9f9;">
-	        <h2>For Schools: Engage Your Students with Interactive Learning</h2>
+	    <section class="section">
+	        <h3>For Schools: Engage Your Students with Interactive Learning</h3>
 	        <p>Our website provides a wide range of educational tools tailored for Nursery to UKG classes. It's designed for smart classrooms and comes with interactive activities, games, and lessons that make learning fun.</p>
-	        <a href="https://aforapple.fun/contact.html" class="cta">Sign Up for a Free Trial</a>
-	        <a href="https://aforapple.fun/brochure.html" class="cta">Request a Demo</a>
+	        <a href="contact.html" class="cta">Sign Up for a Free Trial</a>
+	        <a href="brochure.html" class="cta">Request a Demo</a>
 	    </section>
 
 	    <!-- Section for Parents -->
-	    <section class="section" style="background-color: #eef;">
-	        <h2>For Parents: Fun and Educational Activities for Your Kids</h2>
+	    <section class="section">
+	        <h3>For Parents: Fun and Educational Activities for Your Kids</h3>
 	        <p>Our Android app offers engaging activities like alphabet tracing, number games, and fun puzzles to make learning enjoyable at home. It's ad-free and designed for kids aged 3-6.</p>
 	        <a href="https://play.google.com/store/apps/details?id=aforapple.fun" class="cta">Download the Android App</a>
 	    </section>
     
-    
-            <div class="folium-map" id="map_10b69c8877d66feef41282329d26243b" ></div>
-			<footer>
-			        <p style="font-size: 0.9em; color: gray; text-align: center;">
-			            Disclaimer: The data displayed on this website is sourced from 
-			            <a href="https://lakes.hmda.gov.in" target="_blank">lakes.hmda.gov.in</a>. 
-			            While we strive to present accurate information, we do not take responsibility for any discrepancies, errors, or omissions in the data. 
-			            Users are advised to verify the information from the original source.
-			        </p>
-			    </footer>
-        
+        <div class="folium-map" id="map_10b69c8877d66feef41282329d26243b" ></div>
+		
+		<footer>
+	        <p style="font-size: 0.9em; color: rgba(255,255,255,0.7); text-align: center; margin-top: 20px;">
+	            Disclaimer: The data displayed on this website is sourced from 
+	            <a href="https://lakes.hmda.gov.in" target="_blank">lakes.hmda.gov.in</a>. 
+	            While we strive to present accurate information, we do not take responsibility for any discrepancies, errors, or omissions in the data. 
+	            Users are advised to verify the information from the original source.
+	        </p>
+	    </footer>
+	</div>
+	<button id="scrollToTopBtn" title="Go to top">Top</button>
+	<script src="script.js"></script>
 </body>
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script>

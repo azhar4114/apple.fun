@@ -5,25 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Onboarding Guide | Aforapple.fun</title>
   <meta name="description" content="Printable onboarding guide for teachers using Aforapple.fun in preschool and Grade 2 classrooms.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #14304d;
-      background: #f6f9fb;
-    }
-
-    .page {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 20px 80px;
-    }
-
-    .sheet {
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 0 24px 48px rgba(15, 34, 57, 0.1);
+      font-family: 'Inter', sans-serif;
+      background-image: url('images/space1.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
     }
 
     .toolbar {
@@ -37,32 +27,29 @@
 
     .button {
       display: inline-block;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: #0f4c81;
+      padding: 12px 24px;
+      border-radius: 15px;
+      background: linear-gradient(45deg, #a18cd1, #fbc2eb);
       color: #fff;
       text-decoration: none;
       font-weight: 700;
+      font-size: 16px;
       border: none;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 36px;
-    }
-
-    h2 {
-      margin-top: 28px;
-      font-size: 24px;
-      color: #0f4c81;
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(251, 194, 235, 0.5);
     }
 
     p,
     li {
       font-size: 17px;
       line-height: 1.7;
-      color: #35516a;
+      color: rgba(255, 255, 255, 0.88);
     }
 
     ul {
@@ -77,48 +64,63 @@
     }
 
     .card {
-      border: 1px solid #dce8f2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 16px;
       padding: 18px;
-      background: #f9fcff;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     .card strong {
       display: block;
       margin-bottom: 8px;
-      color: #153451;
+      color: #ff9a9e;
+      font-size: 18px;
     }
 
     @media print {
       body {
-        background: #fff;
+        background: #fff !important;
+        color: #14304d !important;
       }
 
-      .page {
-        padding: 0;
+      .header, .toolbar, #scrollToTopBtn {
+        display: none !important;
       }
 
-      .sheet {
-        box-shadow: none;
-        border-radius: 0;
+      .content-card {
+        background: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #14304d !important;
       }
 
-      .toolbar {
-        display: none;
+      .card {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        color: #14304d !important;
+      }
+
+      .card strong {
+        color: #14304d !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="sheet">
-      <div class="toolbar">
-        <div>
-          <h1>Teacher Onboarding Guide</h1>
-          <p>Use this quick guide to run a classroom pilot with Aforapple.fun.</p>
-        </div>
-        <button class="button" onclick="window.print()">Print guide</button>
+  <div class="header">
+    <h1>Teacher Onboarding Guide</h1>
+    <a href="index.html">Go to Home</a>
+  </div>
+
+  <div class="content-card">
+    <div class="toolbar">
+      <div>
+        <p style="margin: 0;">Use this quick guide to run a classroom pilot with Aforapple.fun.</p>
       </div>
+      <button class="button" onclick="window.print()">Print guide</button>
+    </div>
 
       <h2>Recommended 15-minute demo flow</h2>
       <div class="grid">
@@ -167,5 +169,7 @@
       </ul>
     </div>
   </div>
+  <button id="scrollToTopBtn" title="Go to top">Top</button>
+  <script src="script.js"></script>
 </body>
 </html>
