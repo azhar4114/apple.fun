@@ -6,30 +6,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 	  <title>Telugu Alphabet Chart</title>
      <style>
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Noto Sans Telugu', 'Inter', sans-serif;
       background-image: url('images/space1.jpeg');
       background-size: cover;
       background-attachment: fixed;
     }
 
     #alphabet {
-      grid-template-columns: repeat(auto-fit, minmax(28vh, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
       gap: 3vh;
-      padding: 0 4vh;
+      padding: 2vh 4vh;
     }
     
     .button {
-      padding: 3vh;
-      font-size: 3.5vh;
+      padding: 2vh;
+      font-size: 8vh;
       font-weight: 800;
       color: #fff;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
       text-transform: capitalize;
       height: 18vh;
       display: flex;
@@ -89,7 +89,6 @@ app.directive('loader', function($http, $templateCache) {
   return {
     restrict: 'E',
     link: function(scope, element) {
-      // Load the loader.html file and inject it
       $http.get('loader.html', { cache: $templateCache }).then(function(response) {
         element.html(response.data);
       });
@@ -99,18 +98,37 @@ app.directive('loader', function($http, $templateCache) {
 
 app.controller('appCtrl', function($scope, $timeout) {
   $scope.ctrl = {showSmall:true, showCaps:true};
-  $scope.chars = [];
+  
+  var defaultTeluguChars = [
+    {c:"అ"}, {c:"ఆ"}, {c:"ఇ"}, {c:"ఈ"}, {c:"ఉ"}, {c:"ఊ"}, {c:"ఋ"}, {c:"ౠ"},
+    {c:"ఎ"}, {c:"ఏ"}, {c:"ఐ"}, {c:"ఒ"}, {c:"ఓ"}, {c:"ఔ"}, {c:"అం"}, {c:"అః"},
+    {c:"క"}, {c:"ఖ"}, {c:"గ"}, {c:"ఘ"}, {c:"ఙ"},
+    {c:"చ"}, {c:"ఛ"}, {c:"జ"}, {c:"ఝ"}, {c:"ఞ"},
+    {c:"ట"}, {c:"ఠ"}, {c:"డ"}, {c:"ఢ"}, {c:"ణ"},
+    {c:"త"}, {c:"థ"}, {c:"ద"}, {c:"ధ"}, {c:"న"},
+    {c:"ప"}, {c:"ఫ"}, {c:"బ"}, {c:"భ"}, {c:"మ"},
+    {c:"య"}, {c:"ర"}, {c:"ల"}, {c:"వ"}, {c:"శ"}, {c:"ష"}, {c:"స"}, {c:"హ"},
+    {c:"ళ"}, {c:"క్ష"}, {c:"ఱ"}
+  ];
+
+  $scope.chars = defaultTeluguChars;
   
   $scope.showSmallClck = function(){
-    //$scope.aud.play();
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
   
   $scope.populatePage = function(){
-    var i,c="",C="";
-    $scope.chars = audTime;
-  }
+    $scope.chars = defaultTeluguChars.map(function(item, idx) {
+      var audioItem = (audTime && audTime[idx]) ? audTime[idx] : {};
+      return {
+        c: (audioItem && audioItem.c) ? audioItem.c : item.c,
+        s: audioItem.s,
+        e: audioItem.e
+      };
+    });
+  };
+
   $scope.range = function(min, max, step) {
     step = step || 1;
     var input = [];
@@ -118,17 +136,27 @@ app.controller('appCtrl', function($scope, $timeout) {
         input.push(i);
     }
     return input;
-};
-$scope.initiate = function(data){
- aud = new Audio(data.aud);
-     aud.load();
- audTime = data.audTime;
- $('#loader').hide();
- $scope.populatePage();
-     $timeout(function() {
-         if (typeof attachListeners === 'function') attachListeners();
-     }, 500);
-  } 
+  };
+
+  $scope.initiate = function(data){
+    if (data) {
+      if (data.aud) {
+        aud = new Audio(data.aud);
+        aud.load();
+      }
+      if (data.audTime) {
+        audTime = data.audTime;
+      }
+    }
+    $('#loader').hide();
+    $scope.populatePage();
+    $timeout(function() {
+        if (typeof attachListeners === 'function') attachListeners();
+    }, 500);
+  };
+
+  // Populate immediately on init
+  $scope.populatePage();
 }); 
   </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>

@@ -6,31 +6,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 	
 	  <title>Hindi Alphabet Chart</title>
     <style>
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-image: url('images/default.jpg');
+      font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+      background-image: url('images/space1.jpeg');
       background-size: cover;
       background-attachment: fixed;
     }
 
     #alphabet {
-      grid-template-columns: repeat(auto-fit, minmax(28vh, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr));
       gap: 3vh;
-      padding: 0 4vh;
+      padding: 2vh 4vh;
     }
     
     .button {
-      padding: 3vh;
-      font-size: 3.5vh;
+      padding: 2vh;
+      font-size: 8vh;
       font-weight: 800;
       color: #fff;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
       text-transform: capitalize;
       height: 18vh;
       display: flex;
@@ -93,7 +93,6 @@ app.directive('loader', function($http, $templateCache) {
   return {
     restrict: 'E',
     link: function(scope, element) {
-      // Load the loader.html file and inject it
       $http.get('loader.html', { cache: $templateCache }).then(function(response) {
         element.html(response.data);
       });
@@ -103,18 +102,36 @@ app.directive('loader', function($http, $templateCache) {
 
 app.controller('appCtrl', function($scope, $timeout) {
   $scope.ctrl = {showSmall:true, showCaps:true};
-  $scope.chars = [];
+  
+  var defaultHindiChars = [
+    {c:"अ"}, {c:"आ"}, {c:"इ"}, {c:"ई"}, {c:"उ"}, {c:"ऊ"}, {c:"ऋ"}, {c:"ए"}, {c:"ऐ"}, {c:"ओ"}, {c:"औ"}, {c:"अं"}, {c:"अः"},
+    {c:"क"}, {c:"ख"}, {c:"ग"}, {c:"घ"}, {c:"ङ"},
+    {c:"च"}, {c:"छ"}, {c:"ज"}, {c:"झ"}, {c:"ञ"},
+    {c:"ट"}, {c:"ठ"}, {c:"ड"}, {c:"ढ"}, {c:"ण"},
+    {c:"त"}, {c:"थ"}, {c:"द"}, {c:"ध"}, {c:"न"},
+    {c:"प"}, {c:"फ"}, {c:"ब"}, {c:"भ"}, {c:"म"},
+    {c:"य"}, {c:"र"}, {c:"ल"}, {c:"व"}, {c:"श"}, {c:"ष"}, {c:"स"}, {c:"ह"},
+    {c:"क्ष"}, {c:"त्र"}, {c:"ज्ञ"}
+  ];
+
+  $scope.chars = defaultHindiChars;
   
   $scope.showSmallClck = function(){
-    //$scope.aud.play();
     if(!$scope.ctrl.showSmall && !$scope.ctrl.showCaps)
       $scope.ctrl.showCaps = true;
   };
   
   $scope.populatePage = function(){
-    var i,c="",C="";
-    $scope.chars = audTime;
-  }
+    $scope.chars = defaultHindiChars.map(function(item, idx) {
+      var audioItem = (audTime && audTime[idx]) ? audTime[idx] : {};
+      return {
+        c: (audioItem && audioItem.c) ? audioItem.c : item.c,
+        s: audioItem.s,
+        e: audioItem.e
+      };
+    });
+  };
+
   $scope.range = function(min, max, step) {
     step = step || 1;
     var input = [];
@@ -122,17 +139,27 @@ app.controller('appCtrl', function($scope, $timeout) {
         input.push(i);
     }
     return input;
-};
-$scope.initiate = function(data){
- aud = new Audio(data.aud);
-     aud.load();
- audTime = data.audTime;
- $('#loader').hide();
- $scope.populatePage();
-     $timeout(function() {
-         if (typeof attachListeners === 'function') attachListeners();
-     }, 500);
-  }
+  };
+
+  $scope.initiate = function(data){
+    if (data) {
+      if (data.aud) {
+        aud = new Audio(data.aud);
+        aud.load();
+      }
+      if (data.audTime) {
+        audTime = data.audTime;
+      }
+    }
+    $('#loader').hide();
+    $scope.populatePage();
+    $timeout(function() {
+        if (typeof attachListeners === 'function') attachListeners();
+    }, 500);
+  };
+
+  // Populate immediately on init
+  $scope.populatePage();
 }); 
   </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZCM5PW9N9"></script>
